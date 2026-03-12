@@ -20,11 +20,15 @@ import {
 import { Edit2, Trash2, Package, ShieldCheck, ShieldAlert, Plus, Upload, X, Loader2, ImageIcon, Settings2 } from 'lucide-react'
 
 const PRODUCT_MAPPING = {
-  "24 inch": { size: "24\"", models: ["Basic Frameless", "Basic Double Glass", "Smart Frameless", "Smart Double Glass"], hasTypes: false },
-  "32 inch": { size: "32\"", models: ["Regular Series", "Gold Series", "Google TV"], hasTypes: true },
-  "43 inch": { size: "43\"", models: ["Regular Series", "Gold Series", "Google TV"], hasTypes: true },
-  "50 inch": { size: "50\"", models: ["Regular Series", "Gold Series", "Google TV"], hasTypes: true },
-  "65 inch": { size: "65\"", models: ["Regular Series", "Gold Series", "Google TV"], hasTypes: true },
+  "24 inch": { label: "24 inch (TV)", size: "24\"", models: ["Basic Frameless", "Basic Double Glass", "Smart Frameless", "Smart Double Glass"], hasTypes: false },
+  "32 inch": { label: "32 inch (TV)", size: "32\"", models: ["Regular Series", "Gold Series", "Google TV"], hasTypes: true },
+  "43 inch": { label: "43 inch (TV)", size: "43\"", models: ["Regular Series", "Gold Series", "Google TV"], hasTypes: true },
+  "50 inch": { label: "50 inch (TV)", size: "50\"", models: ["Regular Series", "Gold Series", "Google TV"], hasTypes: true },
+  "65 inch": { label: "65 inch (TV)", size: "65\"", models: ["Regular Series", "Gold Series", "Google TV"], hasTypes: true },
+  "12 inch": { label: "12 inch (Fan)", size: "12\"", models: ["Table Fan - Rechargeable"], hasTypes: false },
+  "16 inch": { label: "16 inch (Fan)", size: "16\"", models: ["Table Fan - Rechargeable", "Stand Fan - Rechargeable"], hasTypes: false },
+  "18 inch": { label: "18 inch (Fan)", size: "18\"", models: ["Stand Fan - Rechargeable"], hasTypes: false },
+  "Cooker": { label: "Rice Cooker", size: "Cooker", models: ["Rice Cooker"], hasTypes: false },
 }
 
 type CategoryKey = keyof typeof PRODUCT_MAPPING;
@@ -182,8 +186,9 @@ export default function ProductsPage() {
       setFormData({ ...formData, image_url: publicUrl })
       setImagePreview(publicUrl)
       toast.success("Image uploaded successfully!")
-    } catch (err: any) {
-      toast.error(err.message || "Failed to upload image")
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to upload image"
+      toast.error(message)
     } finally {
       setIsUploading(false)
     }
@@ -227,7 +232,7 @@ export default function ProductsPage() {
 
   const handleAdd = async () => {
     if (!validateForm()) return
-    const { selectedModel, selectedType, ...dbData } = formData
+    const { ...dbData } = formData
     const { error } = await supabase.from('products').insert([{ ...dbData, is_active: true }])
     if (!error) {
       toast.success(`${formData.name} added to catalog`)
@@ -238,7 +243,7 @@ export default function ProductsPage() {
 
   const handleEdit = async () => {
     if (!selectedProduct || !validateForm()) return
-    const { selectedModel, selectedType, ...dbData } = formData
+    const { ...dbData } = formData
     const { error } = await supabase.from('products').update({ ...dbData }).eq('id', selectedProduct.id)
     if (!error) {
       toast.success("Changes saved successfully")
@@ -280,7 +285,7 @@ export default function ProductsPage() {
       <div className="bg-gradient-to-r from-black via-red-950 to-red-900 px-8 py-10 mb-8 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-center gap-6">
         <div>
           <h1 className="text-4xl font-extrabold text-white tracking-tight">Products Management</h1>
-          <p className="text-red-200 mt-2 font-medium">Add, update, and manage your TV inventory</p>
+          <p className="text-red-200 mt-2 font-medium">Add, update, and manage your product inventory</p>
         </div>
         <div className="flex gap-3">
           <Button
@@ -353,7 +358,9 @@ export default function ProductsPage() {
                   </td>
                   <td className="p-5">
                     <div className="flex gap-2">
-                      <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold uppercase tracking-tighter">{product.category}</span>
+                      <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold uppercase tracking-tighter">
+                        {PRODUCT_MAPPING[product.category as CategoryKey]?.label || product.category}
+                      </span>
                       <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold">{product.size}</span>
                     </div>
                   </td>
@@ -384,7 +391,7 @@ export default function ProductsPage() {
           <div className="bg-gradient-to-r from-black to-red-900 p-6 rounded-t-lg -mx-6 -mt-6 mb-6">
             <DialogTitle className="text-2xl font-black text-white">Manage Product Types</DialogTitle>
             <DialogDescription className="text-red-200 mt-1">
-              Types are shared across 32", 43", 50" and 65" products
+              Types are shared across 32&quot;, 43&quot;, 50&quot; and 65&quot; products
             </DialogDescription>
           </div>
 
@@ -503,7 +510,9 @@ export default function ProductsPage() {
             </SelectTrigger>
             <SelectContent className="bg-white opacity-100 shadow-xl border border-gray-200 z-[150]">
               {Object.keys(PRODUCT_MAPPING).map((cat) => (
-                <SelectItem key={cat} value={cat} className="focus:bg-red-50">{cat}</SelectItem>
+                <SelectItem key={cat} value={cat} className="focus:bg-red-50">
+                  {PRODUCT_MAPPING[cat as CategoryKey].label}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -594,7 +603,7 @@ export default function ProductsPage() {
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-gray-900">Delete Product?</DialogTitle>
             <DialogDescription className="py-4 text-gray-600 text-base">
-              This will permanently remove <span className="font-bold text-red-600">"{selectedProduct?.name}"</span> from your database. This action cannot be undone.
+              This will permanently remove <span className="font-bold text-red-600">&quot;{selectedProduct?.name}&quot;</span> from your database. This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-3">

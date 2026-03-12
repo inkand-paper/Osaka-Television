@@ -17,7 +17,7 @@ export default function HeroCarousel() {
 
   useEffect(() => {
     const fetchSlides = async () => {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('hero_slides')
         .select('*')
         .eq('is_active', true)

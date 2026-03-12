@@ -4,13 +4,12 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from "sonner"
-import { Edit2, Trash2, Plus, ImageIcon, Loader2, Upload, X } from 'lucide-react'
-import Image from 'next/image'
+import { Edit2, Trash2, Plus, Loader2, Upload, X } from 'lucide-react'
 
 interface Slide {
   id: string;
@@ -99,7 +98,7 @@ export default function HeroManagement() {
       const filePath = `${fileName}`
 
       // Upload to Supabase Storage
-      const { data, error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from('hero-images')
         .upload(filePath, file, {
           cacheControl: '3600',
@@ -116,9 +115,10 @@ export default function HeroManagement() {
       setFormData({ ...formData, image_url: publicUrl })
       setImagePreview(publicUrl)
       toast.success("Image uploaded successfully!")
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to upload image"
       console.error("Upload Error:", err)
-      toast.error(err.message || "Failed to upload image")
+      toast.error(message)
     } finally {
       setIsUploading(false)
     }
@@ -159,9 +159,10 @@ export default function HeroManagement() {
       toast.success(selectedSlide ? "Slide updated!" : "New slide added!")
       setDialogOpen(false)
       fetchSlides()
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to save slide"
       console.error("Save Error:", err)
-      toast.error(err.message || "Failed to save slide")
+      toast.error(message)
     } finally {
       setIsSaving(false)
     }

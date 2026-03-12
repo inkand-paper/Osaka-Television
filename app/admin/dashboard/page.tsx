@@ -12,10 +12,6 @@ export default function DashboardPage() {
     inactiveProducts: 0
   })
 
-  useEffect(() => {
-    fetchStats()
-  }, [])
-
   const fetchStats = async () => {
     const { data } = await supabase.from('products').select('is_active')
     
@@ -27,6 +23,11 @@ export default function DashboardPage() {
       })
     }
   }
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchStats()
+  }, [])
 
   return (
     <div>
@@ -47,7 +48,7 @@ export default function DashboardPage() {
             <div>
               <p className="text-sm text-gray-600 mb-2 uppercase tracking-wide">Total Products</p>
               <p className="text-5xl font-bold text-red-600">{stats.totalProducts}</p>
-              <p className="text-xs text-gray-500 mt-2">All TV models</p>
+              <p className="text-xs text-gray-500 mt-2">All product models</p>
             </div>
             <div className="bg-red-100 p-6 rounded-full">
               <span className="text-5xl">📺</span>
@@ -88,11 +89,11 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Link href="/admin/dashboard/products">
             <Card className="p-8 hover:shadow-2xl transition-all cursor-pointer border-2 border-transparent hover:border-red-600 bg-gradient-to-br from-white to-red-50 group">
-              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">📺</div>
+              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">🏷️</div>
               <h3 className="text-2xl font-bold mb-3 text-gray-800 group-hover:text-red-600 transition">
                 Manage Products
               </h3>
-              <p className="text-gray-600">Add, edit, or remove TV models from your inventory</p>
+              <p className="text-gray-600">Add, edit, or remove products from your inventory</p>
               <div className="mt-4 text-red-600 font-semibold group-hover:underline">
                 Go to Products →
               </div>

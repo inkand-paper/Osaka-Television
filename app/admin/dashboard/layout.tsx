@@ -82,7 +82,7 @@ export default function DashboardLayout({
                       ? 'bg-white text-red-600'
                       : 'text-white hover:bg-red-800'
                     }`}>
-                    📺 Products
+                    🏷️ Products
                   </div>
                 </Link>
 
