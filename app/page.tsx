@@ -10,6 +10,7 @@ import { supabase } from '@/lib/supabase'
 import {
   Dialog,
   DialogContent,
+  DialogTitle,
 } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { CheckCircle2 } from "lucide-react"
@@ -476,6 +477,7 @@ export default function Home() {
 <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
   {/* Changed max-w-5xl to max-w-[70vw] and added min-h for that 2/3rd feel */}
   <DialogContent className="max-w-[85vw] md:max-w-[70vw] w-full min-h-[60vh] p-0 overflow-hidden border-none bg-white rounded-3xl shadow-2xl">
+    <DialogTitle className="sr-only">Product Details</DialogTitle>
     {selectedProduct && (
       <div className="flex flex-col md:flex-row min-h-[60vh]">
         
