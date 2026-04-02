@@ -13,7 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle2 } from "lucide-react"
+import { CheckCircle2, Package, Tv, Wind, ChefHat, Sparkles, Mail, Phone } from "lucide-react"
 
 interface Product {
   id: string
@@ -24,6 +24,8 @@ interface Product {
   description: string
   image_url: string | null
   is_active: boolean
+  original_price?: number | null
+  discount_percentage?: string | null
   created_at?: string
 }
 
@@ -105,7 +107,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pb-24 md:pb-0">
       <Navbar />
 
       <main>
@@ -117,7 +119,7 @@ export default function Home() {
         {/* ABOUT SECTION */}
         <section id="about" className="py-20 bg-white border-b">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-5xl font-bold text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
               About <span className="text-red-600">OSAKA Television</span>
             </h2>
 
@@ -150,46 +152,26 @@ export default function Home() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
                 <span className="bg-red-100 text-red-700 font-bold px-4 py-2 rounded-full uppercase tracking-widest text-sm mb-4 inline-block">Flash Release</span>
-                <h2 className="text-5xl font-bold">
+                <h2 className="text-3xl md:text-5xl font-bold">
                   Newly <span className="text-red-600">Arrived</span>
                 </h2>
                 <p className="text-gray-600 mt-4 text-lg">Check out our latest products just added to the store!</p>
               </div>
 
-              <div className="flex overflow-x-auto pb-8 snap-x snap-mandatory hide-scroll-bar gap-6 px-4 md:grid md:grid-cols-5 md:overflow-visible md:px-0 md:gap-4 lg:gap-6">
+              <div className="flex overflow-x-auto pb-8 snap-x snap-mandatory hide-scroll-bar gap-5 px-4 md:px-0 md:flex-wrap md:justify-center">
                 {getLatestProducts().map((product) => (
                   <div 
                     key={`new-${product.id}`} 
-                    className="snap-center min-w-[280px] md:min-w-0 md:w-full shrink-0 cursor-pointer"
-                    onClick={() => setSelectedProduct(product)}
+                    className="snap-center w-[260px] md:w-[280px] shrink-0 h-full py-2"
                   >
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 transition-transform hover:-translate-y-2 hover:shadow-xl group relative overflow-hidden h-full flex flex-col">
-                      <div className="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full z-10 shadow-md">
-                        NEW
-                      </div>
-                      <div className="aspect-square w-full rounded-xl bg-gray-50 mb-4 overflow-hidden flex items-center justify-center">
-                        {product.image_url ? (
-                          <img 
-                            src={product.image_url} 
-                            alt={product.name} 
-                            className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500" 
-                          />
-                        ) : (
-                          <span className="text-4xl">📦</span>
-                        )}
-                      </div>
-                      <div className="flex flex-col flex-1 justify-between">
-                        <div>
-                           <p className="text-xs text-gray-400 font-bold uppercase mb-1">{product.category}</p>
-                           <h3 className="font-bold text-gray-900 group-hover:text-red-600 transition-colors line-clamp-2 leading-tight">
-                             {product.name}
-                           </h3>
-                        </div>
-                        <p className="text-xl font-bold text-red-600 mt-4 border-t pt-3">
-                          ৳ {product.price.toLocaleString()}
-                        </p>
-                      </div>
-                    </div>
+                    <TVCard
+                      name={product.name}
+                      price={product.original_price ? `৳ ${product.original_price.toLocaleString()}` : `৳ ${product.price.toLocaleString()}`}
+                      originalPrice={product.original_price ? `৳ ${product.price.toLocaleString()}` : null}
+                      discountTag={product.discount_percentage ? product.discount_percentage : 'NEW'}
+                      image={product.image_url || ''}
+                      onClick={() => setSelectedProduct(product)}
+                    />
                   </div>
                 ))}
               </div>
@@ -200,7 +182,7 @@ export default function Home() {
         {/* CATEGORY SECTION */}
         <section id="category" className="py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-5xl font-bold text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
               Our <span className="text-red-600">Categories</span>
             </h2>
 
@@ -283,7 +265,9 @@ export default function Home() {
                             <TVCard
                               key={product.id}
                               name={product.name}
-                              price={`৳ ${product.price.toLocaleString()}`}
+                              price={product.original_price ? `৳ ${product.original_price.toLocaleString()}` : `৳ ${product.price.toLocaleString()}`}
+                              originalPrice={product.original_price ? `৳ ${product.price.toLocaleString()}` : null}
+                              discountTag={product.discount_percentage}
                               image={product.image_url || ''}
                               onClick={() => setSelectedProduct(product)}
                             />
@@ -292,7 +276,7 @@ export default function Home() {
 
                       {products.filter(p => p.category === selectedSize && (selectedModel === 'All' || p.name.includes(selectedModel))).length === 0 && (
                         <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm w-full">
-                          <div className="text-6xl mb-4">📺</div>
+                          <Tv className="w-16 h-16 mx-auto text-gray-200 mb-6" strokeWidth={1} />
                           <h3 className="text-2xl font-bold text-gray-800 mb-2">No TVs Found</h3>
                           <p className="text-gray-500">We couldn&apos;t find any active TVs in our current inventory matching your selection.</p>
                           <button
@@ -364,6 +348,8 @@ export default function Home() {
                               key={product.id}
                               name={product.name}
                               price={`৳ ${product.price.toLocaleString()}`}
+                              originalPrice={product.original_price ? `৳ ${product.original_price.toLocaleString()}` : null}
+                              discountTag={product.discount_percentage}
                               image={product.image_url || ''}
                               onClick={() => setSelectedProduct(product)}
                             />
@@ -372,7 +358,7 @@ export default function Home() {
 
                       {products.filter(p => p.category === selectedSize && (selectedModel === 'All' || p.name.includes(selectedModel))).length === 0 && (
                         <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm w-full">
-                          <div className="text-6xl mb-4">💨</div>
+                          <Wind className="w-16 h-16 mx-auto text-gray-200 mb-6" strokeWidth={1} />
                           <h3 className="text-2xl font-bold text-gray-800 mb-2">No Fans Found</h3>
                           <p className="text-gray-500">We couldn&apos;t find any active fans in our current inventory matching your selection.</p>
                           <button
@@ -389,19 +375,39 @@ export default function Home() {
 
                 {/* COOKER SECTION */}
                 {selectedMainCategory === 'Cooker' && (
-                  <div className="text-center py-24 bg-white rounded-3xl border border-gray-100 shadow-sm w-full max-w-4xl mx-auto my-8">
-                    <div className="text-8xl mb-8 animate-bounce mt-4">🍳</div>
-                    <h3 className="text-4xl font-bold text-gray-800 mb-4">Rice Cookers</h3>
-                    <p className="text-2xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
-                      Our premium line of cookers will be introduced very soon! Stay tuned.
-                    </p>
+                  <div className="w-full flex flex-col items-center">
+                    <div className="w-full mt-4">
+                      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                        {products
+                          .filter(p => p.category === 'Cooker')
+                          .map((product) => (
+                            <TVCard
+                              key={product.id}
+                              name={product.name}
+                              price={`৳ ${product.price.toLocaleString()}`}
+                              originalPrice={product.original_price ? `৳ ${product.original_price.toLocaleString()}` : null}
+                              discountTag={product.discount_percentage}
+                              image={product.image_url || ''}
+                              onClick={() => setSelectedProduct(product)}
+                            />
+                          ))}
+                      </div>
+
+                      {products.filter(p => p.category === 'Cooker').length === 0 && (
+                        <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm w-full">
+                          <ChefHat className="w-16 h-16 mx-auto text-gray-200 mb-6" strokeWidth={1} />
+                          <h3 className="text-2xl font-bold text-gray-800 mb-2">No Rice Cookers Found</h3>
+                          <p className="text-gray-500">We couldn&apos;t find any active rice cookers in our current inventory.</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
 
                 {/* MORE SECTION */}
                 {selectedMainCategory === 'More' && (
                   <div className="text-center py-24 bg-white rounded-3xl border border-gray-100 shadow-sm w-full max-w-4xl mx-auto my-8">
-                    <div className="text-8xl mb-8 mt-4">✨</div>
+                    <Sparkles className="w-24 h-24 mx-auto text-gray-200 mb-8 mt-4" strokeWidth={1} />
                     <h3 className="text-4xl font-bold text-gray-800 mb-4">More Categories</h3>
                     <p className="text-2xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
                       We are always expanding. Later we will decide on more exciting products!
@@ -416,7 +422,7 @@ export default function Home() {
         {/* GALLERY SECTION */}
         <section id="gallery" className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-5xl font-bold text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
               Our <span className="text-red-600">Gallery</span>
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -434,7 +440,7 @@ export default function Home() {
         {/* CONTACT SECTION */}
         <section id="contact" className="py-20 bg-gray-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-5xl font-bold text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
               Contact <span className="text-red-600">Us</span>
             </h2>
             <div className="grid md:grid-cols-2 gap-12">
@@ -442,14 +448,18 @@ export default function Home() {
                 <h3 className="text-2xl font-bold mb-6 text-gray-800">Get In Touch</h3>
                 <div className="space-y-6">
                   <div className="flex items-start">
-                    <div className="bg-red-100 p-3 rounded-full text-red-600 mr-4">📧</div>
+                    <div className="bg-red-50 p-4 rounded-2xl mr-6 group-hover:bg-red-100 transition-colors">
+                      <Mail className="w-6 h-6 text-red-600" />
+                    </div>
                     <div>
                       <h4 className="font-bold text-gray-900">Email</h4>
                       <p className="text-gray-600">info@osakatv.com</p>
                     </div>
                   </div>
                   <div className="flex items-start">
-                    <div className="bg-red-100 p-3 rounded-full text-red-600 mr-4">📞</div>
+                    <div className="bg-red-50 p-4 rounded-2xl mr-6 group-hover:bg-red-100 transition-colors">
+                      <Phone className="w-6 h-6 text-red-600" />
+                    </div>
                     <div>
                       <h4 className="font-bold text-gray-900">Phone</h4>
                       <p className="text-gray-600">+880 1XXX-XXXXXX</p>
@@ -473,98 +483,102 @@ export default function Home() {
       </main>
 
    {/* PRODUCT DETAILS MODAL */}
-{/* PRODUCT DETAILS MODAL */}
 <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
-  {/* Changed max-w-5xl to max-w-[70vw] and added min-h for that 2/3rd feel */}
-  <DialogContent className="max-w-[85vw] md:max-w-[70vw] w-full min-h-[60vh] p-0 overflow-hidden border-none bg-white rounded-3xl shadow-2xl">
+  <DialogContent className="max-w-[90vw] md:max-w-[70vw] w-full p-0 overflow-hidden border-none bg-white rounded-3xl shadow-2xl">
     <DialogTitle className="sr-only">Product Details</DialogTitle>
     {selectedProduct && (
-      <div className="flex flex-col md:flex-row min-h-[60vh]">
+      <div className="flex flex-col md:flex-row max-h-[85vh] md:min-h-[60vh] overflow-y-auto">
         
-        {/* Left Side: Large Product Display (Equal 50%) */}
-        <div className="md:w-1/2 bg-[#fdfdfd] flex items-center justify-center p-12 relative border-r border-gray-100">
-          <div className="absolute top-10 left-10">
-             <Badge className="bg-red-600 text-white border-0 px-6 py-2 text-xs font-black uppercase tracking-widest shadow-lg">
+        {/* Left Side: Large Product Display */}
+        <div className="w-full md:w-1/2 bg-[#fdfdfd] flex items-center justify-center p-6 md:p-12 relative border-b md:border-b-0 md:border-r border-gray-100 min-h-[250px] md:min-h-0">
+          <div className="absolute top-4 left-4 md:top-10 md:left-10 z-10 flex flex-col gap-2 items-start">
+             <Badge className="bg-red-600 text-white border-0 px-4 md:px-6 py-1.5 md:py-2 text-[10px] md:text-xs font-black uppercase tracking-widest shadow-lg">
               OSAKA AUTHENTIC
             </Badge>
+            {selectedProduct.discount_percentage && (
+               <Badge className="bg-black text-white border-0 px-4 md:px-6 py-1.5 md:py-2 text-[10px] md:text-xs font-black uppercase tracking-widest shadow-lg">
+                 {selectedProduct.discount_percentage}
+               </Badge>
+            )}
           </div>
-          
-          
 
           {selectedProduct.image_url ? (
-
             <img
-
               src={selectedProduct.image_url}
-
               alt={selectedProduct.name}
-
-              className="w-full max-h-[350px] object-contain drop-shadow-xl"
-
+              className="w-full max-h-[200px] md:max-h-[350px] object-contain drop-shadow-xl"
             />
-
           ) : (
-
-            <div className="w-full h-48 flex items-center justify-center bg-gray-100 rounded-lg">
-
-              <span className="text-6xl">📦</span>
-
+            <div className="w-full h-48 flex items-center justify-center bg-gray-50 rounded-2xl border border-gray-100 mb-4">
+              <Package className="w-24 h-24 text-gray-200" strokeWidth={1} />
             </div>
-
           )} 
         </div>
 
-        {/* Right Side: Information (Equal 50%) */}
-        <div className="md:w-1/2 p-12 md:p-16 flex flex-col justify-between bg-white">
-          <div className="space-y-8">
+        {/* Right Side: Information */}
+        <div className="w-full md:w-1/2 p-6 md:p-16 flex flex-col justify-between bg-white">
+          <div className="space-y-6 md:space-y-8">
             {/* Title & Status */}
             <div>
-              <div className="flex items-center gap-2 text-green-600 font-bold text-xs uppercase tracking-[0.3em] mb-4">
-                <CheckCircle2 size={18} strokeWidth={3} />
+              <div className="flex items-center gap-2 text-green-600 font-bold text-[10px] md:text-xs uppercase tracking-[0.3em] mb-3 md:mb-4">
+                <CheckCircle2 size={16} strokeWidth={3} className="md:w-[18px] md:h-[18px]" />
                 Verified Factory Stock
               </div>
-              <h2 className="text-5xl font-black text-gray-900 leading-[1.1] tracking-tight">
+              <h2 className="text-3xl md:text-5xl font-black text-gray-900 leading-[1.1] tracking-tight">
                 {selectedProduct.name}
               </h2>
             </div>
 
             {/* Price & Info Grid */}
-            <div className="grid grid-cols-2 gap-8 border-y border-gray-100 py-8">
+            <div className="grid grid-cols-2 gap-4 md:gap-8 border-y border-gray-100 py-6 md:py-8">
               <div>
-                <p className="text-gray-400 font-bold uppercase text-xs tracking-widest mb-2">Price</p>
-                <div className="text-5xl font-black text-red-600 tracking-tighter">
-                  ৳{selectedProduct.price.toLocaleString()}
+                <p className="text-gray-400 font-bold uppercase text-[10px] md:text-xs tracking-widest mb-1 md:mb-2">Price</p>
+                {selectedProduct.original_price && (
+                  <div className="text-sm md:text-base text-gray-400 font-bold line-through mb-1">
+                    ৳{selectedProduct.price.toLocaleString()}
+                  </div>
+                )}
+                <div className="text-3xl md:text-5xl font-black text-red-600 tracking-tighter">
+                  ৳{(selectedProduct.original_price || selectedProduct.price).toLocaleString()}
                 </div>
               </div>
               <div>
-                <p className="text-gray-400 font-bold uppercase text-xs tracking-widest mb-2">Model Size</p>
-                <p className="text-2xl font-black text-gray-800">{selectedProduct.size || 'N/A'}</p>
+                <p className="text-gray-400 font-bold uppercase text-[10px] md:text-xs tracking-widest mb-1 md:mb-2">Model Size</p>
+                <p className="text-xl md:text-2xl font-black text-gray-800">{selectedProduct.size || 'N/A'}</p>
               </div>
             </div>
 
             {/* Description */}
-            <div className="space-y-4">
-              <p className="text-gray-400 font-bold uppercase text-xs tracking-widest">Specifications</p>
-              <div className="text-lg text-gray-600 leading-relaxed bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
+            <div className="space-y-3 md:space-y-4">
+              <p className="text-gray-400 font-bold uppercase text-[10px] md:text-xs tracking-widest">Specifications</p>
+              <div className="text-base md:text-lg text-gray-600 leading-relaxed bg-gray-50/50 p-4 md:p-6 rounded-2xl border border-gray-100">
                 {selectedProduct.description || "Premium OSAKA technology designed for high performance and energy efficiency."}
               </div>
             </div>
           </div>
 
           {/* Action Footer */}
-          <div className="mt-12">
-            <div className="grid grid-cols-2 gap-5">
-              <button className="bg-[#25D366] hover:bg-[#128C7E] text-white font-black py-6 rounded-2xl shadow-xl shadow-green-100 transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest">
+          <div className="mt-8 md:mt-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
+              <a 
+                href={`https://wa.me/8801886469096?text=${encodeURIComponent(`Hello Osaka Television!\nI would like to order:\n*${selectedProduct.name}*\n\nPrice: ৳${(selectedProduct.original_price || selectedProduct.price).toLocaleString()}\nSize: ${selectedProduct.size || 'N/A'}\n${selectedProduct.image_url ? `\nProduct Image: ${selectedProduct.image_url}` : ''}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#25D366] hover:bg-[#128C7E] text-white font-black py-4 md:py-6 rounded-xl md:rounded-2xl shadow-xl shadow-green-100 transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-sm md:text-base cursor-pointer"
+              >
                 Order via WhatsApp
-              </button>
-              <button className="bg-black hover:bg-gray-800 text-white font-black py-6 rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest">
+              </a>
+              <a 
+                href="tel:+8801886469096"
+                className="bg-black hover:bg-gray-800 text-white font-black py-4 md:py-6 rounded-xl md:rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-sm md:text-base cursor-pointer"
+              >
                 Call Expert
-              </button>
+              </a>
             </div>
-            <div className="flex justify-between mt-8 opacity-40 text-[10px] font-bold uppercase tracking-[0.2em]">
+            <div className="flex justify-between mt-6 md:mt-8 opacity-40 text-[8px] md:text-[10px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em]">
               <span>Free Delivery</span>
               <span>12 Months Warranty</span>
-              <span>Genuine Product</span>
+              <span>Genuine</span>
             </div>
           </div>
         </div>

@@ -42,6 +42,8 @@ interface Product {
   description: string;
   image_url: string | null;
   is_active: boolean;
+  original_price?: number | null;
+  discount_percentage?: string | null;
 }
 
 interface ProductType {
@@ -73,6 +75,8 @@ export default function ProductsPage() {
     image_url: '',
     selectedModel: '',
     selectedType: '',
+    original_price: '' as string | number,
+    discount_percentage: '',
   })
 
   useEffect(() => {
@@ -200,7 +204,7 @@ export default function ProductsPage() {
   }
 
   const openAddDialog = () => {
-    setFormData({ name: '', category: '', size: '', price: 0, description: '', image_url: '', selectedModel: '', selectedType: '' })
+    setFormData({ name: '', category: '', size: '', price: 0, description: '', image_url: '', selectedModel: '', selectedType: '', original_price: '', discount_percentage: '' })
     setImagePreview('')
     setAddDialog(true)
   }
@@ -225,6 +229,8 @@ export default function ProductsPage() {
       image_url: product.image_url || '',
       selectedModel,
       selectedType,
+      original_price: product.original_price || '',
+      discount_percentage: product.discount_percentage || '',
     })
     setImagePreview(product.image_url || '')
     setEditDialog(true)
@@ -232,8 +238,16 @@ export default function ProductsPage() {
 
   const handleAdd = async () => {
     if (!validateForm()) return
-    const { ...dbData } = formData
-    const { error } = await supabase.from('products').insert([{ ...dbData, is_active: true }])
+    const dbData = { 
+      ...formData, 
+      original_price: formData.original_price ? Number(formData.original_price) : null,
+      discount_percentage: formData.discount_percentage || null,
+      is_active: true
+    }
+    delete (dbData as any).selectedModel
+    delete (dbData as any).selectedType
+
+    const { error } = await supabase.from('products').insert([dbData])
     if (!error) {
       toast.success(`${formData.name} added to catalog`)
       setAddDialog(false)
@@ -243,8 +257,15 @@ export default function ProductsPage() {
 
   const handleEdit = async () => {
     if (!selectedProduct || !validateForm()) return
-    const { ...dbData } = formData
-    const { error } = await supabase.from('products').update({ ...dbData }).eq('id', selectedProduct.id)
+    const dbData = { 
+      ...formData, 
+      original_price: formData.original_price ? Number(formData.original_price) : null,
+      discount_percentage: formData.discount_percentage || null
+    }
+    delete (dbData as any).selectedModel
+    delete (dbData as any).selectedType
+
+    const { error } = await supabase.from('products').update(dbData).eq('id', selectedProduct.id)
     if (!error) {
       toast.success("Changes saved successfully")
       setEditDialog(false)
@@ -445,7 +466,7 @@ export default function ProductsPage() {
       </Dialog>
 
    {/* ── Add/Edit Product Dialog ── */}
-<Dialog open={addDialog || editDialog} onOpenChange={(open) => { if (!open) { setAddDialog(false); setEditDialog(false); } }}>
+<Dialog open={addDialog || editDialog} onOpenChange={(open: boolean) => { if (!open) { setAddDialog(false); setEditDialog(false); } }}>
   <DialogContent className="max-w-4xl bg-white p-0 overflow-hidden border-none shadow-2xl flex flex-col max-h-[95vh]">
     
     {/* Header - Fixed */}
@@ -555,21 +576,49 @@ export default function ProductsPage() {
         </div>
 
         {/* Price Input */}
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label className="text-xs font-black text-gray-400 uppercase">Regular / Old Price (BDT) *</Label>
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-gray-400">৳</span>
+              <Input 
+                type="number" 
+                value={formData.price || ''} 
+                onChange={(e) => setFormData({ ...formData, price: parseInt(e.target.value) || 0 })} 
+                className="h-12 pl-8 border-2 border-green-200 focus:border-green-500 font-bold text-lg bg-green-50/30" 
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Original Price */}
         <div className="space-y-2">
-          <Label className="text-xs font-black text-gray-400 uppercase">Pricing (BDT)</Label>
+          <Label className="text-xs font-black text-gray-400 uppercase">New Discounted Price (Optional)</Label>
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-gray-400">৳</span>
             <Input 
               type="number" 
-              value={formData.price || ''} 
-              onChange={(e) => setFormData({ ...formData, price: parseInt(e.target.value) || 0 })} 
-              className="h-12 pl-8 border-2 border-gray-100 font-bold text-lg" 
+              value={formData.original_price || ''} 
+              onChange={(e) => setFormData({ ...formData, original_price: e.target.value })} 
+              className="h-12 pl-8 border-2 border-gray-100 font-bold text-gray-500" 
             />
           </div>
         </div>
 
-        {/* Description - Spans 2 columns on large screens */}
-        <div className="md:col-span-2 space-y-2">
+        {/* Discount Tag */}
+        <div className="space-y-2">
+          <Label className="text-xs font-black text-gray-400 uppercase">Discount Tag / Badge (Optional)</Label>
+          <Input 
+            type="text" 
+            value={formData.discount_percentage || ''} 
+            onChange={(e) => setFormData({ ...formData, discount_percentage: e.target.value })} 
+            placeholder="e.g. 20% OFF or Save ৳5000"
+            className="h-12 border-2 border-gray-100 font-bold" 
+          />
+        </div>
+
+        {/* Description - Spans full width on large screens */}
+        <div className="md:col-span-2 lg:col-span-3 space-y-2 mt-4">
           <Label className="text-xs font-black text-gray-400 uppercase">Features & Specs</Label>
           <Textarea 
             value={formData.description} 

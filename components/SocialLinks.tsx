@@ -1,13 +1,15 @@
+import { Phone } from 'lucide-react'
+
 export default function SocialLinks() {
   return (
-    <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 flex flex-col gap-4">
+    <div className="fixed right-4 bottom-24 md:right-6 md:top-1/2 md:bottom-auto md:-translate-y-1/2 z-50 flex flex-col gap-4">
       
-      {/* WhatsApp */}
+      {/* WhatsApp (Visible on both) */}
       <a
         href="https://wa.me/8801886469096"
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all hover:scale-110"
+        className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-xl shadow-green-200/50 transition-all hover:scale-110 flex items-center justify-center border-2 border-white"
         title="Chat on WhatsApp"
         aria-label="Chat on WhatsApp"
       >
@@ -16,12 +18,12 @@ export default function SocialLinks() {
         </svg>
       </a>
 
-      {/* Facebook */}
+      {/* Facebook (Visible only on Desktop) */}
       <a
         href="https://www.facebook.com/oscarintosaka/"
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all hover:scale-110"
+        className="hidden md:flex bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all hover:scale-110 items-center justify-center border-2 border-white"
         title="Follow us on Facebook"
         aria-label="Follow us on Facebook"
       >
@@ -30,7 +32,15 @@ export default function SocialLinks() {
         </svg>
       </a>
 
-    
+      {/* Phone Call (Visible only on Mobile) */}
+      <a
+        href="tel:+8801886469096"
+        className="md:hidden flex bg-black hover:bg-gray-800 text-white p-4 rounded-full shadow-xl shadow-gray-200/50 transition-all active:scale-95 items-center justify-center border-2 border-white"
+        title="Call Us"
+        aria-label="Call Us"
+      >
+        <Phone className="w-6 h-6 fill-current" />
+      </a>
 
     </div>
   )
