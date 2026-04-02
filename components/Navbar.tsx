@@ -6,6 +6,27 @@ import { Home, Info, LayoutGrid, Image as ImageIcon, PhoneCall } from 'lucide-re
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState('home')
 
+  const scrollToProducts = () => {
+    let savedCategory = 'Television'
+    try {
+      savedCategory = localStorage.getItem('mainCategory') || 'Television'
+    } catch {
+      // Ignore storage errors.
+    }
+
+    const targetId =
+      savedCategory === 'Television'
+        ? 'tv-products'
+        : savedCategory === 'Fan'
+          ? 'fan-products'
+          : savedCategory === 'Cooker'
+            ? 'cooker-products'
+            : 'tv-products'
+
+    const el = document.getElementById(targetId)
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['home', 'about', 'category', 'gallery', 'contact']
@@ -53,7 +74,15 @@ export default function Navbar() {
                 <a 
                   key={item.id} 
                   href={`#${item.id}`} 
-                  onClick={() => setActiveSection(item.id)}
+                  onClick={(e) => {
+                    if (item.id === 'category') {
+                      e.preventDefault()
+                      setActiveSection(item.id)
+                      scrollToProducts()
+                      return
+                    }
+                    setActiveSection(item.id)
+                  }}
                   className={`font-medium transition-colors ${
                     activeSection === item.id ? 'text-red-600' : 'text-white hover:text-red-400'
                   }`}
@@ -78,7 +107,15 @@ export default function Navbar() {
             <a 
               key={item.id}
               href={`#${item.id}`} 
-              onClick={() => setActiveSection(item.id)}
+              onClick={(e) => {
+                if (item.id === 'category') {
+                  e.preventDefault()
+                  setActiveSection(item.id)
+                  scrollToProducts()
+                  return
+                }
+                setActiveSection(item.id)
+              }}
               className={`flex flex-col flex-1 items-center p-2 rounded-xl transition-all ${
                 isActive 
                   ? 'text-red-600 bg-red-50 hover:bg-red-100 active:bg-red-200 shadow-sm' 

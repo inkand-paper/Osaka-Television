@@ -54,6 +54,25 @@ export default function Home() {
   const [selectedModel, setSelectedModel] = useState<string>('All')
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
 
+  const scrollToProductsForCategory = (category: string) => {
+    const targetId =
+      category === 'Television'
+        ? 'tv-products'
+        : category === 'Fan'
+          ? 'fan-products'
+          : category === 'Cooker'
+            ? 'cooker-products'
+            : null
+
+    if (!targetId) return
+
+    // Wait for the conditional section to render, then smoothly scroll to it.
+    window.setTimeout(() => {
+      const el = document.getElementById(targetId)
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 100)
+  }
+
   const handleMainCategoryClick = (category: string) => {
     setSelectedMainCategory(category)
     if (category === 'Television') {
@@ -64,12 +83,21 @@ export default function Home() {
       setSelectedSize('')
     }
     setSelectedModel('All')
+    try {
+      localStorage.setItem('mainCategory', category)
+    } catch {
+      // Ignore storage errors (private mode, etc.)
+    }
+    // For Cooker there is no size/model step, so jump straight to products.
+    // For Television/Fan, let the user pick the sub-category first.
+    if (category === 'Cooker') scrollToProductsForCategory(category)
   }
 
   // When size changes, reset model selection to All
   const handleSizeClick = (size: string) => {
     setSelectedSize(size)
     setSelectedModel('All')
+    scrollToProductsForCategory(selectedMainCategory)
   }
 
   const fetchProducts = async () => {
@@ -90,6 +118,32 @@ export default function Home() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchProducts()
+  }, [])
+
+  useEffect(() => {
+    // Restore the last selected category so the navbar can scroll to the right product section.
+    try {
+      const saved = localStorage.getItem('mainCategory')
+      if (!saved) return
+
+      if (saved === 'Television') {
+        setSelectedMainCategory(saved)
+        setSelectedSize('32 inch')
+        setSelectedModel('All')
+      } else if (saved === 'Fan') {
+        setSelectedMainCategory(saved)
+        setSelectedSize('16 inch')
+        setSelectedModel('All')
+      } else if (saved === 'Cooker' || saved === 'More') {
+        setSelectedMainCategory(saved)
+        setSelectedSize('')
+        setSelectedModel('All')
+      }
+    } catch {
+      // Ignore storage errors.
+    }
+    // We only want to run this once on first client load.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Get the latest 5 products for the "Newly Arrived" section using the `id` field if `created_at` isn't available
@@ -194,12 +248,12 @@ export default function Home() {
             ) : (
               <div className="flex flex-col items-center">
                 {/* Main Category Selection Tabs */}
-                <div className="flex flex-wrap justify-center gap-4 mb-12">
+                <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-12">
                   {MAIN_CATEGORIES.map(category => (
                     <button
                       key={category}
                       onClick={() => handleMainCategoryClick(category)}
-                      className={`px-10 py-4 rounded-full font-bold text-xl transition-all shadow-sm ${selectedMainCategory === category
+                      className={`px-4 py-2 sm:px-7 sm:py-3 md:px-10 md:py-4 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-xl transition-all shadow-sm ${selectedMainCategory === category
                           ? 'bg-red-600 text-white shadow-lg transform scale-105'
                           : 'bg-white text-gray-800 hover:bg-red-50 hover:text-red-600 border-2 border-gray-200'
                         }`}
@@ -213,12 +267,12 @@ export default function Home() {
                 {selectedMainCategory === 'Television' && (
                   <div className="w-full flex flex-col items-center">
                     {/* TV Size Selection Tabs */}
-                    <div className="flex flex-wrap justify-center gap-4 mb-8">
+                    <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8">
                       {TV_SIZES.map(size => (
                         <button
                           key={size}
                           onClick={() => handleSizeClick(size)}
-                          className={`px-8 py-3 rounded-full font-bold text-lg transition-all shadow-sm ${selectedSize === size
+                          className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-sm ${selectedSize === size
                               ? 'bg-gray-800 text-white shadow-md transform scale-105'
                               : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                             }`}
@@ -230,10 +284,13 @@ export default function Home() {
 
                     {/* TV Model Selection Tabs */}
                     {TV_MODELS[selectedSize] && TV_MODELS[selectedSize].length > 0 && (
-                      <div className="flex flex-wrap justify-center gap-3 mb-16 bg-gray-100 p-2 rounded-2xl">
+                      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-16 bg-gray-100 p-1.5 sm:p-2 rounded-2xl">
                         <button
-                          onClick={() => setSelectedModel('All')}
-                          className={`px-6 py-2 rounded-xl font-medium transition-colors ${selectedModel === 'All'
+                          onClick={() => {
+                            setSelectedModel('All')
+                            scrollToProductsForCategory(selectedMainCategory)
+                          }}
+                          className={`px-3 py-2 sm:px-5 whitespace-nowrap rounded-xl font-medium text-xs sm:text-sm md:text-base transition-colors ${selectedModel === 'All'
                               ? 'bg-gray-800 text-white shadow-md'
                               : 'bg-transparent text-gray-600 hover:bg-gray-200'
                             }`}
@@ -243,8 +300,11 @@ export default function Home() {
                         {TV_MODELS[selectedSize].map(model => (
                           <button
                             key={model}
-                            onClick={() => setSelectedModel(model)}
-                            className={`px-6 py-2 rounded-xl font-medium transition-colors ${selectedModel === model
+                            onClick={() => {
+                              setSelectedModel(model)
+                              scrollToProductsForCategory(selectedMainCategory)
+                            }}
+                            className={`px-3 py-2 sm:px-5 whitespace-nowrap rounded-xl font-medium text-xs sm:text-sm md:text-base transition-colors ${selectedModel === model
                                 ? 'bg-gray-800 text-white shadow-md'
                                 : 'bg-transparent text-gray-600 hover:bg-gray-200'
                               }`}
@@ -256,7 +316,7 @@ export default function Home() {
                     )}
 
                     {/* TV Product Grid */}
-                    <div className="w-full">
+                    <div id="tv-products" className="w-full scroll-mt-24">
                       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
                         {products
                           .filter(p => p.category === selectedSize)
@@ -295,12 +355,12 @@ export default function Home() {
                 {selectedMainCategory === 'Fan' && (
                   <div className="w-full flex flex-col items-center">
                     {/* Fan Size Selection Tabs */}
-                    <div className="flex flex-wrap justify-center gap-4 mb-8">
+                    <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8">
                       {FAN_SIZES.map(size => (
                         <button
                           key={size}
                           onClick={() => handleSizeClick(size)}
-                          className={`px-8 py-3 rounded-full font-bold text-lg transition-all shadow-sm ${selectedSize === size
+                          className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-sm ${selectedSize === size
                               ? 'bg-gray-800 text-white shadow-md transform scale-105'
                               : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                             }`}
@@ -312,10 +372,13 @@ export default function Home() {
 
                     {/* Fan Model Selection Tabs */}
                     {FAN_MODELS[selectedSize] && FAN_MODELS[selectedSize].length > 0 && (
-                      <div className="flex flex-wrap justify-center gap-3 mb-16 bg-gray-100 p-2 rounded-2xl">
+                      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-16 bg-gray-100 p-1.5 sm:p-2 rounded-2xl">
                         <button
-                          onClick={() => setSelectedModel('All')}
-                          className={`px-6 py-2 rounded-xl font-medium transition-colors ${selectedModel === 'All'
+                          onClick={() => {
+                            setSelectedModel('All')
+                            scrollToProductsForCategory(selectedMainCategory)
+                          }}
+                          className={`px-3 py-2 sm:px-5 whitespace-nowrap rounded-xl font-medium text-xs sm:text-sm md:text-base transition-colors ${selectedModel === 'All'
                               ? 'bg-gray-800 text-white shadow-md'
                               : 'bg-transparent text-gray-600 hover:bg-gray-200'
                             }`}
@@ -325,8 +388,11 @@ export default function Home() {
                         {FAN_MODELS[selectedSize].map(model => (
                           <button
                             key={model}
-                            onClick={() => setSelectedModel(model)}
-                            className={`px-6 py-2 rounded-xl font-medium transition-colors ${selectedModel === model
+                            onClick={() => {
+                              setSelectedModel(model)
+                              scrollToProductsForCategory(selectedMainCategory)
+                            }}
+                            className={`px-3 py-2 sm:px-5 whitespace-nowrap rounded-xl font-medium text-xs sm:text-sm md:text-base transition-colors ${selectedModel === model
                                 ? 'bg-gray-800 text-white shadow-md'
                                 : 'bg-transparent text-gray-600 hover:bg-gray-200'
                               }`}
@@ -338,7 +404,7 @@ export default function Home() {
                     )}
 
                     {/* Fan Product Grid */}
-                    <div className="w-full">
+                    <div id="fan-products" className="w-full scroll-mt-24">
                       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
                         {products
                           .filter(p => p.category === selectedSize)
@@ -376,7 +442,7 @@ export default function Home() {
                 {/* COOKER SECTION */}
                 {selectedMainCategory === 'Cooker' && (
                   <div className="w-full flex flex-col items-center">
-                    <div className="w-full mt-4">
+                    <div id="cooker-products" className="w-full mt-4 scroll-mt-24">
                       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
                         {products
                           .filter(p => p.category === 'Cooker')
