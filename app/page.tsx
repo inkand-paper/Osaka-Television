@@ -301,47 +301,52 @@ export default function Home() {
                     </div>
 
                     {/* TV Model Selection Tabs */}
-                    {TV_MODELS[selectedSize] && TV_MODELS[selectedSize].length > 0 && (
-                      <div
-                        id="tv-series-picker"
-                        className="w-full max-w-3xl bg-gray-50 border border-gray-100 rounded-2xl shadow-sm p-4 sm:p-5 mb-10 sm:mb-16 scroll-mt-24"
-                      >
-                        <div className="mb-4">
-                          <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
-                            Pick TV Series
-                          </p>
-                        </div>
-                        <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
-                        <button
-                          onClick={() => {
-                            setSelectedModel('All')
-                            scrollToProductsForCategory(selectedMainCategory)
-                          }}
-                          className={`px-3 py-2 sm:px-5 whitespace-nowrap rounded-xl font-medium text-xs sm:text-sm md:text-base transition-colors ${selectedModel === 'All'
-                              ? 'bg-gray-800 text-white shadow-md'
-                              : 'bg-transparent text-gray-600 hover:bg-gray-200'
-                            }`}
-                        >
-                          All models
-                        </button>
-                        {TV_MODELS[selectedSize].map(model => (
-                          <button
-                            key={model}
-                            onClick={() => {
-                              setSelectedModel(model)
-                              scrollToProductsForCategory(selectedMainCategory)
-                            }}
-                            className={`px-3 py-2 sm:px-5 whitespace-nowrap rounded-xl font-medium text-xs sm:text-sm md:text-base transition-colors ${selectedModel === model
-                                ? 'bg-gray-800 text-white shadow-md'
-                                : 'bg-transparent text-gray-600 hover:bg-gray-200'
-                              }`}
-                          >
-                            {model}
-                          </button>
-                        ))}
-                        </div>
-                      </div>
-                    )}
+{TV_MODELS[selectedSize] && TV_MODELS[selectedSize].length > 0 && (
+  <div
+    id="tv-series-picker"
+    className="w-full max-w-3xl bg-white border border-gray-100 rounded-2xl shadow-sm p-4 sm:p-5 mb-10 sm:mb-16 scroll-mt-24"
+  >
+    <div className="mb-4">
+      <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
+        Pick TV Series
+      </p>
+    </div>
+    <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+      {/* "All Models" Button - Content & Logic preserved */}
+      <button
+        onClick={() => {
+          setSelectedModel('All')
+          scrollToProductsForCategory(selectedMainCategory)
+        }}
+        className={`px-4 py-2 sm:px-7 sm:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base transition-all shadow-sm ${
+          selectedModel === 'All'
+            ? 'bg-gray-800 text-white shadow-md transform scale-105'
+            : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+        }`}
+      >
+        All models
+      </button>
+
+      {/* Map through Models - Content & Logic preserved */}
+      {TV_MODELS[selectedSize].map(model => (
+        <button
+          key={model}
+          onClick={() => {
+            setSelectedModel(model)
+            scrollToProductsForCategory(selectedMainCategory)
+          }}
+          className={`px-4 py-2 sm:px-7 sm:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base transition-all shadow-sm ${
+            selectedModel === model
+              ? 'bg-gray-800 text-white shadow-md transform scale-105'
+              : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+          }`}
+        >
+          {model}
+        </button>
+      ))}
+    </div>
+  </div>
+)}
 
                     {/* TV Product Grid */}
                     <div id="tv-products" className="w-full scroll-mt-24">
