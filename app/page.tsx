@@ -54,6 +54,14 @@ export default function Home() {
   const [selectedModel, setSelectedModel] = useState<string>('All')
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
 
+  const scrollToId = (id: string) => {
+    // Wait for React to render conditional sections before scrolling.
+    window.setTimeout(() => {
+      const el = document.getElementById(id)
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 120)
+  }
+
   const scrollToProductsForCategory = (category: string) => {
     const targetId =
       category === 'Television'
@@ -66,11 +74,7 @@ export default function Home() {
 
     if (!targetId) return
 
-    // Wait for the conditional section to render, then smoothly scroll to it.
-    window.setTimeout(() => {
-      const el = document.getElementById(targetId)
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, 100)
+    scrollToId(targetId)
   }
 
   const handleMainCategoryClick = (category: string) => {
@@ -88,15 +92,20 @@ export default function Home() {
     } catch {
       // Ignore storage errors (private mode, etc.)
     }
-    // For Cooker there is no size/model step, so jump straight to products.
-    // For Television/Fan, let the user pick the sub-category first.
-    if (category === 'Cooker') scrollToProductsForCategory(category)
+    // Auto scroll to the first sub-chooser (TV size / Fan size).
+    if (category === 'Television') scrollToId('tv-size-picker')
+    else if (category === 'Fan') scrollToId('fan-size-picker')
+    // Cooker has no sub-steps.
+    else if (category === 'Cooker') scrollToProductsForCategory(category)
   }
 
   // When size changes, reset model selection to All
   const handleSizeClick = (size: string) => {
     setSelectedSize(size)
     setSelectedModel('All')
+    // Auto scroll to the second sub-chooser (TV series / Fan model).
+    if (selectedMainCategory === 'Television') scrollToId('tv-series-picker')
+    else if (selectedMainCategory === 'Fan') scrollToId('fan-series-picker')
   }
 
   const fetchProducts = async () => {
@@ -170,7 +179,7 @@ export default function Home() {
         </section>
 
         {/* ABOUT SECTION */}
-        <section id="about" className="py-20 bg-white border-b">
+        <section id="about" className="py-14 sm:py-20 bg-white border-b">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
               About <span className="text-red-600">OSAKA Group</span>
@@ -201,7 +210,7 @@ export default function Home() {
 
         {/* NEWLY ARRIVED SECTION */}
         {!loading && products.length > 0 && (
-          <section id="newly-arrived" className="py-20 bg-gradient-to-br from-red-50 to-white">
+        <section id="newly-arrived" className="py-14 sm:py-20 bg-gradient-to-br from-red-50 to-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
                 <span className="bg-red-100 text-red-700 font-bold px-4 py-2 rounded-full uppercase tracking-widest text-sm mb-4 inline-block">Flash Release</span>
@@ -233,21 +242,21 @@ export default function Home() {
         )}
 
         {/* CATEGORY SECTION */}
-        <section id="category" className="py-20 bg-gray-50">
+        <section id="category" className="py-14 sm:py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
               Our <span className="text-red-600">Categories</span>
             </h2>
 
             {loading ? (
-              <div className="text-center py-20">
+              <div className="text-center py-14 sm:py-20">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
                 <p className="text-xl text-gray-600">Loading products...</p>
               </div>
             ) : (
               <div className="flex flex-col items-center">
                 {/* Main Category Selection Tabs */}
-                <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-12">
+                <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 sm:mb-12">
                   {MAIN_CATEGORIES.map(category => (
                     <button
                       key={category}
@@ -266,7 +275,10 @@ export default function Home() {
                 {selectedMainCategory === 'Television' && (
                   <div className="w-full flex flex-col items-center">
                     {/* TV Size Selection Tabs */}
-                    <div className="w-full max-w-3xl bg-white border border-gray-100 rounded-2xl shadow-sm p-5 mb-8">
+                    <div
+                      id="tv-size-picker"
+                      className="w-full max-w-3xl bg-white border border-gray-100 rounded-2xl shadow-sm p-4 sm:p-5 mb-6 sm:mb-8 scroll-mt-24"
+                    >
                       <div className="mb-4">
                         <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
                           Pick TV Size
@@ -290,7 +302,10 @@ export default function Home() {
 
                     {/* TV Model Selection Tabs */}
                     {TV_MODELS[selectedSize] && TV_MODELS[selectedSize].length > 0 && (
-                      <div className="w-full max-w-3xl bg-gray-50 border border-gray-100 rounded-2xl shadow-sm p-5 mb-16">
+                      <div
+                        id="tv-series-picker"
+                        className="w-full max-w-3xl bg-gray-50 border border-gray-100 rounded-2xl shadow-sm p-4 sm:p-5 mb-10 sm:mb-16 scroll-mt-24"
+                      >
                         <div className="mb-4">
                           <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
                             Pick TV Series
@@ -348,7 +363,7 @@ export default function Home() {
                       </div>
 
                       {products.filter(p => p.category === selectedSize && (selectedModel === 'All' || p.name.includes(selectedModel))).length === 0 && (
-                        <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm w-full">
+                        <div className="text-center py-14 sm:py-20 bg-white rounded-2xl border border-gray-100 shadow-sm w-full">
                           <Tv className="w-16 h-16 mx-auto text-gray-200 mb-6" strokeWidth={1} />
                           <h3 className="text-2xl font-bold text-gray-800 mb-2">No TVs Found</h3>
                           <p className="text-gray-500">We couldn&apos;t find any active TVs in our current inventory matching your selection.</p>
@@ -368,7 +383,10 @@ export default function Home() {
                 {selectedMainCategory === 'Fan' && (
                   <div className="w-full flex flex-col items-center">
                     {/* Fan Size Selection Tabs */}
-                    <div className="w-full max-w-3xl bg-white border border-gray-100 rounded-2xl shadow-sm p-5 mb-8">
+                    <div
+                      id="fan-size-picker"
+                      className="w-full max-w-3xl bg-white border border-gray-100 rounded-2xl shadow-sm p-4 sm:p-5 mb-6 sm:mb-8 scroll-mt-24"
+                    >
                       <div className="mb-4">
                         <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
                           Pick Fan Size
@@ -392,7 +410,10 @@ export default function Home() {
 
                     {/* Fan Model Selection Tabs */}
                     {FAN_MODELS[selectedSize] && FAN_MODELS[selectedSize].length > 0 && (
-                      <div className="w-full max-w-3xl bg-gray-50 border border-gray-100 rounded-2xl shadow-sm p-5 mb-16">
+                      <div
+                        id="fan-series-picker"
+                        className="w-full max-w-3xl bg-gray-50 border border-gray-100 rounded-2xl shadow-sm p-4 sm:p-5 mb-10 sm:mb-16 scroll-mt-24"
+                      >
                         <div className="mb-4">
                           <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
                             Pick Fan Model
@@ -450,7 +471,7 @@ export default function Home() {
                       </div>
 
                       {products.filter(p => p.category === selectedSize && (selectedModel === 'All' || p.name.includes(selectedModel))).length === 0 && (
-                        <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm w-full">
+                        <div className="text-center py-14 sm:py-20 bg-white rounded-2xl border border-gray-100 shadow-sm w-full">
                           <Wind className="w-16 h-16 mx-auto text-gray-200 mb-6" strokeWidth={1} />
                           <h3 className="text-2xl font-bold text-gray-800 mb-2">No Fans Found</h3>
                           <p className="text-gray-500">We couldn&apos;t find any active fans in our current inventory matching your selection.</p>
@@ -487,7 +508,7 @@ export default function Home() {
                       </div>
 
                       {products.filter(p => p.category === 'Cooker').length === 0 && (
-                        <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm w-full">
+                        <div className="text-center py-14 sm:py-20 bg-white rounded-2xl border border-gray-100 shadow-sm w-full">
                           <ChefHat className="w-16 h-16 mx-auto text-gray-200 mb-6" strokeWidth={1} />
                           <h3 className="text-2xl font-bold text-gray-800 mb-2">No Rice Cookers Found</h3>
                           <p className="text-gray-500">We couldn&apos;t find any active rice cookers in our current inventory.</p>
@@ -513,7 +534,7 @@ export default function Home() {
         </section>
 
         {/* GALLERY SECTION */}
-        <section id="gallery" className="py-20 bg-white">
+        <section id="gallery" className="py-14 sm:py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
               Our <span className="text-red-600">Gallery</span>
@@ -531,7 +552,7 @@ export default function Home() {
         </section>
 
         {/* CONTACT SECTION */}
-        <section id="contact" className="py-20 bg-gray-100">
+        <section id="contact" className="py-14 sm:py-20 bg-gray-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
               Contact <span className="text-red-600">Us</span>
