@@ -97,7 +97,6 @@ export default function Home() {
   const handleSizeClick = (size: string) => {
     setSelectedSize(size)
     setSelectedModel('All')
-    scrollToProductsForCategory(selectedMainCategory)
   }
 
   const fetchProducts = async () => {
@@ -127,6 +126,7 @@ export default function Home() {
       if (!saved) return
 
       if (saved === 'Television') {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSelectedMainCategory(saved)
         setSelectedSize('32 inch')
         setSelectedModel('All')
@@ -143,7 +143,6 @@ export default function Home() {
       // Ignore storage errors.
     }
     // We only want to run this once on first client load.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Get the latest 5 products for the "Newly Arrived" section using the `id` field if `created_at` isn't available
@@ -174,14 +173,14 @@ export default function Home() {
         <section id="about" className="py-20 bg-white border-b">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
-              About <span className="text-red-600">OSAKA Television</span>
+              About <span className="text-red-600">OSAKA Group</span>
             </h2>
 
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <h3 className="text-3xl font-bold mb-6">Our Story</h3>
                 <p className="text-gray-700 text-lg mb-4">
-                  OSAKA Television has been at the forefront of bringing premium television
+                  OSAKA Group has been at the forefront of bringing premium
                   solutions to homes and businesses across Bangladesh.
                 </p>
                 <p className="text-gray-700 text-lg">
@@ -267,24 +266,37 @@ export default function Home() {
                 {selectedMainCategory === 'Television' && (
                   <div className="w-full flex flex-col items-center">
                     {/* TV Size Selection Tabs */}
-                    <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8">
-                      {TV_SIZES.map(size => (
-                        <button
-                          key={size}
-                          onClick={() => handleSizeClick(size)}
-                          className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-sm ${selectedSize === size
-                              ? 'bg-gray-800 text-white shadow-md transform scale-105'
-                              : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-                            }`}
-                        >
-                          {size}
-                        </button>
-                      ))}
+                    <div className="w-full max-w-3xl bg-white border border-gray-100 rounded-2xl shadow-sm p-5 mb-8">
+                      <div className="mb-4">
+                        <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
+                          Pick TV Size
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+                        {TV_SIZES.map(size => (
+                          <button
+                            key={size}
+                            onClick={() => handleSizeClick(size)}
+                            className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-sm ${selectedSize === size
+                                ? 'bg-gray-800 text-white shadow-md transform scale-105'
+                                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                              }`}
+                          >
+                            {size}
+                          </button>
+                        ))}
+                      </div>
                     </div>
 
                     {/* TV Model Selection Tabs */}
                     {TV_MODELS[selectedSize] && TV_MODELS[selectedSize].length > 0 && (
-                      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-16 bg-gray-100 p-1.5 sm:p-2 rounded-2xl">
+                      <div className="w-full max-w-3xl bg-gray-50 border border-gray-100 rounded-2xl shadow-sm p-5 mb-16">
+                        <div className="mb-4">
+                          <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
+                            Pick TV Series
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
                         <button
                           onClick={() => {
                             setSelectedModel('All')
@@ -312,6 +324,7 @@ export default function Home() {
                             {model}
                           </button>
                         ))}
+                        </div>
                       </div>
                     )}
 
@@ -355,24 +368,37 @@ export default function Home() {
                 {selectedMainCategory === 'Fan' && (
                   <div className="w-full flex flex-col items-center">
                     {/* Fan Size Selection Tabs */}
-                    <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8">
-                      {FAN_SIZES.map(size => (
-                        <button
-                          key={size}
-                          onClick={() => handleSizeClick(size)}
-                          className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-sm ${selectedSize === size
-                              ? 'bg-gray-800 text-white shadow-md transform scale-105'
-                              : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-                            }`}
-                        >
-                          {size}
-                        </button>
-                      ))}
+                    <div className="w-full max-w-3xl bg-white border border-gray-100 rounded-2xl shadow-sm p-5 mb-8">
+                      <div className="mb-4">
+                        <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
+                          Pick Fan Size
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+                        {FAN_SIZES.map(size => (
+                          <button
+                            key={size}
+                            onClick={() => handleSizeClick(size)}
+                            className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-sm ${selectedSize === size
+                                ? 'bg-gray-800 text-white shadow-md transform scale-105'
+                                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                              }`}
+                          >
+                            {size}
+                          </button>
+                        ))}
+                      </div>
                     </div>
 
                     {/* Fan Model Selection Tabs */}
                     {FAN_MODELS[selectedSize] && FAN_MODELS[selectedSize].length > 0 && (
-                      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-16 bg-gray-100 p-1.5 sm:p-2 rounded-2xl">
+                      <div className="w-full max-w-3xl bg-gray-50 border border-gray-100 rounded-2xl shadow-sm p-5 mb-16">
+                        <div className="mb-4">
+                          <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
+                            Pick Fan Model
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
                         <button
                           onClick={() => {
                             setSelectedModel('All')
@@ -400,6 +426,7 @@ export default function Home() {
                             {model}
                           </button>
                         ))}
+                        </div>
                       </div>
                     )}
 

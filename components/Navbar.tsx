@@ -65,7 +65,7 @@ export default function Navbar() {
           <div className="flex justify-between items-center h-16">
             <div className="flex-shrink-0">
               <a href="#home" className="text-2xl font-black tracking-tight text-white hover:text-red-500 transition-colors">
-                OSAKA <span className="text-red-600">Television</span>
+                OSAKA <span className="text-red-600">Group</span>
               </a>
             </div>
 
