@@ -69,18 +69,7 @@ export default function DashboardPage() {
           </div>
         </Card>
 
-        <Card className="p-8 border-l-4 border-yellow-600 bg-white shadow-lg hover:shadow-xl transition">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600 mb-2 uppercase tracking-wide">Messages</p>
-              <p className="text-5xl font-bold text-yellow-600">0</p>
-              <p className="text-xs text-gray-500 mt-2">Contact inquiries</p>
-            </div>
-            <div className="bg-yellow-100 p-6 rounded-full">
-              <span className="text-5xl">💬</span>
-            </div>
-          </div>
-        </Card>
+
       </div>
 
       {/* Quick Actions */}
@@ -113,18 +102,7 @@ export default function DashboardPage() {
             </Card>
           </Link>
 
-          <Link href="/admin/dashboard/messages">
-            <Card className="p-8 hover:shadow-2xl transition-all cursor-pointer border-2 border-transparent hover:border-red-600 bg-gradient-to-br from-white to-yellow-50 group">
-              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">💬</div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-800 group-hover:text-red-600 transition">
-                View Messages
-              </h3>
-              <p className="text-gray-600">Check customer inquiries and feedback</p>
-              <div className="mt-4 text-red-600 font-semibold group-hover:underline">
-                Go to Messages →
-              </div>
-            </Card>
-          </Link>
+
         </div>
       </div>
 

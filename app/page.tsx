@@ -13,7 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle2, Package, Tv, Wind, ChefHat, Sparkles, Mail, Phone } from "lucide-react"
+import { CheckCircle2, Package, Tv, Wind, ChefHat, Sparkles, Mail, Phone, ImageIcon } from "lucide-react"
 
 interface Product {
   id: string
@@ -27,6 +27,13 @@ interface Product {
   original_price?: number | null
   discount_percentage?: string | null
   created_at?: string
+}
+
+interface GalleryItem {
+  id: string
+  image_url: string
+  caption: string
+  display_order: number
 }
 
 const MAIN_CATEGORIES = ['Television', 'Fan', 'Cooker', 'More'];
@@ -48,6 +55,7 @@ const FAN_MODELS: Record<string, string[]> = {
 }
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([])
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedMainCategory, setSelectedMainCategory] = useState<string>('Television')
   const [selectedSize, setSelectedSize] = useState<string>('32 inch')
@@ -123,9 +131,23 @@ export default function Home() {
     setLoading(false)
   }
 
+  const fetchGallery = async () => {
+    const { data, error } = await supabase
+      .from('gallery')
+      .select('*')
+      .eq('is_active', true)
+      .order('display_order', { ascending: true })
+
+    if (error) {
+      console.error('Error fetching gallery:', error)
+    } else {
+      setGalleryItems(data || [])
+    }
+  }
+
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchProducts()
+    fetchGallery()
   }, [])
 
   useEffect(() => {
@@ -544,15 +566,33 @@ export default function Home() {
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
               Our <span className="text-red-600">Gallery</span>
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-                <div key={item} className="bg-gray-200 h-64 rounded-lg flex items-center justify-center hover:shadow-xl transition group overflow-hidden">
-                  <div className="text-gray-400 group-hover:scale-110 transition-transform duration-500">
-                    Photo {item}
+            
+            {galleryItems.length > 0 ? (
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {galleryItems.map((item) => (
+                  <div key={item.id} className="relative group overflow-hidden rounded-2xl aspect-square shadow-md border-2 border-transparent hover:border-red-500 transition-all duration-300">
+                    <img 
+                      src={item.image_url} 
+                      alt={item.caption || "Gallery"} 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    {item.caption && (
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <p className="text-white font-bold text-sm line-clamp-2">{item.caption}</p>
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+                  <div key={item} className="bg-gray-50 h-48 md:h-64 rounded-2xl flex items-center justify-center hover:shadow-xl transition group overflow-hidden border border-gray-100 border-dashed">
+                    <ImageIcon className="w-10 h-10 text-gray-200 group-hover:scale-110 transition-transform" />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
@@ -572,7 +612,7 @@ export default function Home() {
                     </div>
                     <div>
                       <h4 className="font-bold text-gray-900">Email</h4>
-                      <p className="text-gray-600">info@osakatv.com</p>
+                      <p className="text-gray-600">oscar_elec722@yahoo.com</p>
                     </div>
                   </div>
                   <div className="flex items-start">
@@ -581,131 +621,172 @@ export default function Home() {
                     </div>
                     <div>
                       <h4 className="font-bold text-gray-900">Phone</h4>
-                      <p className="text-gray-600">+880 1XXX-XXXXXX</p>
+                      <p className="text-gray-600">01886-469096</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-                <form className="space-y-4">
-                  <input type="text" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none" placeholder="Your Name" />
-                  <input type="email" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none" placeholder="Email Address" />
-                  <textarea className="w-full px-4 py-3 border border-gray-200 rounded-lg h-32 focus:ring-2 focus:ring-red-500 focus:outline-none" placeholder="Write your message here..."></textarea>
-                  <button className="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-4 rounded-lg font-bold transition-colors shadow-md transform active:scale-95">
-                    Send Message
-                  </button>
-                </form>
+              <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 flex flex-col justify-center">
+                <div className="mb-8">
+                  <h3 className="text-3xl font-black text-gray-900 mb-2">Visit Our Showroom</h3>
+                  <p className="text-gray-500 font-medium font-mono text-sm uppercase tracking-widest">Official OSAKA Point</p>
+                </div>
+                
+                <div className="space-y-8">
+                  <div className="flex items-start">
+                    <div className="bg-red-50 p-4 rounded-2xl mr-6">
+                      <Package className="w-6 h-6 text-red-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 text-lg">Main Showroom</h4>
+                      <p className="text-gray-600 leading-relaxed mt-1">
+                        Kaptan Bazar Complex -Building 2, Shop no: 106 and 52, (first floor- ২য় তলা),<br />
+                        Nowabpur road, Dhaka.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start">
+                    <div className="bg-red-50 p-4 rounded-2xl mr-6">
+                      <Phone className="w-6 h-6 text-red-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 text-lg">Sales Support</h4>
+                      <p className="text-gray-600 mt-1">01886-469096</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start">
+                    <div className="bg-red-50 p-4 rounded-2xl mr-6">
+                      <Sparkles className="w-6 h-6 text-red-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 text-lg">Business Hours</h4>
+                      <div className="grid grid-cols-2 gap-x-8 gap-y-1 mt-2 text-sm text-gray-600">
+                        <span className="font-bold">Sat - Thu:</span>
+                        <span>10:00 AM - 8:00 PM</span>
+                        <span className="font-bold">Friday:</span>
+                        <span className="text-red-500 font-bold uppercase tracking-tighter">Day Off / Showroom Closed</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-10 pt-8 border-t border-gray-100">
+                   <p className="text-xs text-gray-400 font-bold uppercase tracking-[0.3em] text-center">
+                     Reliable • Genuine • Verified
+                   </p>
+                </div>
               </div>
             </div>
           </div>
         </section>
       </main>
 
-   {/* PRODUCT DETAILS MODAL */}
-<Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
-  <DialogContent className="max-w-[90vw] md:max-w-[70vw] w-full p-0 overflow-hidden border-none bg-white rounded-3xl shadow-2xl">
-    <DialogTitle className="sr-only">Product Details</DialogTitle>
-    {selectedProduct && (
-      <div className="flex flex-col md:flex-row max-h-[85vh] md:min-h-[60vh] overflow-y-auto">
-        
-        {/* Left Side: Large Product Display */}
-        <div className="w-full md:w-1/2 bg-[#fdfdfd] flex items-center justify-center p-6 md:p-12 relative border-b md:border-b-0 md:border-r border-gray-100 min-h-[250px] md:min-h-0">
-          <div className="absolute top-4 left-4 md:top-10 md:left-10 z-10 flex flex-col gap-2 items-start">
-             <Badge className="bg-red-600 text-white border-0 px-4 md:px-6 py-1.5 md:py-2 text-[10px] md:text-xs font-black uppercase tracking-widest shadow-lg">
-              OSAKA AUTHENTIC
-            </Badge>
-            {selectedProduct.discount_percentage && (
-               <Badge className="bg-black text-white border-0 px-4 md:px-6 py-1.5 md:py-2 text-[10px] md:text-xs font-black uppercase tracking-widest shadow-lg">
-                 {selectedProduct.discount_percentage}
-               </Badge>
-            )}
-          </div>
+      {/* PRODUCT DETAILS MODAL */}
+      <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
+        <DialogContent className="max-w-[95vw] sm:max-w-[90vw] md:max-w-[75vw] lg:max-w-[70vw] w-full p-0 overflow-hidden border-none bg-white rounded-2xl md:rounded-3xl shadow-2xl">
+          <DialogTitle className="sr-only">Product Details</DialogTitle>
+          {selectedProduct && (
+            <div className="flex flex-col md:flex-row max-h-[90vh] md:min-h-[60vh] overflow-y-auto scrollbar-hide">
+              
+              {/* Left Side: Large Product Display */}
+              <div className="w-full md:w-1/2 bg-[#fdfdfd] flex items-center justify-center p-4 md:p-12 relative border-b md:border-b-0 md:border-r border-gray-100 min-h-[250px] sm:min-h-[300px] md:min-h-0">
+                <div className="absolute top-4 left-4 md:top-10 md:left-10 z-10 flex flex-col gap-1.5 md:gap-2 items-start text-left">
+                  <Badge className="bg-red-600 text-white border-0 px-3 md:px-6 py-1 md:py-2 text-[9px] md:text-xs font-black uppercase tracking-widest shadow-lg">
+                    OSAKA AUTHENTIC
+                  </Badge>
+                  {selectedProduct.discount_percentage && (
+                    <Badge className="bg-black text-white border-0 px-3 md:px-6 py-1 md:py-2 text-[9px] md:text-xs font-black uppercase tracking-widest shadow-lg">
+                      {selectedProduct.discount_percentage}
+                    </Badge>
+                  )}
+                </div>
 
-          {selectedProduct.image_url ? (
-            <img
-              src={selectedProduct.image_url}
-              alt={selectedProduct.name}
-              className="w-full max-h-[200px] md:max-h-[350px] object-contain drop-shadow-xl"
-            />
-          ) : (
-            <div className="w-full h-48 flex items-center justify-center bg-gray-50 rounded-2xl border border-gray-100 mb-4">
-              <Package className="w-24 h-24 text-gray-200" strokeWidth={1} />
-            </div>
-          )} 
-        </div>
-
-        {/* Right Side: Information */}
-        <div className="w-full md:w-1/2 p-6 md:p-16 flex flex-col justify-between bg-white">
-          <div className="space-y-6 md:space-y-8">
-            {/* Title & Status */}
-            <div>
-              <div className="flex items-center gap-2 text-green-600 font-bold text-[10px] md:text-xs uppercase tracking-[0.3em] mb-3 md:mb-4">
-                <CheckCircle2 size={16} strokeWidth={3} className="md:w-[18px] md:h-[18px]" />
-                Verified Factory Stock
-              </div>
-              <h2 className="text-3xl md:text-5xl font-black text-gray-900 leading-[1.1] tracking-tight">
-                {selectedProduct.name}
-              </h2>
-            </div>
-
-            {/* Price & Info Grid */}
-            <div className="grid grid-cols-2 gap-4 md:gap-8 border-y border-gray-100 py-6 md:py-8">
-              <div>
-                <p className="text-gray-400 font-bold uppercase text-[10px] md:text-xs tracking-widest mb-1 md:mb-2">Price</p>
-                {selectedProduct.original_price && (
-                  <div className="text-sm md:text-base text-gray-400 font-bold line-through mb-1">
-                    ৳{selectedProduct.price.toLocaleString()}
+                {selectedProduct.image_url ? (
+                  <img
+                    src={selectedProduct.image_url}
+                    alt={selectedProduct.name}
+                    className="w-full max-h-[200px] sm:max-h-[250px] md:max-h-[350px] object-contain drop-shadow-xl p-4"
+                  />
+                ) : (
+                  <div className="w-full h-48 flex items-center justify-center bg-gray-50 rounded-2xl border border-gray-100 mb-4">
+                    <Package className="w-24 h-24 text-gray-200" strokeWidth={1} />
                   </div>
-                )}
-                <div className="text-3xl md:text-5xl font-black text-red-600 tracking-tighter">
-                  ৳{(selectedProduct.original_price || selectedProduct.price).toLocaleString()}
+                )} 
+              </div>
+
+              {/* Right Side: Information */}
+              <div className="w-full md:w-1/2 p-5 md:p-14 lg:p-16 flex flex-col justify-between bg-white text-left">
+                <div className="space-y-5 md:space-y-8">
+                  {/* Title & Status */}
+                  <div>
+                    <div className="flex items-center gap-2 text-green-600 font-bold text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] mb-2 md:mb-4">
+                      <CheckCircle2 size={14} strokeWidth={3} className="md:w-[18px] md:h-[18px]" />
+                      Verified Factory Stock
+                    </div>
+                    <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-gray-900 leading-[1.15] tracking-tight">
+                      {selectedProduct.name}
+                    </h2>
+                  </div>
+
+                  {/* Price & Info Grid */}
+                  <div className="grid grid-cols-2 gap-4 md:gap-8 border-y border-gray-100 py-5 md:py-8">
+                    <div>
+                      <p className="text-gray-400 font-bold uppercase text-[9px] md:text-xs tracking-widest mb-1 md:mb-2">Price</p>
+                      {selectedProduct.original_price && (
+                        <div className="text-xs md:text-base text-gray-400 font-bold line-through mb-0.5">
+                          ৳{selectedProduct.price.toLocaleString()}
+                        </div>
+                      )}
+                      <div className="text-2xl md:text-4xl lg:text-5xl font-black text-red-600 tracking-tighter">
+                        ৳{(selectedProduct.original_price || selectedProduct.price).toLocaleString()}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-gray-400 font-bold uppercase text-[9px] md:text-xs tracking-widest mb-1 md:mb-2">Model Size</p>
+                      <p className="text-lg md:text-2xl font-black text-gray-800">{selectedProduct.size || 'N/A'}</p>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <div className="space-y-2 md:space-y-4">
+                    <p className="text-gray-400 font-bold uppercase text-[9px] md:text-xs tracking-widest">Specifications</p>
+                    <div className="text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed bg-gray-50/50 p-4 md:p-6 rounded-xl md:rounded-2xl border border-gray-100">
+                      {selectedProduct.description || "Premium OSAKA technology designed for high performance and energy efficiency."}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Footer */}
+                <div className="mt-8 md:mt-12">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
+                    <a 
+                      href={`https://wa.me/8801886469096?text=${encodeURIComponent(`Hello OSAKA GROUP!\nI would like to order:\n*${selectedProduct.name}*\n\nPrice: ৳${(selectedProduct.original_price || selectedProduct.price).toLocaleString()}\nSize: ${selectedProduct.size || 'N/A'}\n${selectedProduct.image_url ? `\nProduct Image: ${selectedProduct.image_url}` : ''}`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-[#25D366] hover:bg-[#128C7E] text-white font-black py-4 md:py-6 rounded-xl md:rounded-2xl shadow-xl shadow-green-100 transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-xs md:text-base cursor-pointer"
+                    >
+                      Order via WhatsApp
+                    </a>
+                    <a 
+                      href="tel:+8801886469096"
+                      className="bg-black hover:bg-gray-800 text-white font-black py-4 md:py-6 rounded-xl md:rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-xs md:text-base cursor-pointer"
+                    >
+                      Call Expert
+                    </a>
+                  </div>
+                  <div className="flex justify-between mt-6 md:mt-8 opacity-40 text-[7px] sm:text-[8px] md:text-[10px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em]">
+                    <span>Free Delivery</span>
+                    <span>12 Months Warranty</span>
+                    <span>Genuine</span>
+                  </div>
                 </div>
               </div>
-              <div>
-                <p className="text-gray-400 font-bold uppercase text-[10px] md:text-xs tracking-widest mb-1 md:mb-2">Model Size</p>
-                <p className="text-xl md:text-2xl font-black text-gray-800">{selectedProduct.size || 'N/A'}</p>
-              </div>
             </div>
-
-            {/* Description */}
-            <div className="space-y-3 md:space-y-4">
-              <p className="text-gray-400 font-bold uppercase text-[10px] md:text-xs tracking-widest">Specifications</p>
-              <div className="text-base md:text-lg text-gray-600 leading-relaxed bg-gray-50/50 p-4 md:p-6 rounded-2xl border border-gray-100">
-                {selectedProduct.description || "Premium OSAKA technology designed for high performance and energy efficiency."}
-              </div>
-            </div>
-          </div>
-
-          {/* Action Footer */}
-          <div className="mt-8 md:mt-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
-              <a 
-                href={`https://wa.me/8801886469096?text=${encodeURIComponent(`Hello OSAKA GROUP!\nI would like to order:\n*${selectedProduct.name}*\n\nPrice: ৳${(selectedProduct.original_price || selectedProduct.price).toLocaleString()}\nSize: ${selectedProduct.size || 'N/A'}\n${selectedProduct.image_url ? `\nProduct Image: ${selectedProduct.image_url}` : ''}`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#25D366] hover:bg-[#128C7E] text-white font-black py-4 md:py-6 rounded-xl md:rounded-2xl shadow-xl shadow-green-100 transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-sm md:text-base cursor-pointer"
-              >
-                Order via WhatsApp
-              </a>
-              <a 
-                href="tel:+8801886469096"
-                className="bg-black hover:bg-gray-800 text-white font-black py-4 md:py-6 rounded-xl md:rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-sm md:text-base cursor-pointer"
-              >
-                Call Expert
-              </a>
-            </div>
-            <div className="flex justify-between mt-6 md:mt-8 opacity-40 text-[8px] md:text-[10px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em]">
-              <span>Free Delivery</span>
-              <span>12 Months Warranty</span>
-              <span>Genuine</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    )}
-  </DialogContent>
-</Dialog>
+          )}
+        </DialogContent>
+      </Dialog>
 
       <Footer />
       <SocialLinks />

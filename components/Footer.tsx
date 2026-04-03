@@ -17,21 +17,21 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold text-red-600 mb-4">Quick Links</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><Link href="/" className="hover:text-red-600">Home</Link></li>
-              <li><Link href="/about" className="hover:text-red-600">About</Link></li>
-              <li><Link href="/gallery" className="hover:text-red-600">Gallery</Link></li>
-              <li><Link href="/category" className="hover:text-red-600">Category</Link></li>
-              <li><Link href="/contact" className="hover:text-red-600">Contact</Link></li>
+              <li><Link href="#home" className="hover:text-red-600">Home</Link></li>
+              <li><Link href="#about" className="hover:text-red-600">About</Link></li>
+              <li><Link href="#category" className="hover:text-red-600">Products</Link></li>
+              <li><Link href="#gallery" className="hover:text-red-600">Gallery</Link></li>
+              <li><Link href="#contact" className="hover:text-red-600">Contact</Link></li>
             </ul>
           </div>
 
           {/* Contact Info */}
           <div>
             <h3 className="text-xl font-bold text-red-600 mb-4">Contact Us</h3>
-            <ul className="space-y-2 text-gray-400">
-              <li>Email: info@osakatv.com</li>
-              <li>Phone: +880 123 456 7890</li>
-              <li>Address: Dhaka, Bangladesh</li>
+            <ul className="space-y-2 text-gray-400 text-sm">
+              <li>Email: oscar_elec722@yahoo.com</li>
+              <li>Phone: 01886-469096</li>
+              <li>Address: Kaptan Bazar Complex -Building 2, Shop no: 106 and 52, (first floor- ২য় তলা) , Nowabpur road, Dhaka.</li>
             </ul>
           </div>
         </div>
