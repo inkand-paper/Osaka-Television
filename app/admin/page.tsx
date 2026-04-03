@@ -114,7 +114,7 @@ export default function AdminLogin() {
 
       {/* Footer */}
       <div className="absolute bottom-4 text-center text-white text-sm">
-        <p className="opacity-75">© 2026 OSAKA Television • Admin Panel</p>
+        <p className="opacity-75">© 2026 OSAKA GROUP • Admin Panel</p>
       </div>
     </div>
   )

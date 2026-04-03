@@ -63,7 +63,7 @@ export default function HeroCarousel() {
         .order('display_order', { ascending: true })
 
       if (data && data.length > 0) setSlides(data)
-      else setSlides([{ title: "OSAKA Television", description: "Experience the best in visual entertainment", image_url: "/hero1.jpg" }])
+      else setSlides([{ title: "OSAKA GROUP", description: "Experience the best in visual entertainment", image_url: "/hero1.jpg" }])
       setLoading(false)
     }
     fetchSlides()

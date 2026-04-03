@@ -135,7 +135,7 @@ export default function DashboardLayout({
       <footer className="bg-black text-white py-6 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-sm text-gray-400">
-            © 2026 OSAKA Television Admin Panel • All Rights Reserved
+            © 2026 OSAKA GROUP Admin Panel • All Rights Reserved
           </p>
         </div>
       </footer>

@@ -7,9 +7,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold text-red-600 mb-4">OSAKA Television</h3>
+            <h3 className="text-xl font-bold text-red-600 mb-4">OSAKA GROUP</h3>
             <p className="text-gray-400">
-              Quality televisions for your home and office.
+              Quality solutions for your home and office.
             </p>
           </div>
 
@@ -38,7 +38,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
-          <p>&copy; 2026 OSAKA Television. All rights reserved.</p>
+          <p>&copy; 2026 OSAKA GROUP. All rights reserved.</p>
         </div>
       </div>
     </footer>

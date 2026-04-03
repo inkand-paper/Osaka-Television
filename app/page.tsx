@@ -182,14 +182,14 @@ export default function Home() {
         <section id="about" className="py-14 sm:py-20 bg-white border-b">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
-              About <span className="text-red-600">OSAKA Group</span>
+              About <span className="text-red-600">OSAKA GROUP</span>
             </h2>
 
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <h3 className="text-3xl font-bold mb-6">Our Story</h3>
                 <p className="text-gray-700 text-lg mb-4">
-                  OSAKA Group has been at the forefront of bringing premium
+                  OSAKA GROUP has been at the forefront of bringing premium
                   solutions to homes and businesses across Bangladesh.
                 </p>
                 <p className="text-gray-700 text-lg">
@@ -261,9 +261,9 @@ export default function Home() {
                     <button
                       key={category}
                       onClick={() => handleMainCategoryClick(category)}
-                      className={`px-4 py-2 sm:px-7 sm:py-3 md:px-10 md:py-4 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-xl transition-all shadow-sm ${selectedMainCategory === category
-                          ? 'bg-red-600 text-white shadow-lg transform scale-105'
-                          : 'bg-white text-gray-800 hover:bg-red-50 hover:text-red-600 border-2 border-gray-200'
+                      className={`px-4 py-2 sm:px-7 sm:py-3 md:px-10 md:py-4 whitespace-nowrap rounded-full font-black text-sm sm:text-base md:text-xl transition-all shadow-sm ${selectedMainCategory === category
+                          ? 'bg-red-600 text-white shadow-xl ring-4 ring-red-100 transform scale-105'
+                          : 'bg-white text-gray-800 hover:bg-red-50 hover:text-red-600 border-2 border-gray-200 hover:shadow-md'
                         }`}
                     >
                       {category}
@@ -289,9 +289,9 @@ export default function Home() {
                           <button
                             key={size}
                             onClick={() => handleSizeClick(size)}
-                            className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-sm ${selectedSize === size
-                                ? 'bg-gray-800 text-white shadow-md transform scale-105'
-                                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                            className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-md border-2 ${selectedSize === size
+                                ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
+                                : 'bg-gray-50 text-gray-700 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
                               }`}
                           >
                             {size}
@@ -318,10 +318,10 @@ export default function Home() {
           setSelectedModel('All')
           scrollToProductsForCategory(selectedMainCategory)
         }}
-        className={`px-4 py-2 sm:px-7 sm:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base transition-all shadow-sm ${
+        className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-md border-2 ${
           selectedModel === 'All'
-            ? 'bg-gray-800 text-white shadow-md transform scale-105'
-            : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+            ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
+            : 'bg-gray-50 text-gray-700 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
         }`}
       >
         All models
@@ -335,10 +335,10 @@ export default function Home() {
             setSelectedModel(model)
             scrollToProductsForCategory(selectedMainCategory)
           }}
-          className={`px-4 py-2 sm:px-7 sm:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base transition-all shadow-sm ${
+          className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-md border-2 ${
             selectedModel === model
-              ? 'bg-gray-800 text-white shadow-md transform scale-105'
-              : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+              ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
+              : 'bg-gray-50 text-gray-700 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
           }`}
         >
           {model}
@@ -402,9 +402,9 @@ export default function Home() {
                           <button
                             key={size}
                             onClick={() => handleSizeClick(size)}
-                            className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-sm ${selectedSize === size
-                                ? 'bg-gray-800 text-white shadow-md transform scale-105'
-                                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                            className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-md border-2 ${selectedSize === size
+                                ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
+                                : 'bg-gray-50 text-gray-700 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
                               }`}
                           >
                             {size}
@@ -417,7 +417,7 @@ export default function Home() {
                     {FAN_MODELS[selectedSize] && FAN_MODELS[selectedSize].length > 0 && (
                       <div
                         id="fan-series-picker"
-                        className="w-full max-w-3xl bg-gray-50 border border-gray-100 rounded-2xl shadow-sm p-4 sm:p-5 mb-10 sm:mb-16 scroll-mt-24"
+                        className="w-full max-w-3xl bg-white border border-gray-100 rounded-2xl shadow-sm p-4 sm:p-5 mb-10 sm:mb-16 scroll-mt-24"
                       >
                         <div className="mb-4">
                           <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
@@ -430,9 +430,9 @@ export default function Home() {
                             setSelectedModel('All')
                             scrollToProductsForCategory(selectedMainCategory)
                           }}
-                          className={`px-3 py-2 sm:px-5 whitespace-nowrap rounded-xl font-medium text-xs sm:text-sm md:text-base transition-colors ${selectedModel === 'All'
-                              ? 'bg-gray-800 text-white shadow-md'
-                              : 'bg-transparent text-gray-600 hover:bg-gray-200'
+                          className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-md border-2 ${selectedModel === 'All'
+                              ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
+                              : 'bg-gray-50 text-gray-600 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
                             }`}
                         >
                           All models
@@ -444,9 +444,9 @@ export default function Home() {
                               setSelectedModel(model)
                               scrollToProductsForCategory(selectedMainCategory)
                             }}
-                            className={`px-3 py-2 sm:px-5 whitespace-nowrap rounded-xl font-medium text-xs sm:text-sm md:text-base transition-colors ${selectedModel === model
-                                ? 'bg-gray-800 text-white shadow-md'
-                                : 'bg-transparent text-gray-600 hover:bg-gray-200'
+                            className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-md border-2 ${selectedModel === model
+                                ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
+                                : 'bg-gray-50 text-gray-600 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
                               }`}
                           >
                             {model}
@@ -680,7 +680,7 @@ export default function Home() {
           <div className="mt-8 md:mt-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
               <a 
-                href={`https://wa.me/8801886469096?text=${encodeURIComponent(`Hello Osaka Television!\nI would like to order:\n*${selectedProduct.name}*\n\nPrice: ৳${(selectedProduct.original_price || selectedProduct.price).toLocaleString()}\nSize: ${selectedProduct.size || 'N/A'}\n${selectedProduct.image_url ? `\nProduct Image: ${selectedProduct.image_url}` : ''}`)}`}
+                href={`https://wa.me/8801886469096?text=${encodeURIComponent(`Hello OSAKA GROUP!\nI would like to order:\n*${selectedProduct.name}*\n\nPrice: ৳${(selectedProduct.original_price || selectedProduct.price).toLocaleString()}\nSize: ${selectedProduct.size || 'N/A'}\n${selectedProduct.image_url ? `\nProduct Image: ${selectedProduct.image_url}` : ''}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#25D366] hover:bg-[#128C7E] text-white font-black py-4 md:py-6 rounded-xl md:rounded-2xl shadow-xl shadow-green-100 transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-sm md:text-base cursor-pointer"

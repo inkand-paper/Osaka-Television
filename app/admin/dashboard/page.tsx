@@ -37,7 +37,7 @@ export default function DashboardPage() {
           Welcome Back! 👋
         </h1>
         <p className="text-xl text-gray-300">
-          Manage your OSAKA Television products and content
+          Manage your OSAKA GROUP products and content
         </p>
       </div>
 
