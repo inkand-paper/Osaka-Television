@@ -13,7 +13,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle2, Package, Tv, Wind, ChefHat, Sparkles, Mail, Phone, ImageIcon } from "lucide-react"
+import { motion, AnimatePresence } from 'framer-motion'
+import { CheckCircle2, Package, Tv, Wind, ChefHat, Sparkles, Mail, Phone, ImageIcon, Clock, Calendar } from "lucide-react"
+import GalleryLightbox from '@/components/GalleryLightbox'
 
 interface Product {
   id: string
@@ -61,6 +63,10 @@ export default function Home() {
   const [selectedSize, setSelectedSize] = useState<string>('32 inch')
   const [selectedModel, setSelectedModel] = useState<string>('All')
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  
+  // Lightbox state
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState(0)
 
   const scrollToId = (id: string) => {
     // Wait for React to render conditional sections before scrolling.
@@ -195,13 +201,25 @@ export default function Home() {
       <Navbar />
 
       <main>
-        {/* HOME SECTION */}
-        <section id="home" className="pt-16">
+        <motion.section 
+          id="home" 
+          className="pt-16"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
           <HeroCarousel />
-        </section>
+        </motion.section>
 
         {/* ABOUT SECTION */}
-        <section id="about" className="py-14 sm:py-20 bg-white border-b">
+        <motion.section 
+          id="about" 
+          className="py-14 sm:py-20 bg-white border-b"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
               About <span className="text-red-600">OSAKA GROUP</span>
@@ -228,11 +246,18 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* NEWLY ARRIVED SECTION */}
         {!loading && products.length > 0 && (
-        <section id="newly-arrived" className="py-14 sm:py-20 bg-gradient-to-br from-red-50 to-white">
+        <motion.section 
+          id="newly-arrived" 
+          className="py-14 sm:py-20 bg-gradient-to-br from-red-50 to-white"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
                 <span className="bg-red-100 text-red-700 font-bold px-4 py-2 rounded-full uppercase tracking-widest text-sm mb-4 inline-block">Flash Release</span>
@@ -260,11 +285,18 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          </section>
+          </motion.section>
         )}
 
         {/* CATEGORY SECTION */}
-        <section id="category" className="py-14 sm:py-20 bg-gray-50">
+        <motion.section 
+          id="category" 
+          className="py-14 sm:py-20 bg-gray-50"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
               Our <span className="text-red-600">Categories</span>
@@ -276,21 +308,26 @@ export default function Home() {
                 <p className="text-xl text-gray-600">Loading products...</p>
               </div>
             ) : (
-              <div className="flex flex-col items-center">
-                {/* Main Category Selection Tabs */}
-                <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 sm:mb-12">
-                  {MAIN_CATEGORIES.map(category => (
-                    <button
-                      key={category}
-                      onClick={() => handleMainCategoryClick(category)}
-                      className={`px-4 py-2 sm:px-7 sm:py-3 md:px-10 md:py-4 whitespace-nowrap rounded-full font-black text-sm sm:text-base md:text-xl transition-all shadow-sm ${selectedMainCategory === category
-                          ? 'bg-red-600 text-white shadow-xl ring-4 ring-red-100 transform scale-105'
-                          : 'bg-white text-gray-800 hover:bg-red-50 hover:text-red-600 border-2 border-gray-200 hover:shadow-md'
-                        }`}
-                    >
-                      {category}
-                    </button>
-                  ))}
+            <div className="flex flex-col items-center w-full">
+                {/* Main Category Selection Tabs - Modern Horizontal Scroll on Mobile */}
+                <div className="w-full overflow-x-auto pb-4 hide-scroll-bar">
+                  <div className="flex justify-start sm:justify-center gap-3 sm:gap-4 px-4 min-w-max mx-auto">
+                    {MAIN_CATEGORIES.map(category => (
+                      <motion.button
+                        key={category}
+                        layout
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => handleMainCategoryClick(category)}
+                        className={`px-5 py-2.5 sm:px-10 sm:py-4 whitespace-nowrap rounded-full font-black text-sm sm:text-lg md:text-xl transition-all shadow-sm ${selectedMainCategory === category
+                            ? 'bg-red-600 text-white shadow-xl ring-4 ring-red-100'
+                            : 'bg-white text-gray-800 hover:bg-gray-50 border-2 border-gray-100'
+                          }`}
+                      >
+                        {category}
+                      </motion.button>
+                    ))}
+                  </div>
                 </div>
 
                 {/* TELEVISION SECTION */}
@@ -558,46 +595,64 @@ export default function Home() {
               </div>
             )}
           </div>
-        </section>
+        </motion.section>
 
         {/* GALLERY SECTION */}
-        <section id="gallery" className="py-14 sm:py-20 bg-white">
+        <motion.section 
+          id="gallery" 
+          className="py-14 sm:py-20 bg-white"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
               Our <span className="text-red-600">Gallery</span>
             </h2>
             
-            {galleryItems.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {galleryItems.map((item) => (
-                  <div key={item.id} className="relative group overflow-hidden rounded-2xl aspect-square shadow-md border-2 border-transparent hover:border-red-500 transition-all duration-300">
-                    <img 
-                      src={item.image_url} 
-                      alt={item.caption || "Gallery"} 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    {item.caption && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                        <p className="text-white font-bold text-sm line-clamp-2">{item.caption}</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                {galleryItems.length > 0 ? (
+                  galleryItems.map((item, idx) => (
+                    <motion.div 
+                      key={item.id} 
+                      whileHover={{ y: -5 }}
+                      onClick={() => {
+                        setLightboxIndex(idx)
+                        setIsLightboxOpen(true)
+                      }}
+                      className="relative group overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 cursor-zoom-in"
+                    >
+                      <img 
+                        src={item.image_url} 
+                        alt={item.caption || "Gallery"} 
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <p className="text-white font-bold text-xs line-clamp-1">{item.caption}</p>
                       </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-                  <div key={item} className="bg-gray-50 h-48 md:h-64 rounded-2xl flex items-center justify-center hover:shadow-xl transition group overflow-hidden border border-gray-100 border-dashed">
-                    <ImageIcon className="w-10 h-10 text-gray-200 group-hover:scale-110 transition-transform" />
-                  </div>
-                ))}
-              </div>
-            )}
+                    </motion.div>
+                  ))
+                ) : (
+                  [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+                    <div key={item} className="bg-gray-50 h-48 md:h-64 rounded-2xl flex items-center justify-center border border-gray-100 border-dashed">
+                      <ImageIcon className="w-10 h-10 text-gray-200" />
+                    </div>
+                  ))
+                )}
+            </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* CONTACT SECTION */}
-        <section id="contact" className="py-14 sm:py-20 bg-gray-100">
+        <motion.section 
+          id="contact" 
+          className="py-14 sm:py-20 bg-gray-100"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
               Contact <span className="text-red-600">Us</span>
@@ -656,17 +711,23 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="flex items-start">
-                    <div className="bg-red-50 p-4 rounded-2xl mr-6">
-                      <Sparkles className="w-6 h-6 text-red-600" />
+                  <div className="flex items-start group">
+                    <div className="bg-white p-4 rounded-2xl mr-6 shadow-sm group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
+                      <Clock className="w-6 h-6 text-red-600 group-hover:text-white" />
                     </div>
                     <div>
                       <h4 className="font-bold text-gray-900 text-lg">Business Hours</h4>
                       <div className="grid grid-cols-2 gap-x-8 gap-y-1 mt-2 text-sm text-gray-600">
-                        <span className="font-bold">Sat - Thu:</span>
+                        <div className="flex items-center gap-2">
+                           <Calendar size={14} className="text-red-500" />
+                           <span className="font-bold">Sat - Thu:</span>
+                        </div>
                         <span>10:00 AM - 8:00 PM</span>
-                        <span className="font-bold">Friday:</span>
-                        <span className="text-red-500 font-bold uppercase tracking-tighter">Day Off / Showroom Closed</span>
+                        <div className="flex items-center gap-2">
+                           <Calendar size={14} className="text-red-500 text-opacity-40" />
+                           <span className="font-bold">Friday:</span>
+                        </div>
+                        <span className="text-red-500 font-black uppercase tracking-tighter">Showroom Closed</span>
                       </div>
                     </div>
                   </div>
@@ -680,7 +741,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
       </main>
 
       {/* PRODUCT DETAILS MODAL */}
@@ -787,6 +848,27 @@ export default function Home() {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* GALLERY LIGHTBOX */}
+      <GalleryLightbox 
+        isOpen={isLightboxOpen}
+        onClose={() => setIsLightboxOpen(false)}
+        images={galleryItems.map(item => item.image_url)}
+        currentIndex={lightboxIndex}
+        setCurrentIndex={setLightboxIndex}
+      />
+
+      {/* BACK TO TOP BUTTON */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0.5 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="fixed bottom-24 right-6 z-[90] bg-white text-gray-900 p-4 rounded-full shadow-2xl border border-gray-100 md:bottom-10 md:right-10 hidden sm:flex items-center justify-center"
+      >
+        <Package className="w-6 h-6 rotate-180" />
+      </motion.button>
 
       <Footer />
       <SocialLinks />

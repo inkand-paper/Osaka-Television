@@ -1,4 +1,5 @@
 import { Package } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 interface TVCardProps {
   name: string
@@ -11,57 +12,67 @@ interface TVCardProps {
 
 export default function TVCard({ name, price, originalPrice, discountTag, image, onClick }: TVCardProps) {
   return (
-    <div 
+    <motion.div 
+      layout
+      whileHover={{ y: -8, transition: { duration: 0.3, ease: "easeOut" } }}
+      whileTap={{ scale: 0.98 }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       onClick={onClick}
-      className="border border-gray-100 rounded-2xl overflow-hidden hover:shadow-2xl hover:border-red-100 transition-all duration-300 bg-white cursor-pointer group relative flex flex-col h-full"
+      className="border border-gray-100 rounded-3xl overflow-hidden hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] hover:border-red-200 transition-all duration-500 bg-white cursor-pointer group relative flex flex-col h-full"
     >
       {/* Discount Badge */}
       {discountTag && (
-        <div className="absolute top-3 left-3 bg-red-600 text-white text-[10px] md:text-xs font-black px-3 py-1.5 rounded-full z-10 shadow-lg tracking-wider uppercase">
+        <div className="absolute top-4 left-4 bg-red-600 text-white text-[10px] md:text-xs font-black px-4 py-2 rounded-full z-10 shadow-2xl tracking-wider uppercase">
           {discountTag}
         </div>
       )}
 
       {/* TV Image */}
-      <div className="bg-[#fdfdfd] h-48 md:h-56 flex items-center justify-center p-6 overflow-hidden relative group-hover:bg-gray-50 transition-colors border-b border-gray-50">
+      <div className="bg-[#fcfcfc] h-52 md:h-64 flex items-center justify-center p-8 overflow-hidden relative group-hover:bg-red-50/30 transition-colors duration-500">
         {image ? (
-          <img 
+          <motion.img 
             src={image} 
             alt={name}
-            className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-md"
+            className="w-full h-full object-contain drop-shadow-2xl"
+            whileHover={{ scale: 1.1 }}
+            transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }} // smooth easeOut
           />
         ) : (
-          <div className="w-full h-full rounded flex items-center justify-center text-gray-300">
-            <Package className="w-16 h-16" strokeWidth={1} />
+          <div className="w-full h-full rounded flex items-center justify-center text-gray-200">
+            <Package className="w-20 h-20" strokeWidth={1} />
           </div>
         )}
       </div>
       
       {/* Details */}
-      <div className="p-5 md:p-6 text-center flex flex-col flex-1 justify-between">
+      <div className="p-6 md:p-8 text-center flex flex-col flex-1 justify-between">
         <div>
-          <h4 className="font-bold text-base md:text-lg mb-2 text-gray-900 line-clamp-2 leading-snug">{name}</h4>
+          <h4 className="font-bold text-lg md:text-xl mb-3 text-gray-900 line-clamp-2 leading-tight tracking-tight group-hover:text-red-600 transition-colors">{name}</h4>
           
-          <div className="flex flex-col items-center justify-center mb-5 mt-2">
+          <div className="flex flex-col items-center justify-center mb-6 mt-2">
             {originalPrice && (
-              <span className="text-xs md:text-sm text-gray-400 font-bold line-through decoration-gray-300 mb-0.5">
+              <span className="text-xs md:text-sm text-gray-400 font-bold line-through decoration-gray-300 mb-1">
                 {originalPrice}
               </span>
             )}
-            <p className="text-2xl lg:text-3xl text-red-600 font-black tracking-tighter leading-none">{price}</p>
+            <p className="text-3xl lg:text-4xl text-red-600 font-black tracking-tighter leading-none">{price}</p>
           </div>
         </div>
 
-        <button 
+        <motion.button 
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.95 }}
           onClick={(e) => {
             e.stopPropagation();
             onClick?.();
           }}
-          className="w-full bg-black hover:bg-gray-800 text-white px-5 py-3 rounded-xl font-bold transition-all active:scale-95 uppercase tracking-widest text-xs shadow-md"
+          className="w-full bg-black hover:bg-gray-900 text-white px-6 py-4 rounded-2xl font-black transition-all uppercase tracking-[0.1em] text-xs shadow-lg shadow-black/10 group-hover:shadow-black/20"
         >
-          View Details
-        </button>
+          Explore Now
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   )
-}
+}

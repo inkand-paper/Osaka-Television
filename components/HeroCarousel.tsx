@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import { motion, AnimatePresence } from 'framer-motion'
 import { supabase } from '@/lib/supabase'
 
 interface Slide {
@@ -75,11 +75,11 @@ export default function HeroCarousel() {
     return () => clearInterval(timer)
   }, [slides.length, isPaused])
 
-  if (loading) return <div className="h-[600px] bg-black animate-pulse" />
+  if (loading) return <div className="h-[500px] md:h-[600px] bg-black animate-pulse" />
 
   return (
     <div 
-      className="relative h-[600px] bg-black overflow-hidden cursor-grab active:cursor-grabbing group select-none"
+      className="relative h-[500px] md:h-[600px] bg-black overflow-hidden cursor-grab active:cursor-grabbing group select-none"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEndHandler}
@@ -89,41 +89,75 @@ export default function HeroCarousel() {
       onMouseLeave={() => { onTouchEndHandler(); setIsPaused(false); }}
       onMouseEnter={() => setIsPaused(true)}
     >
-      {slides.map((slide, index) => (
-        <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent z-10" />
-            <img src={slide.image_url} alt="" className="w-full h-full object-cover" draggable={false} />
-          </div>
-          <div className="relative z-20 flex items-center h-full px-8 md:px-16 lg:px-24 pointer-events-none">
-            <div className="max-w-2xl text-white">
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                {slide.title.includes('OSAKA') ? (
-                  <>
-                    {slide.title.split('OSAKA')[0]} 
-                    <span className="text-red-600">OSAKA</span> 
-                    {slide.title.split('OSAKA')[1]}
-                  </>
-                ) : slide.title}
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-200 mb-10">{slide.description}</p>
-              <Link href="#category" className="pointer-events-auto bg-red-600 hover:bg-red-700 px-10 py-4 rounded-lg text-lg font-bold transition-all transform hover:scale-105 inline-block">
-                View Product List
-              </Link>
-            </div>
-          </div>
-        </div>
-      ))}
+      <AnimatePresence mode="wait">
+        {slides.map((slide, index) => (
+          index === currentSlide && (
+            <motion.div 
+              key={index}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+              className="absolute inset-0"
+            >
+              <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent z-10" />
+                <motion.img 
+                  initial={{ scale: 1.1 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 10 }}
+                  src={slide.image_url} 
+                  alt="" 
+                  className="w-full h-full object-cover" 
+                  draggable={false} 
+                />
+              </div>
+              <div className="relative z-20 flex items-center h-full px-8 md:px-16 lg:px-24 pointer-events-none">
+                <div className="max-w-2xl text-white">
+                  <motion.h1 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="text-4xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tight"
+                  >
+                    {slide.title}
+                  </motion.h1>
+                  <motion.p 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                    className="text-lg md:text-2xl text-gray-200 mb-10 leading-relaxed font-medium"
+                  >
+                    {slide.description}
+                  </motion.p>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.6 }}
+                    className="flex gap-4 pointer-events-auto"
+                  >
+                    <a 
+                      href="#category" 
+                      className="inline-block bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full font-black uppercase tracking-widest text-sm transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-red-900/20"
+                    >
+                      Shop Now
+                    </a>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          )
+        ))}
+      </AnimatePresence>
 
-      {/* Dots Indicator */}
+      {/* Navigation Indicators */}
       {slides.length > 1 && (
-        <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-3 z-30">
-          {slides.map((_, idx) => (
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+          {slides.map((_, i) => (
             <button
-              key={idx}
-              onClick={(e) => { e.stopPropagation(); setCurrentSlide(idx); }}
-              className={`h-2.5 rounded-full transition-all duration-300 ${idx === currentSlide ? 'w-10 bg-red-600' : 'w-2.5 bg-white/50 hover:bg-white/90'}`}
-              aria-label={`Go to slide ${idx + 1}`}
+              key={i}
+              onClick={() => setCurrentSlide(i)}
+              className={`h-1.5 rounded-full transition-all duration-500 ${i === currentSlide ? 'w-10 bg-red-600' : 'w-2 bg-white/30 hover:bg-white/50'}`}
             />
           ))}
         </div>
