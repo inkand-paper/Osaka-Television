@@ -97,15 +97,6 @@ export default function AdminLogin() {
             </Button>
           </form>
 
-          {/* Helper Text */}
-          <div className="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
-            <p className="text-xs text-gray-500 text-center">
-              <span className="font-semibold">Demo Password:</span> osaka2026
-            </p>
-            <p className="text-xs text-gray-400 text-center mt-1">
-              For security, change this password in production
-            </p>
-          </div>
         </div>
 
         {/* Bottom Gradient */}

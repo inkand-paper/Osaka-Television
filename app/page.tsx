@@ -701,7 +701,7 @@ export default function Home() {
                     <div>
                       <h4 className="font-bold text-gray-900 text-lg">Wholesale Center</h4>
                       <p className="text-gray-600 leading-relaxed mt-1 text-sm">
-                        গুলিস্তান, কাপ্তান বাজার কম্পলেক্স -ভবন ২, ২য় তলা,<br />দোকান নং- ১০৫ (105) & ১০৬ (106), নওয়াবপুর রোড, ঢাকা।
+                        গুলিস্তান, কাপ্তান বাজার কম্পলেক্স -ভবন ২, ২য় তলা,<br />দোকান নং- ১০৫ (105) & ১০৬ (106), নবাবপুর রোড, ঢাকা।
                         <a href="tel:01934009834" className="text-red-600 font-bold hover:underline block mt-1">📲 01934009834</a>
                       </p>
                     </div>
