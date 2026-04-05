@@ -91,14 +91,14 @@ export default function Navbar() {
            transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
            className="whitespace-nowrap flex gap-10 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] px-4"
         >
-           <span>Retail • Wholesale • Corporate Direct</span>
-           <span>Retail • Wholesale • Corporate Direct</span>
-           <span>Retail • Wholesale • Corporate Direct</span>
-           <span>Retail • Wholesale • Corporate Direct</span>
-           <span>Retail • Wholesale • Corporate Direct</span>
-           <span>Retail • Wholesale • Corporate Direct</span>
-           <span>Retail • Wholesale • Corporate Direct</span>
-           <span>Retail • Wholesale • Corporate Direct</span>
+           <span>Retail • Wholesale • Corporate Deals</span>
+           <span>Retail • Wholesale • Corporate Deals</span>
+           <span>Retail • Wholesale • Corporate Deals</span>
+           <span>Retail • Wholesale • Corporate Deals</span>
+           <span>Retail • Wholesale • Corporate Deals</span>
+           <span>Retail • Wholesale • Corporate Deals</span>
+           <span>Retail • Wholesale • Corporate Deals</span>
+           <span>Retail • Wholesale • Corporate Deals</span>
         </motion.div>
       </div>
 
