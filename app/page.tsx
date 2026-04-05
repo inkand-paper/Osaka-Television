@@ -680,6 +680,15 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
+                
+                <div className="mt-12 pt-8 border-t border-gray-200">
+                  <h4 className="text-2xl font-black text-gray-900 mb-1">Abrar Fahim Khan</h4>
+                  <p className="text-gray-600 font-bold text-lg">Industrialist</p>
+                  <p className="text-gray-600 font-medium text-sm mb-3">LL.B LL.M</p>
+                  <div className="inline-block bg-red-100 text-red-700 px-3 py-1 rounded text-sm font-black uppercase tracking-widest">
+                    CEO, OSAKA GROUP
+                  </div>
+                </div>
               </div>
               <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 flex flex-col justify-center">
                 <div className="mb-8">
@@ -693,42 +702,37 @@ export default function Home() {
                       <Package className="w-6 h-6 text-red-600" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-gray-900 text-lg">Main Showroom</h4>
-                      <p className="text-gray-600 leading-relaxed mt-1">
-                        Kaptan Bazar Complex -Building 2, Shop no: 106 and 52, (first floor- ২য় তলা),<br />
-                        Nowabpur road, Dhaka.
+                      <h4 className="font-bold text-gray-900 text-lg">Corporate Office</h4>
+                      <p className="text-gray-600 leading-relaxed mt-1 text-sm">
+                        Mohammadpur, Kaderabad Housing,<br />
+                        Road 5, Block B, House 4, Ground Floor.
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-start">
                     <div className="bg-red-50 p-4 rounded-2xl mr-6">
-                      <Phone className="w-6 h-6 text-red-600" />
+                      <Package className="w-6 h-6 text-red-600" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-gray-900 text-lg">Sales Support</h4>
-                      <p className="text-gray-600 mt-1">01886-469096</p>
+                      <h4 className="font-bold text-gray-900 text-lg">Wholesale Center</h4>
+                      <p className="text-gray-600 leading-relaxed mt-1 text-sm">
+                        Nobabpur, Kaptan Bazar Complex,<br />
+                        Building 2, 1st Floor, Shop No: 105 & 106.
+                      </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start group">
-                    <div className="bg-white p-4 rounded-2xl mr-6 shadow-sm group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
-                      <Clock className="w-6 h-6 text-red-600 group-hover:text-white" />
+                  <div className="flex items-start">
+                    <div className="bg-red-50 p-4 rounded-2xl mr-6">
+                      <Package className="w-6 h-6 text-red-600" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-gray-900 text-lg">Business Hours</h4>
-                      <div className="grid grid-cols-2 gap-x-8 gap-y-1 mt-2 text-sm text-gray-600">
-                        <div className="flex items-center gap-2">
-                           <Calendar size={14} className="text-red-500" />
-                           <span className="font-bold">Sat - Thu:</span>
-                        </div>
-                        <span>10:00 AM - 8:00 PM</span>
-                        <div className="flex items-center gap-2">
-                           <Calendar size={14} className="text-red-500 text-opacity-40" />
-                           <span className="font-bold">Friday:</span>
-                        </div>
-                        <span className="text-red-500 font-black uppercase tracking-tighter">Showroom Closed</span>
-                      </div>
+                      <h4 className="font-bold text-gray-900 text-lg">Sales Center</h4>
+                      <p className="text-gray-600 leading-relaxed mt-1 text-sm">
+                        Elephant Road, ICT Bhaban (Suvastu Arcade),<br />
+                        Level 3, Shop NO. 308.
+                      </p>
                     </div>
                   </div>
                 </div>

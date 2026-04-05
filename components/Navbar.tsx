@@ -85,8 +85,25 @@ export default function Navbar() {
 
   return (
     <>
+      <div className="fixed top-0 w-full z-[101] bg-red-600 text-white overflow-hidden py-1.5 flex items-center">
+        <motion.div
+           animate={{ x: [0, -1000] }}
+           transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+           className="whitespace-nowrap flex gap-10 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] px-4"
+        >
+           <span>Retail • Wholesale • Corporate Direct</span>
+           <span>Retail • Wholesale • Corporate Direct</span>
+           <span>Retail • Wholesale • Corporate Direct</span>
+           <span>Retail • Wholesale • Corporate Direct</span>
+           <span>Retail • Wholesale • Corporate Direct</span>
+           <span>Retail • Wholesale • Corporate Direct</span>
+           <span>Retail • Wholesale • Corporate Direct</span>
+           <span>Retail • Wholesale • Corporate Direct</span>
+        </motion.div>
+      </div>
+
       {/* Top Navbar */}
-      <nav className="fixed w-full top-0 z-[100] transition-all duration-500 bg-black/80 backdrop-blur-xl border-b border-white/5">
+      <nav className="fixed w-full top-7 z-[100] transition-all duration-500 bg-black/80 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex-shrink-0">
@@ -126,13 +143,9 @@ export default function Navbar() {
             </div>
 
             <div className="hidden md:flex items-center">
-              <div className="bg-red-600/10 border border-red-600/20 px-4 py-1.5 rounded-full">
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-red-500 italic">Official Global Store</span>
-              </div>
             </div>
 
             <div className="md:hidden flex items-center">
-              <span className="text-[10px] font-black uppercase tracking-widest text-red-600 bg-red-50 px-3 py-1 rounded-full">Official</span>
             </div>
           </div>
         </div>

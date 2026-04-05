@@ -61,21 +61,28 @@ export default function Footer() {
 
           {/* Contact Details */}
           <div className="space-y-6">
-            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-red-600 mb-8">HQ Showroom</h4>
-            <div className="space-y-4">
+            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-red-600 mb-8">Showrooms</h4>
+            <div className="space-y-6">
               <div className="flex items-start gap-3 group">
                 <MapPin size={18} className="text-red-600 mt-1 shrink-0" />
                 <p className="text-gray-400 text-sm leading-relaxed group-hover:text-white transition-colors">
-                  Kaptan Bazar Complex -Building 2, Shop no: 106 and 52, (first floor), Nowabpur road, Dhaka.
+                  <strong className="text-white block mb-1">Corporate Office:</strong>
+                  Mohammadpur, Kaderabad Housing, Road 5, Block B, House 4, Ground Floor.
                 </p>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone size={18} className="text-red-600 shrink-0" />
-                <a href="tel:01886469096" className="text-gray-400 text-sm hover:text-white transition-colors">01886-469096</a>
+              <div className="flex items-start gap-3 group">
+                <MapPin size={18} className="text-red-600 mt-1 shrink-0" />
+                <p className="text-gray-400 text-sm leading-relaxed group-hover:text-white transition-colors">
+                  <strong className="text-white block mb-1">Wholesale Center:</strong>
+                  Nobabpur, Kaptan Bazar Complex, Building 2, 1st Floor, Shop No: 105 & 106.
+                </p>
               </div>
-              <div className="flex items-center gap-3">
-                <Mail size={18} className="text-red-600 shrink-0" />
-                <a href="mailto:oscar_elec722@yahoo.com" className="text-gray-400 text-sm hover:text-white transition-colors">oscar_elec722@yahoo.com</a>
+              <div className="flex items-start gap-3 group">
+                <MapPin size={18} className="text-red-600 mt-1 shrink-0" />
+                <p className="text-gray-400 text-sm leading-relaxed group-hover:text-white transition-colors">
+                  <strong className="text-white block mb-1">Sales Center:</strong>
+                  Elephant Road, ICT Bhaban (Suvastu Arcade), Level 3, Shop NO. 308.
+                </p>
               </div>
             </div>
           </div>
