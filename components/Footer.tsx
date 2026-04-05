@@ -18,12 +18,12 @@ export default function Footer() {
             <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
               Redefining the standards of home electronics in Bangladesh. We bring you premium technology designed for durability, efficiency, and the ultimate user experience.
             </p>
-            <div className="flex gap-4">
-              <a href="https://facebook.com" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-red-600 transition-all duration-300">
-                <Facebook size={18} />
+            <div className="flex gap-4 mt-6">
+              <a href="https://facebook.com/oscarintosaka/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border-2 border-transparent bg-blue-600 flex items-center justify-center hover:scale-110 hover:border-white transition-all duration-300 shadow-lg shadow-blue-600/30">
+                <Facebook size={24} className="text-white fill-current" />
               </a>
-              <a href="https://wa.me/8801886469096" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-green-600 transition-all duration-300">
-                <MessageCircle size={18} />
+              <a href="https://wa.me/8801886469096" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border-2 border-transparent bg-green-500 flex items-center justify-center hover:scale-110 hover:border-white transition-all duration-300 shadow-lg shadow-green-500/30">
+                <MessageCircle size={24} className="text-white fill-current" />
               </a>
             </div>
           </div>
@@ -40,24 +40,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Customer Trust */}
-          <div>
-            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-red-600 mb-8">Customer Trust</h4>
-            <ul className="space-y-4 text-gray-400 font-bold text-sm">
-              <li className="flex items-center gap-3">
-                <ShieldCheck size={16} className="text-red-600" />
-                <span>Genuine Warranty</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Truck size={16} className="text-red-600" />
-                <span>Fast Home Delivery</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <RefreshCw size={16} className="text-red-600" />
-                <span>7 Days Replacement</span>
-              </li>
-            </ul>
-          </div>
 
           {/* Contact Details */}
           <div className="space-y-6">
@@ -65,24 +47,27 @@ export default function Footer() {
             <div className="space-y-6">
               <div className="flex items-start gap-3 group">
                 <MapPin size={18} className="text-red-600 mt-1 shrink-0" />
-                <p className="text-gray-400 text-sm leading-relaxed group-hover:text-white transition-colors">
+                <div className="text-gray-400 text-sm leading-relaxed group-hover:text-white transition-colors">
                   <strong className="text-white block mb-1">Corporate Office:</strong>
-                  Mohammadpur, Kaderabad Housing, Road 5, Block B, House 4, Ground Floor.
-                </p>
+                  মহম্মদপুর, কাদেরাবাদ হাউসিং, রোড ৫, ব্লক বি, বাসা ৪, গ্রাউন্ড ফ্লোর । 
+                  <a href="tel:01886469096" className="block mt-1 font-bold text-red-500 hover:text-white">📲 01886469096</a>
+                </div>
               </div>
               <div className="flex items-start gap-3 group">
                 <MapPin size={18} className="text-red-600 mt-1 shrink-0" />
-                <p className="text-gray-400 text-sm leading-relaxed group-hover:text-white transition-colors">
+                <div className="text-gray-400 text-sm leading-relaxed group-hover:text-white transition-colors">
                   <strong className="text-white block mb-1">Wholesale Center:</strong>
-                  Nobabpur, Kaptan Bazar Complex, Building 2, 1st Floor, Shop No: 105 & 106.
-                </p>
+                  গুলিস্তান, কাপ্তান বাজার কম্পলেক্স -ভবন ২, ২য় তলা, দোকান নং- ১০৫ (105) & ১০৬ (106), নওয়াবপুর রোড, ঢাকা।
+                  <a href="tel:01934009834" className="block mt-1 font-bold text-red-500 hover:text-white">📲 01934009834</a>
+                </div>
               </div>
               <div className="flex items-start gap-3 group">
                 <MapPin size={18} className="text-red-600 mt-1 shrink-0" />
-                <p className="text-gray-400 text-sm leading-relaxed group-hover:text-white transition-colors">
+                <div className="text-gray-400 text-sm leading-relaxed group-hover:text-white transition-colors">
                   <strong className="text-white block mb-1">Sales Center:</strong>
-                  Elephant Road, ICT Bhaban (Suvastu Arcade), Level 3, Shop NO. 308.
-                </p>
+                  এলিফ্যান্ট রোড, আইসিটি ভবন (সুভাসতু আর্কেড), লেভেল ৩, দোকান নং: ৩০৮ (308)।
+                  <a href="tel:01401111245" className="block mt-1 font-bold text-red-500 hover:text-white">📲 01401111245</a>
+                </div>
               </div>
             </div>
           </div>

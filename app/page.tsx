@@ -663,15 +663,6 @@ export default function Home() {
                 <div className="space-y-6">
                   <div className="flex items-start">
                     <div className="bg-red-50 p-4 rounded-2xl mr-6 group-hover:bg-red-100 transition-colors">
-                      <Mail className="w-6 h-6 text-red-600" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900">Email</h4>
-                      <p className="text-gray-600">oscar_elec722@yahoo.com</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <div className="bg-red-50 p-4 rounded-2xl mr-6 group-hover:bg-red-100 transition-colors">
                       <Phone className="w-6 h-6 text-red-600" />
                     </div>
                     <div>
@@ -681,14 +672,7 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <div className="mt-12 pt-8 border-t border-gray-200">
-                  <h4 className="text-2xl font-black text-gray-900 mb-1">Abrar Fahim Khan</h4>
-                  <p className="text-gray-600 font-bold text-lg">Industrialist</p>
-                  <p className="text-gray-600 font-medium text-sm mb-3">LL.B LL.M</p>
-                  <div className="inline-block bg-red-100 text-red-700 px-3 py-1 rounded text-sm font-black uppercase tracking-widest">
-                    CEO, OSAKA GROUP
-                  </div>
-                </div>
+              
               </div>
               <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 flex flex-col justify-center">
                 <div className="mb-8">
@@ -704,8 +688,8 @@ export default function Home() {
                     <div>
                       <h4 className="font-bold text-gray-900 text-lg">Corporate Office</h4>
                       <p className="text-gray-600 leading-relaxed mt-1 text-sm">
-                        Mohammadpur, Kaderabad Housing,<br />
-                        Road 5, Block B, House 4, Ground Floor.
+                        মোহাম্মদপুর, কাদেরাবাদ হাউজিং, রোড ৫, ব্লক বি, বাসা ৪, গ্রাউন্ড ফ্লোর । 
+                        <a href="tel:01886469096" className="text-red-600 font-bold hover:underline block mt-1">📲 01886469096</a>
                       </p>
                     </div>
                   </div>
@@ -717,8 +701,8 @@ export default function Home() {
                     <div>
                       <h4 className="font-bold text-gray-900 text-lg">Wholesale Center</h4>
                       <p className="text-gray-600 leading-relaxed mt-1 text-sm">
-                        Nobabpur, Kaptan Bazar Complex,<br />
-                        Building 2, 1st Floor, Shop No: 105 & 106.
+                        গুলিস্তান, কাপ্তান বাজার কম্পলেক্স -ভবন ২, ২য় তলা,<br />দোকান নং- ১০৫ (105) & ১০৬ (106), নওয়াবপুর রোড, ঢাকা।
+                        <a href="tel:01934009834" className="text-red-600 font-bold hover:underline block mt-1">📲 01934009834</a>
                       </p>
                     </div>
                   </div>
@@ -730,8 +714,8 @@ export default function Home() {
                     <div>
                       <h4 className="font-bold text-gray-900 text-lg">Sales Center</h4>
                       <p className="text-gray-600 leading-relaxed mt-1 text-sm">
-                        Elephant Road, ICT Bhaban (Suvastu Arcade),<br />
-                        Level 3, Shop NO. 308.
+                        এলিফ্যান্ট রোড, আইসিটি ভবন (সুভাসতু আর্কেড),<br />লেভেল ৩, দোকান নং: ৩০৮ (308)।
+                        <a href="tel:01401111245" className="text-red-600 font-bold hover:underline block mt-1">📲 01401111245</a>
                       </p>
                     </div>
                   </div>
@@ -827,7 +811,7 @@ export default function Home() {
                 <div className="mt-8 md:mt-12">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
                     <a 
-                      href={`https://wa.me/8801886469096?text=${encodeURIComponent(`Hello OSAKA GROUP!\nI would like to order:\n*${selectedProduct.name}*\n\nPrice: ৳${(selectedProduct.original_price || selectedProduct.price).toLocaleString()}\nSize: ${selectedProduct.size || 'N/A'}\n${selectedProduct.image_url ? `\nProduct Image: ${selectedProduct.image_url}` : ''}`)}`}
+                      href={`https://wa.me/8801886469096?text=${encodeURIComponent(`Hello OSAKA GROUP!\nI would like to order:\n*${selectedProduct.name}*\n\nPrice: ৳${(selectedProduct.original_price || selectedProduct.price).toLocaleString()}\nSize: ${selectedProduct.size || 'N/A'}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-[#25D366] hover:bg-[#128C7E] text-white font-black py-4 md:py-6 rounded-xl md:rounded-2xl shadow-xl shadow-green-100 transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-xs md:text-base cursor-pointer"
