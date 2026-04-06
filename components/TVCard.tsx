@@ -48,16 +48,31 @@ export default function TVCard({ name, price, originalPrice, discountTag, image,
       
       {/* Details */}
       <div className="p-6 md:p-8 text-center flex flex-col flex-1 justify-between">
-        <div>
-          <h4 className="font-bold text-lg md:text-xl mb-3 text-gray-900 line-clamp-2 leading-tight tracking-tight group-hover:text-red-600 transition-colors">{name}</h4>
+        <div className="flex-1 flex flex-col justify-between">
+          <div className="h-[3.5rem] md:h-[4rem] flex items-center justify-center">
+            <h4 className="font-bold text-lg md:text-xl text-gray-900 line-clamp-2 leading-snug tracking-tight group-hover:text-red-600 transition-colors px-2">
+              {name}
+            </h4>
+          </div>
           
-          <div className="flex flex-col items-center justify-center mb-6 mt-2">
-            {originalPrice && (
-              <span className="text-xs md:text-sm text-gray-400 font-bold line-through decoration-gray-300 mb-1">
-                {originalPrice}
-              </span>
-            )}
-            <p className="text-3xl lg:text-4xl text-red-600 font-black tracking-tighter leading-none">{price}</p>
+          <div className="min-h-[60px] md:min-h-[70px] flex flex-col items-center justify-center mt-2 mb-4">
+            <div className="h-5 flex items-center justify-center">
+              {originalPrice ? (
+                <span className="text-xs md:text-sm text-gray-400 font-bold line-through decoration-gray-300">
+                  {originalPrice}
+                </span>
+              ) : (
+                <div className="h-5" /> // Spacer for consistency
+              )}
+            </div>
+            <p className="text-lg md:text-xl lg:text-2xl text-red-600 font-bold tracking-tight leading-none flex items-baseline gap-1.2 mt-1">
+              {price.toString().startsWith('MRP') ? (
+                <>
+                  <span className="text-[10px] md:text-xs font-bold text-red-600 uppercase">MRP</span>
+                  <span>{price.toString().replace('MRP', '').trim()}</span>
+                </>
+              ) : price}
+            </p>
           </div>
         </div>
 

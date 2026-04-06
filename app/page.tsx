@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { motion, AnimatePresence } from 'framer-motion'
-import { CheckCircle2, Package, Tv, Wind, ChefHat, Sparkles, Mail, Phone, ImageIcon, Clock, Calendar } from "lucide-react"
+import { CheckCircle2, Package, Tv, Wind, ChefHat, Sparkles, Mail, Phone, ImageIcon, Clock, Calendar, ArrowRight, X } from "lucide-react"
 import GalleryLightbox from '@/components/GalleryLightbox'
 
 interface Product {
@@ -62,7 +62,8 @@ export default function Home() {
   const [selectedMainCategory, setSelectedMainCategory] = useState<string>('Television')
   const [selectedSize, setSelectedSize] = useState<string>('32 inch')
   const [selectedModel, setSelectedModel] = useState<string>('All')
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [selectedProduct, setSelectedProduct] = useState<any>(null)
+  const [showSpecs, setShowSpecs] = useState(false)
   
   // Lightbox state
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
@@ -275,8 +276,8 @@ export default function Home() {
                   >
                     <TVCard
                       name={product.name}
-                      price={product.original_price ? `৳ ${product.original_price.toLocaleString()}` : `৳ ${product.price.toLocaleString()}`}
-                      originalPrice={product.original_price ? `৳ ${product.price.toLocaleString()}` : null}
+                      price={product.original_price ? `MRP  ${product.original_price.toLocaleString()}  ৳` : `MRP  ${product.price.toLocaleString()} ৳`}
+                      originalPrice={product.original_price ? `MRP  ${product.price.toLocaleString()}  ৳` : null}
                       discountTag={product.discount_percentage ? product.discount_percentage : 'NEW'}
                       image={product.image_url || ''}
                       onClick={() => setSelectedProduct(product)}
@@ -417,8 +418,8 @@ export default function Home() {
                             <TVCard
                               key={product.id}
                               name={product.name}
-                              price={product.original_price ? `৳ ${product.original_price.toLocaleString()}` : `৳ ${product.price.toLocaleString()}`}
-                              originalPrice={product.original_price ? `৳ ${product.price.toLocaleString()}` : null}
+                              price={product.original_price ? `MRP  ${product.original_price.toLocaleString()}  ৳` : `MRP  ${product.price.toLocaleString()}  ৳`}
+                              originalPrice={product.original_price ? `MRP  ${product.price.toLocaleString()}  ৳` : null}
                               discountTag={product.discount_percentage}
                               image={product.image_url || ''}
                               onClick={() => setSelectedProduct(product)}
@@ -525,8 +526,8 @@ export default function Home() {
                             <TVCard
                               key={product.id}
                               name={product.name}
-                              price={`৳ ${product.price.toLocaleString()}`}
-                              originalPrice={product.original_price ? `৳ ${product.original_price.toLocaleString()}` : null}
+                              price={`MRP  ${product.price.toLocaleString()}  ৳`}
+                              originalPrice={product.original_price ? `MRP  ${product.original_price.toLocaleString()}  ৳` : null}
                               discountTag={product.discount_percentage}
                               image={product.image_url || ''}
                               onClick={() => setSelectedProduct(product)}
@@ -562,8 +563,8 @@ export default function Home() {
                             <TVCard
                               key={product.id}
                               name={product.name}
-                              price={`৳ ${product.price.toLocaleString()}`}
-                              originalPrice={product.original_price ? `৳ ${product.original_price.toLocaleString()}` : null}
+                              price={`MRP  ${product.price.toLocaleString()}  ৳`}
+                              originalPrice={product.original_price ? `MRP  ${product.original_price.toLocaleString()}  ৳` : null}
                               discountTag={product.discount_percentage}
                               image={product.image_url || ''}
                               onClick={() => setSelectedProduct(product)}
@@ -737,10 +738,10 @@ export default function Home() {
         <DialogContent className="max-w-[95vw] sm:max-w-[90vw] md:max-w-[75vw] lg:max-w-[70vw] w-full p-0 overflow-hidden border-none bg-white rounded-2xl md:rounded-3xl shadow-2xl">
           <DialogTitle className="sr-only">Product Details</DialogTitle>
           {selectedProduct && (
-            <div className="flex flex-col md:flex-row max-h-[90vh] md:min-h-[60vh] overflow-y-auto scrollbar-hide">
+            <div className="flex flex-col xl:flex-row max-h-[92vh] xl:min-h-[60vh] overflow-y-auto pb-20 sm:pb-24 xl:pb-0">
               
               {/* Left Side: Large Product Display */}
-              <div className="w-full md:w-1/2 bg-[#fdfdfd] flex items-center justify-center p-4 md:p-12 relative border-b md:border-b-0 md:border-r border-gray-100 min-h-[250px] sm:min-h-[300px] md:min-h-0">
+              <div className="w-full xl:w-1/2 bg-[#fdfdfd] flex items-center justify-center p-4 md:p-12 relative border-b xl:border-b-0 xl:border-r border-gray-100 min-h-[250px] sm:min-h-[300px] xl:min-h-0">
                 <div className="absolute top-4 left-4 md:top-10 md:left-10 z-10 flex flex-col gap-1.5 md:gap-2 items-start text-left">
                   <Badge className="bg-red-600 text-white border-0 px-3 md:px-6 py-1 md:py-2 text-[9px] md:text-xs font-black uppercase tracking-widest shadow-lg">
                     OSAKA AUTHENTIC
@@ -756,62 +757,68 @@ export default function Home() {
                   <img
                     src={selectedProduct.image_url}
                     alt={selectedProduct.name}
-                    className="w-full max-h-[200px] sm:max-h-[250px] md:max-h-[350px] object-contain drop-shadow-xl p-4"
+                    className="w-full max-h-[180px] sm:max-h-[220px] md:max-h-[350px] object-contain drop-shadow-xl p-4"
                   />
                 ) : (
-                  <div className="w-full h-48 flex items-center justify-center bg-gray-50 rounded-2xl border border-gray-100 mb-4">
-                    <Package className="w-24 h-24 text-gray-200" strokeWidth={1} />
+                  <div className="w-full h-40 sm:h-48 flex items-center justify-center bg-gray-50 rounded-2xl border border-gray-100 mb-4">
+                    <Package className="w-16 h-16 sm:w-24 sm:h-24 text-gray-200" strokeWidth={1} />
                   </div>
                 )} 
               </div>
 
               {/* Right Side: Information */}
-              <div className="w-full md:w-1/2 p-5 md:p-14 lg:p-16 flex flex-col justify-between bg-white text-left">
-                <div className="space-y-5 md:space-y-8">
+              <div className="w-full xl:w-1/2 p-4 sm:p-6 md:p-14 lg:p-16 flex flex-col justify-between bg-white text-left">
+                <div className="space-y-4 md:space-y-8">
                   {/* Title & Status */}
                   <div>
                     <div className="flex items-center gap-2 text-green-600 font-bold text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] mb-2 md:mb-4">
                       <CheckCircle2 size={14} strokeWidth={3} className="md:w-[18px] md:h-[18px]" />
                       Verified Factory Stock
                     </div>
-                    <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-gray-900 leading-[1.15] tracking-tight">
+                    <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-black text-gray-900 leading-tight md:leading-[1.15] tracking-tight">
                       {selectedProduct.name}
                     </h2>
                   </div>
 
                   {/* Price & Info Grid */}
-                  <div className="grid grid-cols-2 gap-4 md:gap-8 border-y border-gray-100 py-5 md:py-8">
+                    <div className="flex flex-wrap gap-x-12 gap-y-4 md:gap-x-16 border-y border-gray-100 py-4 md:py-8 items-start">
                     <div>
-                      <p className="text-gray-400 font-bold uppercase text-[9px] md:text-xs tracking-widest mb-1 md:mb-2">Price</p>
+                      <p className="text-gray-400 font-bold uppercase text-[8px] md:text-xs tracking-widest mb-1 md:mb-2 whitespace-nowrap">Price</p>
                       {selectedProduct.original_price && (
-                        <div className="text-xs md:text-base text-gray-400 font-bold line-through mb-0.5">
-                          ৳{selectedProduct.price.toLocaleString()}
+                        <div className="text-[9px] md:text-sm text-gray-400 font-bold line-through mb-0.5 whitespace-nowrap flex items-baseline gap-1">
+                          <span className="text-[8px] md:text-[10px] uppercase text-gray-400">MRP</span>
+                          <span>{selectedProduct.price.toLocaleString()}  ৳</span>
                         </div>
                       )}
-                      <div className="text-2xl md:text-4xl lg:text-5xl font-black text-red-600 tracking-tighter">
-                        ৳{(selectedProduct.original_price || selectedProduct.price).toLocaleString()}
+                      <div className="text-base sm:text-lg md:text-xl lg:text-2xl font-extrabold text-red-600 tracking-tight whitespace-nowrap flex items-baseline gap-1.5">
+                        <span className="text-[10px] md:text-xs font-bold text-red-600 uppercase tracking-widest leading-none">MRP</span>
+                        <span>{(selectedProduct.original_price || selectedProduct.price).toLocaleString()}  ৳</span>
                       </div>
                     </div>
                     <div>
-                      <p className="text-gray-400 font-bold uppercase text-[9px] md:text-xs tracking-widest mb-1 md:mb-2">Model Size</p>
-                      <p className="text-lg md:text-2xl font-black text-gray-800">{selectedProduct.size || 'N/A'}</p>
+                      <p className="text-gray-400 font-bold uppercase text-[8px] md:text-xs tracking-widest mb-1 md:mb-2 whitespace-nowrap">Model Size</p>
+                      <p className="text-sm sm:text-base md:text-2xl font-black text-gray-800 whitespace-nowrap">{selectedProduct.size || 'N/A'}</p>
                     </div>
                   </div>
 
-                  {/* Description */}
-                  <div className="space-y-2 md:space-y-4">
-                    <p className="text-gray-400 font-bold uppercase text-[9px] md:text-xs tracking-widest">Specifications</p>
-                    <div className="text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed bg-gray-50/50 p-4 md:p-6 rounded-xl md:rounded-2xl border border-gray-100">
-                      {selectedProduct.description || "Premium OSAKA technology designed for high performance and energy efficiency."}
-                    </div>
+                  {/* Description Button */}
+                  <div className="space-y-2 md:space-y-4 pt-1 md:pt-4">
+                    <p className="text-gray-400 font-bold uppercase text-[9px] md:text-xs tracking-widest">Product Details</p>
+                    <button 
+                      onClick={() => setShowSpecs(true)}
+                      className="w-full text-left flex items-center justify-between p-4 md:p-6 bg-gray-50 hover:bg-red-50/50 rounded-xl md:rounded-2xl border border-gray-100 group transition-all"
+                    >
+                      <span className="text-xs sm:text-sm md:text-base font-bold text-gray-900 group-hover:text-red-600 transition-colors">View Product Specifications</span>
+                      <ArrowRight size={18} className="text-gray-400 group-hover:text-red-600 md:group-hover:translate-x-1 transition-all" />
+                    </button>
                   </div>
                 </div>
 
                 {/* Action Footer */}
-                <div className="mt-8 md:mt-12">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
+                 <div className="mt-6 md:mt-12">
+                  <div className="flex flex-col 2xl:grid 2xl:grid-cols-2 gap-3 md:gap-5">
                     <a 
-                      href={`https://wa.me/8801886469096?text=${encodeURIComponent(`Hello OSAKA GROUP!\nI would like to order:\n*${selectedProduct.name}*\n\nPrice: ৳${(selectedProduct.original_price || selectedProduct.price).toLocaleString()}\nSize: ${selectedProduct.size || 'N/A'}`)}`}
+                      href={`https://wa.me/8801886469096?text=${encodeURIComponent(`Hello OSAKA GROUP!\nI would like to order:\n*${selectedProduct.name}*\n\nPrice: MRP  ${(selectedProduct.original_price || selectedProduct.price).toLocaleString()}  ৳\nSize: ${selectedProduct.size || 'N/A'}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-[#25D366] hover:bg-[#128C7E] text-white font-black py-4 md:py-6 rounded-xl md:rounded-2xl shadow-xl shadow-green-100 transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-xs md:text-base cursor-pointer"
@@ -825,13 +832,50 @@ export default function Home() {
                       Call Expert
                     </a>
                   </div>
-                  <div className="flex justify-between mt-6 md:mt-8 opacity-40 text-[7px] sm:text-[8px] md:text-[10px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em]">
-                    <span>Free Delivery</span>
-                    <span>12 Months Warranty</span>
-                    <span>Genuine</span>
-                  </div>
                 </div>
               </div>
+
+              {/* Specifications Overlay Popup */}
+              {showSpecs && (
+                <div className="absolute inset-0 z-[100] bg-white/95 backdrop-blur-sm p-6 sm:p-10 flex flex-col items-center justify-center">
+                  <div className="max-w-xl w-full">
+                    <button 
+                      onClick={() => setShowSpecs(false)}
+                      className="absolute top-4 right-4 p-2 bg-gray-100 hover:bg-red-100 rounded-full text-gray-500 hover:text-red-600 transition-all border border-transparent hover:border-red-200"
+                    >
+                      <X size={20} strokeWidth={3} />
+                    </button>
+                    <div className="flex items-center gap-3 mb-6 md:mb-10 animate-fade-in">
+                      <div className="bg-red-600 p-3 rounded-2xl shadow-xl shadow-red-200">
+                        <Sparkles className="text-white w-6 h-6" />
+                      </div>
+                      <h3 className="text-xl md:text-3xl font-black text-gray-900 tracking-tight">Full Specifications</h3>
+                    </div>
+                    <div className="bg-white rounded-3xl border border-gray-100 p-6 md:p-10 shadow-2xl shadow-gray-100 max-h-[60vh] overflow-y-auto scrollbar-thin">
+                      <div className="text-sm md:text-lg text-gray-600 leading-relaxed space-y-4">
+                        {selectedProduct.description ? (
+                          selectedProduct.description.split('\n').map((line: string, i: number) => (
+                            <p key={i} className="flex gap-3">
+                              <span className="text-red-600 mt-1.5 shrink-0">•</span>
+                              {line}
+                            </p>
+                          ))
+                        ) : (
+                          <div className="text-center py-10 opacity-50">
+                            No detailed specifications available for this model yet.
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => setShowSpecs(false)}
+                      className="mt-8 w-full bg-black text-white font-black py-4 md:py-6 rounded-2xl tracking-widest uppercase text-xs md:text-sm hover:bg-red-600 transition-all shadow-xl shadow-gray-100 hover:shadow-red-200 active:scale-95"
+                    >
+                      Back to Product
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </DialogContent>

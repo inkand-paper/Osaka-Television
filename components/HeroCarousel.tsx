@@ -79,7 +79,7 @@ export default function HeroCarousel() {
 
   return (
     <div 
-      className="relative h-[500px] md:h-[600px] bg-black overflow-hidden cursor-grab active:cursor-grabbing group select-none"
+      className="relative h-[450px] sm:h-[500px] md:h-[600px] bg-black overflow-hidden cursor-grab active:cursor-grabbing group select-none"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEndHandler}
@@ -118,7 +118,7 @@ export default function HeroCarousel() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="text-4xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tight"
+                    className="text-3xl sm:text-5xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tight"
                   >
                     {slide.title}
                   </motion.h1>
@@ -126,7 +126,7 @@ export default function HeroCarousel() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
-                    className="text-lg md:text-2xl text-gray-200 mb-10 leading-relaxed font-medium"
+                    className="text-base sm:text-lg md:text-2xl text-gray-200 mb-10 leading-relaxed font-medium"
                   >
                     {slide.description}
                   </motion.p>
@@ -134,11 +134,11 @@ export default function HeroCarousel() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
-                    className="flex gap-4 pointer-events-auto"
+                    className="flex flex-col sm:flex-row gap-3 sm:gap-4 pointer-events-auto"
                   >
                     <a 
                       href="#category" 
-                      className="inline-block bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full font-black uppercase tracking-widest text-sm transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-red-900/20"
+                      className="inline-block bg-red-600 hover:bg-red-700 text-white px-8 py-3.5 sm:py-4 rounded-full font-black uppercase tracking-widest text-xs sm:text-sm transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-red-900/20 text-center"
                     >
                       Shop Now
                     </a>
