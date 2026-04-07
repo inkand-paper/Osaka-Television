@@ -49,7 +49,7 @@ export default function Footer() {
                 <MapPin size={18} className="text-red-600 mt-1 shrink-0" />
                 <div className="text-gray-400 text-sm leading-relaxed group-hover:text-white transition-colors">
                   <strong className="text-white block mb-1">Corporate Office:</strong>
-                  মহম্মদপুর, কাদেরাবাদ হাউসিং, রোড ৫, ব্লক বি, বাসা ৪, গ্রাউন্ড ফ্লোর । 
+                  মোহাম্মদপুর, কাদেরাবাদ হাউসিং, রোড ৫, ব্লক বি, বাসা ৪, গ্রাউন্ড ফ্লোর । 
                   <a href="tel:01886469096" className="block mt-1 font-bold text-red-500 hover:text-white">📲 01886469096</a>
                 </div>
               </div>
@@ -57,7 +57,7 @@ export default function Footer() {
                 <MapPin size={18} className="text-red-600 mt-1 shrink-0" />
                 <div className="text-gray-400 text-sm leading-relaxed group-hover:text-white transition-colors">
                   <strong className="text-white block mb-1">Wholesale Center:</strong>
-                  গুলিস্তান, কাপ্তান বাজার কম্পলেক্স -ভবন ২, ২য় তলা, দোকান নং- ১০৫ (105) & ১০৬ (106), নওয়াবপুর রোড, ঢাকা।
+                  গুলিস্তান, কাপ্তান বাজার কম্পলেক্স -ভবন ২, ২য় তলা, দোকান নং- ১০৫ (105) & ১০৬ (106), নওবাবপুর রোড, ঢাকা।
                   <a href="tel:01934009834" className="block mt-1 font-bold text-red-500 hover:text-white">📲 01934009834</a>
                 </div>
               </div>

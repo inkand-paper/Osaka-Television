@@ -66,3 +66,17 @@ section[id] {
 .hide-scroll-bar::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
 }
+
+/* Safe Area Utilities for Mobile */
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.mt-safe {
+  margin-top: env(safe-area-inset-top, 0px);
+}
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+}

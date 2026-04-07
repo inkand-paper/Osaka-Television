@@ -198,7 +198,8 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen pb-24 md:pb-0">
+    <div className="min-h-screen pb-24 md:pb-0 mb-safe">
+
       <Navbar />
 
       <main>
