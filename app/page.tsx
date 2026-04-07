@@ -204,7 +204,7 @@ export default function Home() {
       <main>
         <motion.section 
           id="home" 
-          className="pt-16"
+          className="pt-28 md:pt-36"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -809,7 +809,7 @@ export default function Home() {
                     >
                       <div className="flex items-center gap-3">
                         <Sparkles size={18} className="text-red-600" />
-                        <span className="text-xs sm:text-sm md:text-base font-bold text-gray-900">Technical Specifications</span>
+                        <span className="text-xs sm:text-sm md:text-base font-bold text-gray-900">Specifications</span>
                       </div>
                       <motion.div
                         animate={{ rotate: showSpecs ? 180 : 0 }}

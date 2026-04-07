@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { Toaster } from "@/components/ui/sonner"
 import { Menu, X, Home, Image as ImageIcon, Package, Sparkles } from 'lucide-react'
 
+import { supabase } from '@/lib/supabase'
+
 export default function DashboardLayout({
   children,
 }: {
@@ -15,30 +17,26 @@ export default function DashboardLayout({
   const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  useEffect(() => {
-    const isAuth = localStorage.getItem('adminAuth')
-    if (!isAuth) {
-      router.push('/admin')
-    }
-  }, [router])
+  // Middleware handles the redirect now, so we just focus on the client session here if needed
+  // But for simple data fetching, we rely on the server-side RLS.
 
   // Close mobile menu on path change
   useEffect(() => {
     setIsMobileMenuOpen(false)
   }, [pathname])
 
-  const handleLogout = () => {
-    localStorage.removeItem('adminAuth')
-    router.push('/admin')
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    router.push('/osaka-ops')
   }
 
   const isActive = (path: string) => pathname === path
 
   const navLinks = [
-    { href: '/admin/dashboard', label: 'Dashboard', icon: Home },
-    { href: '/admin/dashboard/hero', label: 'Hero Banners', icon: Sparkles },
-    { href: '/admin/dashboard/products', label: 'Products', icon: Package },
-    { href: '/admin/dashboard/gallery', label: 'Gallery', icon: ImageIcon },
+    { href: '/osaka-ops/dashboard', label: 'Dashboard', icon: Home },
+    { href: '/osaka-ops/dashboard/hero', label: 'Hero Banners', icon: Sparkles },
+    { href: '/osaka-ops/dashboard/products', label: 'Products', icon: Package },
+    { href: '/osaka-ops/dashboard/gallery', label: 'Gallery', icon: ImageIcon },
   ]
 
   return (
@@ -73,7 +71,7 @@ export default function DashboardLayout({
                 {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
               </button>
               
-              <Link href="/admin/dashboard">
+              <Link href="/osaka-ops/dashboard">
                 <h1 className="text-2xl md:text-3xl font-bold text-white hover:text-red-300 transition cursor-pointer">
                   OSAKA <span className="text-red-400">Admin</span>
                 </h1>
@@ -83,7 +81,7 @@ export default function DashboardLayout({
                 {navLinks.map((link) => (
                   <Link key={link.href} href={link.href}>
                     <div className={`px-4 py-2 rounded-lg transition font-semibold flex items-center gap-2 ${
-                      isActive(link.href) || (link.href !== '/admin/dashboard' && pathname?.includes(link.href))
+                      isActive(link.href) || (link.href !== '/osaka-ops/dashboard' && pathname?.includes(link.href))
                         ? 'bg-white text-red-600'
                         : 'text-white hover:bg-red-800'
                       }`}>
@@ -122,7 +120,7 @@ export default function DashboardLayout({
               {navLinks.map((link) => (
                 <Link key={link.href} href={link.href}>
                   <div className={`px-4 py-4 rounded-xl transition-all font-bold flex items-center gap-4 text-lg ${
-                    isActive(link.href) || (link.href !== '/admin/dashboard' && pathname?.includes(link.href))
+                    isActive(link.href) || (link.href !== '/osaka-ops/dashboard' && pathname?.includes(link.href))
                       ? 'bg-red-600 text-white shadow-lg'
                       : 'text-gray-300 hover:bg-red-900/50 hover:text-white'
                     }`}>

@@ -85,88 +85,77 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="fixed top-0 w-full z-[101] bg-red-600 text-white overflow-hidden py-2 flex items-center shadow-md">
-        <motion.div
-           animate={{ x: ["0%", "-50%"] }}
-           transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
-           className="whitespace-nowrap flex gap-12 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] px-4"
-        >
-           <div className="flex gap-12 items-center">
-             <span>Wholesale</span>
-             <span className="opacity-40">•</span>
-             <span>Retail</span>
-             <span className="opacity-40">•</span>
-             <span>Corporate Deals</span>
-             <span className="opacity-40">•</span>
-           </div>
-           <div className="flex gap-12 items-center">
-             <span>Wholesale</span>
-             <span className="opacity-40">•</span>
-             <span>Retail</span>
-             <span className="opacity-40">•</span>
-             <span>Corporate Deals</span>
-             <span className="opacity-40">•</span>
-           </div>
-           {/* Duplicate for seamless loop */}
-           <div className="flex gap-12 items-center">
-             <span>Wholesale</span>
-             <span className="opacity-40">•</span>
-             <span>Retail</span>
-             <span className="opacity-40">•</span>
-             <span>Corporate Deals</span>
-             <span className="opacity-40">•</span>
-           </div>
-        </motion.div>
-      </div>
+      {/* Unified Top Header (Marquee + Logo Bar) */}
+      <header className="fixed top-0 left-0 w-full z-[100] flex flex-col shadow-lg border-b border-white/5">
+        {/* Top Bar (Marquee) - Notch Friendly */}
+        <div className="bg-red-600 text-white overflow-hidden py-2 flex items-center pt-[env(safe-area-inset-top,8px)]">
+          <motion.div
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ repeat: Infinity, duration: 35, ease: "linear" }}
+            className="whitespace-nowrap flex gap-10 sm:gap-20 text-[9px] md:text-xs font-black uppercase tracking-[0.3em] px-4"
+          >
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+              <div key={i} className="flex gap-2 sm:gap-4 items-center">
+                <span>Wholesale</span>
+                <span className="opacity-40">•</span>
+                <span>Retail</span>
+                <span className="opacity-40">•</span>
+                <span>Corporate Deals</span>
+                
+              </div>
+            ))}
+          </motion.div>
+        </div>
 
-      {/* Top Navbar */}
-      <nav className="fixed w-full top-7 z-[100] transition-all duration-500 bg-black/80 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex-shrink-0">
-              <a href="#home" className="group flex items-center gap-2">
-                <span className="text-2xl font-black tracking-tighter text-white group-hover:text-red-500 transition-all duration-300 transform group-hover:scale-105">
-                  OSAKA <span className="text-red-600">GROUP</span>
-                </span>
-              </a>
-            </div>
-
-            <div className="hidden md:flex items-center space-x-10">
-              {navItems.map((item) => (
-                <a 
-                  key={item.id} 
-                  href={`#${item.id}`} 
-                  onClick={(e) => {
-                    handleManualNav(item.id)
-                    if (item.id === 'category') {
-                      e.preventDefault()
-                      scrollToProducts()
-                    }
-                  }}
-                  className={`relative py-2 text-sm font-bold uppercase tracking-widest transition-all duration-300 ${
-                    activeSection === item.id ? 'text-red-500' : 'text-gray-300 hover:text-white'
-                  }`}
-                >
-                  {item.label}
-                  {activeSection === item.id && (
-                    <motion.span 
-                      layoutId="navUnderline"
-                      className="absolute bottom-0 left-0 w-full h-0.5 bg-red-600 rounded-full" 
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
+        {/* Brand Bar / Main Navbar */}
+        <nav className="bg-black/90 backdrop-blur-2xl transition-all duration-500">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16 md:h-20">
+              <div className="flex-shrink-0">
+                <a href="#home" className="group flex items-center gap-2">
+                  <span className="text-xl md:text-2xl font-black tracking-tighter text-white group-hover:text-red-500 transition-all duration-300 transform group-hover:scale-105">
+                    OSAKA <span className="text-red-600">GROUP</span>
+                  </span>
                 </a>
-              ))}
-            </div>
+              </div>
 
-            <div className="hidden md:flex items-center">
-            </div>
+              {/* Desktop Menu */}
+              <div className="hidden md:flex items-center space-x-10">
+                {navItems.map((item) => (
+                  <a 
+                    key={item.id} 
+                    href={`#${item.id}`} 
+                    onClick={(e) => {
+                      handleManualNav(item.id)
+                      if (item.id === 'category') {
+                        e.preventDefault()
+                        scrollToProducts()
+                      }
+                    }}
+                    className={`relative py-2 text-sm font-bold uppercase tracking-widest transition-all duration-300 ${
+                      activeSection === item.id ? 'text-red-500' : 'text-gray-300 hover:text-white'
+                    }`}
+                  >
+                    {item.label}
+                    {activeSection === item.id && (
+                      <motion.span 
+                        layoutId="navUnderline"
+                        className="absolute bottom-0 left-0 w-full h-0.5 bg-red-600 rounded-full" 
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </a>
+                ))}
+              </div>
 
-            <div className="md:hidden flex items-center">
+              {/* Mobile Right Section (Icons if needed) */}
+              <div className="md:hidden flex items-center h-full">
+                {/* Optional: Add a call icon or search icon here for mobile top right if desired */}
+              </div>
             </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </header>
 
       {/* Built for Mobile: Bottom App-like Navigation */}
       <nav className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 z-50 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] pb-safe flex justify-between items-center px-4 py-2">

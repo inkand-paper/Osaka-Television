@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import xss from 'xss'
 import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -138,10 +139,10 @@ export default function HeroManagement() {
     setIsSaving(true)
     try {
       const payload = {
-        title: formData.title,
-        description: formData.description,
-        image_url: formData.image_url,
-        display_order: formData.display_order,
+        title: xss(formData.title),
+        description: xss(formData.description),
+        image_url: xss(formData.image_url),
+        display_order: Number(formData.display_order),
         is_active: true
       }
 

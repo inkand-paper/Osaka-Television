@@ -76,7 +76,7 @@ export default function DashboardPage() {
       <div className="mb-8">
         <h2 className="text-3xl font-bold mb-6 text-gray-800">Quick Actions</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Link href="/admin/dashboard/products">
+          <Link href="/osaka-ops/dashboard/products">
             <Card className="p-8 hover:shadow-2xl transition-all cursor-pointer border-2 border-transparent hover:border-red-600 bg-gradient-to-br from-white to-red-50 group">
               <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">🏷️</div>
               <h3 className="text-2xl font-bold mb-3 text-gray-800 group-hover:text-red-600 transition">
@@ -89,7 +89,7 @@ export default function DashboardPage() {
             </Card>
           </Link>
 
-          <Link href="/admin/dashboard/gallery">
+          <Link href="/osaka-ops/dashboard/gallery">
             <Card className="p-8 hover:shadow-2xl transition-all cursor-pointer border-2 border-transparent hover:border-red-600 bg-gradient-to-br from-white to-blue-50 group">
               <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">🖼️</div>
               <h3 className="text-2xl font-bold mb-3 text-gray-800 group-hover:text-red-600 transition">

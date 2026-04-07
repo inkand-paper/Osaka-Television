@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import xss from 'xss'
 import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -238,14 +239,19 @@ export default function ProductsPage() {
 
   const handleAdd = async () => {
     if (!validateForm()) return
+    
+    // Sanitize inputs
     const dbData = { 
-      ...formData, 
+      name: xss(formData.name),
+      category: xss(formData.category),
+      size: xss(formData.size),
+      price: Number(formData.price),
+      description: xss(formData.description),
+      image_url: xss(formData.image_url),
       original_price: formData.original_price ? Number(formData.original_price) : null,
-      discount_percentage: formData.discount_percentage || null,
+      discount_percentage: formData.discount_percentage ? xss(formData.discount_percentage) : null,
       is_active: true
     }
-    delete (dbData as any).selectedModel
-    delete (dbData as any).selectedType
 
     const { error } = await supabase.from('products').insert([dbData])
     if (!error) {
@@ -257,13 +263,18 @@ export default function ProductsPage() {
 
   const handleEdit = async () => {
     if (!selectedProduct || !validateForm()) return
+    
+    // Sanitize inputs
     const dbData = { 
-      ...formData, 
+      name: xss(formData.name),
+      category: xss(formData.category),
+      size: xss(formData.size),
+      price: Number(formData.price),
+      description: xss(formData.description),
+      image_url: xss(formData.image_url),
       original_price: formData.original_price ? Number(formData.original_price) : null,
-      discount_percentage: formData.discount_percentage || null
+      discount_percentage: formData.discount_percentage ? xss(formData.discount_percentage) : null
     }
-    delete (dbData as any).selectedModel
-    delete (dbData as any).selectedType
 
     const { error } = await supabase.from('products').update(dbData).eq('id', selectedProduct.id)
     if (!error) {
