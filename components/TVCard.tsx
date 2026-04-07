@@ -30,45 +30,45 @@ export default function TVCard({ name, price, originalPrice, discountTag, image,
       )}
 
       {/* TV Image */}
-      <div className="bg-[#fcfcfc] h-52 md:h-64 flex items-center justify-center p-8 overflow-hidden relative group-hover:bg-red-50/30 transition-colors duration-500">
+      <div className="bg-[#fcfcfc] aspect-video flex items-center justify-center p-6 sm:p-8 overflow-hidden relative group-hover:bg-red-50/30 transition-colors duration-500">
         {image ? (
           <motion.img 
             src={image} 
             alt={name}
             className="w-full h-full object-contain drop-shadow-2xl"
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }} // smooth easeOut
           />
         ) : (
           <div className="w-full h-full rounded flex items-center justify-center text-gray-200">
-            <Package className="w-20 h-20" strokeWidth={1} />
+            <Package className="w-16 h-16 sm:w-20 sm:h-20" strokeWidth={1} />
           </div>
         )}
       </div>
       
       {/* Details */}
-      <div className="p-6 md:p-8 text-center flex flex-col flex-1 justify-between">
+      <div className="p-5 sm:p-8 text-center flex flex-col flex-1 justify-between gap-4">
         <div className="flex-1 flex flex-col justify-between">
           <div className="h-[3.5rem] md:h-[4rem] flex items-center justify-center">
-            <h4 className="font-bold text-lg md:text-xl text-gray-900 line-clamp-2 leading-snug tracking-tight group-hover:text-red-600 transition-colors px-2">
+            <h4 className="font-bold text-base sm:text-lg md:text-xl text-gray-900 line-clamp-2 leading-snug tracking-tight group-hover:text-red-600 transition-colors px-1 sm:px-2">
               {name}
             </h4>
           </div>
           
-          <div className="min-h-[60px] md:min-h-[70px] flex flex-col items-center justify-center mt-2 mb-4">
+          <div className="min-h-[50px] sm:min-h-[60px] md:min-h-[70px] flex flex-col items-center justify-center mt-1 sm:mt-2 mb-2 sm:mb-4">
             <div className="h-5 flex items-center justify-center">
               {originalPrice ? (
-                <span className="text-xs md:text-sm text-gray-400 font-bold line-through decoration-gray-300">
+                <span className="text-[10px] sm:text-xs md:text-sm text-gray-400 font-bold line-through decoration-gray-300">
                   {originalPrice}
                 </span>
               ) : (
                 <div className="h-5" /> // Spacer for consistency
               )}
             </div>
-            <p className="text-lg md:text-xl lg:text-2xl text-red-600 font-bold tracking-tight leading-none flex items-baseline gap-1.2 mt-1">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-red-600 font-bold tracking-tight leading-none flex items-baseline gap-1 mt-0.5 sm:mt-1">
               {price.toString().startsWith('MRP') ? (
                 <>
-                  <span className="text-[10px] md:text-xs font-bold text-red-600 uppercase">MRP</span>
+                  <span className="text-[8px] sm:text-[10px] md:text-xs font-bold text-red-600 uppercase">MRP</span>
                   <span>{price.toString().replace('MRP', '').trim()}</span>
                 </>
               ) : price}
@@ -83,7 +83,7 @@ export default function TVCard({ name, price, originalPrice, discountTag, image,
             e.stopPropagation();
             onClick?.();
           }}
-          className="w-full bg-black hover:bg-gray-900 text-white px-6 py-4 rounded-2xl font-black transition-all uppercase tracking-[0.1em] text-xs shadow-lg shadow-black/10 group-hover:shadow-black/20"
+          className="w-full h-auto flex-shrink-0 bg-black hover:bg-gray-900 text-white px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-5 rounded-xl sm:rounded-2xl font-black transition-all uppercase tracking-[0.1em] text-[10px] sm:text-xs md:text-sm shadow-lg shadow-black/10 group-hover:shadow-black/20"
         >
           Explore Now
         </motion.button>

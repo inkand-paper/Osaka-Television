@@ -77,7 +77,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-500 text-xs font-black uppercase tracking-widest">
-            &copy; 2026 OSAKA GROUP. AUTHORIZED GLOBAL STORE.
+            &copy; OSAKA GROUP. AUTHORIZED GLOBAL STORE.
           </p>
           <div className="flex gap-6 text-[10px] font-black uppercase tracking-widest text-gray-500">
             <a href="#" className="hover:text-red-600">Privacy Policy</a>

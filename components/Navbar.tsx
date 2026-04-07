@@ -85,20 +85,37 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="fixed top-0 w-full z-[101] bg-red-600 text-white overflow-hidden py-1.5 flex items-center">
+      <div className="fixed top-0 w-full z-[101] bg-red-600 text-white overflow-hidden py-2 flex items-center shadow-md">
         <motion.div
-           animate={{ x: [0, -1000] }}
-           transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-           className="whitespace-nowrap flex gap-10 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] px-4"
+           animate={{ x: ["0%", "-50%"] }}
+           transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
+           className="whitespace-nowrap flex gap-12 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] px-4"
         >
-           <span>Wholesale • Retail • Corporate deals</span>
-           <span>Wholesale • Retail • Corporate deals</span>
-           <span>Wholesale • Retail • Corporate deals</span>
-           <span>Wholesale • Retail • Corporate deals</span>
-           <span>Wholesale • Retail • Corporate deals</span>
-           <span>Wholesale • Retail • Corporate deals</span>
-           <span>Wholesale • Retail • Corporate deals</span>
-           <span>Wholesale • Retail • Corporate deals</span>
+           <div className="flex gap-12 items-center">
+             <span>Wholesale</span>
+             <span className="opacity-40">•</span>
+             <span>Retail</span>
+             <span className="opacity-40">•</span>
+             <span>Corporate Deals</span>
+             <span className="opacity-40">•</span>
+           </div>
+           <div className="flex gap-12 items-center">
+             <span>Wholesale</span>
+             <span className="opacity-40">•</span>
+             <span>Retail</span>
+             <span className="opacity-40">•</span>
+             <span>Corporate Deals</span>
+             <span className="opacity-40">•</span>
+           </div>
+           {/* Duplicate for seamless loop */}
+           <div className="flex gap-12 items-center">
+             <span>Wholesale</span>
+             <span className="opacity-40">•</span>
+             <span>Retail</span>
+             <span className="opacity-40">•</span>
+             <span>Corporate Deals</span>
+             <span className="opacity-40">•</span>
+           </div>
         </motion.div>
       </div>
 

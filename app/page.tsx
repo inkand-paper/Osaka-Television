@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { motion, AnimatePresence } from 'framer-motion'
-import { CheckCircle2, Package, Tv, Wind, ChefHat, Sparkles, Mail, Phone, ImageIcon, Clock, Calendar, ArrowRight, X } from "lucide-react"
+import { CheckCircle2, Package, Tv, Wind, ChefHat, Sparkles, Mail, Phone, ImageIcon, Clock, Calendar, ArrowRight, X, ChevronDown, Shield, Zap, Maximize } from "lucide-react"
 import GalleryLightbox from '@/components/GalleryLightbox'
 
 interface Product {
@@ -320,7 +320,7 @@ export default function Home() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => handleMainCategoryClick(category)}
-                        className={`px-5 py-2.5 sm:px-10 sm:py-4 whitespace-nowrap rounded-full font-black text-sm sm:text-lg md:text-xl transition-all shadow-sm ${selectedMainCategory === category
+                        className={`px-4 py-2.5 sm:px-8 sm:py-3 md:px-10 md:py-4 whitespace-nowrap rounded-full font-black text-xs sm:text-base md:text-xl transition-all shadow-sm ${selectedMainCategory === category
                             ? 'bg-red-600 text-white shadow-xl ring-4 ring-red-100'
                             : 'bg-white text-gray-800 hover:bg-gray-50 border-2 border-gray-100'
                           }`}
@@ -349,7 +349,7 @@ export default function Home() {
                           <button
                             key={size}
                             onClick={() => handleSizeClick(size)}
-                            className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-md border-2 ${selectedSize === size
+                            className={`px-3 py-1.5 sm:px-6 sm:py-2.5 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-xs sm:text-sm md:text-lg transition-all shadow-md border-2 ${selectedSize === size
                                 ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
                                 : 'bg-gray-50 text-gray-700 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
                               }`}
@@ -378,7 +378,7 @@ export default function Home() {
           setSelectedModel('All')
           scrollToProductsForCategory(selectedMainCategory)
         }}
-        className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-md border-2 ${
+        className={`px-3 py-1.5 sm:px-6 sm:py-2.5 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-xs sm:text-sm md:text-lg transition-all shadow-md border-2 ${
           selectedModel === 'All'
             ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
             : 'bg-gray-50 text-gray-700 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
@@ -395,7 +395,7 @@ export default function Home() {
             setSelectedModel(model)
             scrollToProductsForCategory(selectedMainCategory)
           }}
-          className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-md border-2 ${
+          className={`px-3 py-1.5 sm:px-6 sm:py-2.5 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-xs sm:text-sm md:text-lg transition-all shadow-md border-2 ${
             selectedModel === model
               ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
               : 'bg-gray-50 text-gray-700 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
@@ -410,7 +410,7 @@ export default function Home() {
 
                     {/* TV Product Grid */}
                     <div id="tv-products" className="w-full scroll-mt-24">
-                      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 sm:gap-8 justify-center">
                         {products
                           .filter(p => p.category === selectedSize)
                           .filter(p => selectedModel === 'All' || p.name.includes(selectedModel))
@@ -462,7 +462,7 @@ export default function Home() {
                           <button
                             key={size}
                             onClick={() => handleSizeClick(size)}
-                            className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-md border-2 ${selectedSize === size
+                            className={`px-3 py-1.5 sm:px-6 sm:py-2.5 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-xs sm:text-sm md:text-lg transition-all shadow-md border-2 ${selectedSize === size
                                 ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
                                 : 'bg-gray-50 text-gray-700 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
                               }`}
@@ -490,7 +490,7 @@ export default function Home() {
                             setSelectedModel('All')
                             scrollToProductsForCategory(selectedMainCategory)
                           }}
-                          className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-md border-2 ${selectedModel === 'All'
+                          className={`px-3 py-1.5 sm:px-6 sm:py-2.5 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-xs sm:text-sm md:text-lg transition-all shadow-md border-2 ${selectedModel === 'All'
                               ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
                               : 'bg-gray-50 text-gray-600 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
                             }`}
@@ -504,7 +504,7 @@ export default function Home() {
                               setSelectedModel(model)
                               scrollToProductsForCategory(selectedMainCategory)
                             }}
-                            className={`px-4 py-2 sm:px-7 sm:py-3 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-sm sm:text-base md:text-lg transition-all shadow-md border-2 ${selectedModel === model
+                            className={`px-3 py-1.5 sm:px-6 sm:py-2.5 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-xs sm:text-sm md:text-lg transition-all shadow-md border-2 ${selectedModel === model
                                 ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
                                 : 'bg-gray-50 text-gray-600 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
                               }`}
@@ -518,7 +518,7 @@ export default function Home() {
 
                     {/* Fan Product Grid */}
                     <div id="fan-products" className="w-full scroll-mt-24">
-                      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 sm:gap-8 justify-center">
                         {products
                           .filter(p => p.category === selectedSize)
                           .filter(p => selectedModel === 'All' || p.name.includes(selectedModel))
@@ -556,7 +556,7 @@ export default function Home() {
                 {selectedMainCategory === 'Cooker' && (
                   <div className="w-full flex flex-col items-center">
                     <div id="cooker-products" className="w-full mt-4 scroll-mt-24">
-                      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 sm:gap-8 justify-center">
                         {products
                           .filter(p => p.category === 'Cooker')
                           .map((product) => (
@@ -801,81 +801,85 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Description Button */}
-                  <div className="space-y-2 md:space-y-4 pt-1 md:pt-4">
-                    <p className="text-gray-400 font-bold uppercase text-[9px] md:text-xs tracking-widest">Product Details</p>
+                  {/* Specifications Accordion */}
+                  <div className="pt-2 md:pt-4">
                     <button 
-                      onClick={() => setShowSpecs(true)}
-                      className="w-full text-left flex items-center justify-between p-4 md:p-6 bg-gray-50 hover:bg-red-50/50 rounded-xl md:rounded-2xl border border-gray-100 group transition-all"
+                      onClick={() => setShowSpecs(!showSpecs)}
+                      className="w-full flex items-center justify-between p-4 md:p-6 bg-gray-50 hover:bg-red-50/50 rounded-xl md:rounded-2xl border border-gray-100 group transition-all"
                     >
-                      <span className="text-xs sm:text-sm md:text-base font-bold text-gray-900 group-hover:text-red-600 transition-colors">View Product Specifications</span>
-                      <ArrowRight size={18} className="text-gray-400 group-hover:text-red-600 md:group-hover:translate-x-1 transition-all" />
+                      <div className="flex items-center gap-3">
+                        <Sparkles size={18} className="text-red-600" />
+                        <span className="text-xs sm:text-sm md:text-base font-bold text-gray-900">Technical Specifications</span>
+                      </div>
+                      <motion.div
+                        animate={{ rotate: showSpecs ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <ChevronDown size={18} className="text-gray-400 group-hover:text-red-600" />
+                      </motion.div>
                     </button>
+
+                    <AnimatePresence>
+                      {showSpecs && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="p-4 md:p-6 bg-white border-x border-b border-gray-50 rounded-b-2xl space-y-3">
+                            {selectedProduct.description ? (
+                              selectedProduct.description.split('\n').map((line: string, i: number) => {
+                                // Try to extract key-value if present (e.g., "Model: OS-32")
+                                const parts = line.split(':');
+                                if (parts.length >= 2) {
+                                  return (
+                                    <div key={i} className="flex justify-between items-center py-2 border-b border-gray-50 last:border-0 hover:bg-gray-50/50 px-2 rounded-lg transition-colors">
+                                      <span className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-wider">{parts[0].trim()}</span>
+                                      <span className="text-xs md:text-sm font-black text-gray-800">{parts.slice(1).join(':').trim()}</span>
+                                    </div>
+                                  );
+                                }
+                                return (
+                                  <div key={i} className="flex gap-3 py-2 px-2 hover:bg-gray-50/50 rounded-lg transition-colors">
+                                    <span className="text-red-600 mt-1.5 shrink-0 text-[10px]">•</span>
+                                    <span className="text-xs md:text-sm font-medium text-gray-600 leading-relaxed">{line}</span>
+                                  </div>
+                                );
+                              })
+                            ) : (
+                              <div className="text-center py-6 opacity-50 text-sm">
+                                No detailed specifications available.
+                              </div>
+                            )}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
 
                 {/* Action Footer */}
-                 <div className="mt-6 md:mt-12">
-                  <div className="flex flex-col 2xl:grid 2xl:grid-cols-2 gap-3 md:gap-5">
+                <div className="mt-8 md:mt-12">
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 md:gap-5 w-full">
                     <a 
                       href={`https://wa.me/8801886469096?text=${encodeURIComponent(`Hello OSAKA GROUP!\nI would like to order:\n*${selectedProduct.name}*\n\nPrice: MRP  ${(selectedProduct.original_price || selectedProduct.price).toLocaleString()}  ৳\nSize: ${selectedProduct.size || 'N/A'}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-[#25D366] hover:bg-[#128C7E] text-white font-black py-4 md:py-6 rounded-xl md:rounded-2xl shadow-xl shadow-green-100 transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-xs md:text-base cursor-pointer"
+                      className="bg-[#25D366] hover:bg-[#128C7E] text-white font-black py-4 sm:py-5 md:py-6 rounded-xl md:rounded-2xl shadow-xl shadow-green-100 transition-all active:scale-95 flex items-center justify-center gap-2 sm:gap-3 uppercase tracking-widest text-[10px] sm:text-xs md:text-sm lg:text-base cursor-pointer text-center leading-tight"
                     >
                       Order via WhatsApp
                     </a>
                     <a 
                       href="tel:+8801886469096"
-                      className="bg-black hover:bg-gray-800 text-white font-black py-4 md:py-6 rounded-xl md:rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-xs md:text-base cursor-pointer"
+                      className="bg-black hover:bg-gray-800 text-white font-black py-4 sm:py-5 md:py-6 rounded-xl md:rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-2 sm:gap-3 uppercase tracking-widest text-[10px] sm:text-xs md:text-sm lg:text-base cursor-pointer text-center leading-tight"
                     >
                       Call Expert
                     </a>
                   </div>
                 </div>
               </div>
-
-              {/* Specifications Overlay Popup */}
-              {showSpecs && (
-                <div className="absolute inset-0 z-[100] bg-white/95 backdrop-blur-sm p-6 sm:p-10 flex flex-col items-center justify-center">
-                  <div className="max-w-xl w-full">
-                    <button 
-                      onClick={() => setShowSpecs(false)}
-                      className="absolute top-4 right-4 p-2 bg-gray-100 hover:bg-red-100 rounded-full text-gray-500 hover:text-red-600 transition-all border border-transparent hover:border-red-200"
-                    >
-                      <X size={20} strokeWidth={3} />
-                    </button>
-                    <div className="flex items-center gap-3 mb-6 md:mb-10 animate-fade-in">
-                      <div className="bg-red-600 p-3 rounded-2xl shadow-xl shadow-red-200">
-                        <Sparkles className="text-white w-6 h-6" />
-                      </div>
-                      <h3 className="text-xl md:text-3xl font-black text-gray-900 tracking-tight">Full Specifications</h3>
-                    </div>
-                    <div className="bg-white rounded-3xl border border-gray-100 p-6 md:p-10 shadow-2xl shadow-gray-100 max-h-[60vh] overflow-y-auto scrollbar-thin">
-                      <div className="text-sm md:text-lg text-gray-600 leading-relaxed space-y-4">
-                        {selectedProduct.description ? (
-                          selectedProduct.description.split('\n').map((line: string, i: number) => (
-                            <p key={i} className="flex gap-3">
-                              <span className="text-red-600 mt-1.5 shrink-0">•</span>
-                              {line}
-                            </p>
-                          ))
-                        ) : (
-                          <div className="text-center py-10 opacity-50">
-                            No detailed specifications available for this model yet.
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <button 
-                      onClick={() => setShowSpecs(false)}
-                      className="mt-8 w-full bg-black text-white font-black py-4 md:py-6 rounded-2xl tracking-widest uppercase text-xs md:text-sm hover:bg-red-600 transition-all shadow-xl shadow-gray-100 hover:shadow-red-200 active:scale-95"
-                    >
-                      Back to Product
-                    </button>
-                  </div>
-                </div>
-              )}
             </div>
           )}
         </DialogContent>
