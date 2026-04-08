@@ -97,7 +97,7 @@ export default function Navbar() {
             <motion.div
               animate={{ x: ['0%', '-50%'] }}
               transition={{ repeat: Infinity, duration: 30, ease: 'linear' }}
-              className="whitespace-nowrap flex gap-8 xs:gap-12 sm:gap-16 md:gap-24 text-[10px] xs:text-[11px] md:text-sm font-black uppercase tracking-[0.25em] md:tracking-[0.3em] text-black"
+              className="whitespace-nowrap flex gap-8 xs:gap-12 sm:gap-16 md:gap-24 text-[10px] xs:text-[11px] md:text-sm font-black uppercase tracking-[0.25em] md:tracking-[0.3em] text-white"
             >
               {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                 <div key={i} className="flex gap-2 sm:gap-4 items-center shrink-0">
