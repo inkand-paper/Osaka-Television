@@ -23,10 +23,8 @@
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
 
-    /* ── iOS Visual Viewport Vars (set by Navbar JS) ─────────────────────── */
-    --vv-top: 0px;
-    --vv-height: 100vh;
-    --header-h: 80px; /* fallback; Navbar updates dynamically */
+    /* Header height - set by Navbar */
+    --header-h: 80px;
   }
 
   .dark {
@@ -52,11 +50,19 @@
   }
 }
 
+/* Utility classes - place these OUTSIDE @layer base */
+.flex-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.flex-content {
+  flex: 1;
+}
+
 /* ──────────────────────────────────────────────────────────────────────────
    iOS Safari + Layout stability
-   - Avoid global will-change on every nav/header (can worsen compositing)
-   - Use dvh where possible
-   - Keep horizontal overflow hidden
    ────────────────────────────────────────────────────────────────────────── */
 
 html {

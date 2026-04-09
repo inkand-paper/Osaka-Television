@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Navbar from '@/components/Navbar'
+import BottomNav from '@/components/BottomNav'
 import HeroCarousel from '@/components/HeroCarousel'
 import Footer from '@/components/Footer'
 import TVCard from '@/components/TVCard'
@@ -205,11 +206,12 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen pb-24 md:pb-0 mb-safe">
+    <div className="min-h-screen flex flex-col pb-20 md:pb-0">
 
       <Navbar />
 
-      <main>
+      
+        <main>
         <motion.section 
           id="home" 
           className="pt-28 md:pt-36"
@@ -740,6 +742,8 @@ export default function Home() {
           </div>
         </motion.section>
       </main>
+      
+      
 
       {/* PRODUCT DETAILS MODAL */}
       <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
@@ -916,6 +920,8 @@ export default function Home() {
 
       <Footer />
       <SocialLinks />
+      
+      <BottomNav />
     </div>
   )
 }
