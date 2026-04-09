@@ -47,29 +47,42 @@
   }
 }
 
-/* ─── iOS Safari Fix ──────────────────────────────────────────────────────── */
-/* Fix viewport height — iOS Safari's dynamic toolbar shrinks 100vh incorrectly */
+/* ─── iOS Safari Core Fixes ───────────────────────────────────────────────── */
+
+/* Fix 2: Use dynamic viewport height so iOS Safari address bar
+   doesn't cause layout shifts or bottom nav overlap */
 html {
-  height: -webkit-fill-available;
+  height: 100%;
+  overflow-x: hidden;
   scroll-behavior: smooth;
+  /* Fallback for older iOS that doesn't support dvh */
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  min-height: 100vh;
-  /* Fallback for iOS Safari so body fills the real visible height */
-  min-height: -webkit-fill-available;
+  height: 100%;
+  overflow-x: hidden;
+  /* Fix 2: 100dvh = dynamic viewport height, accounts for iOS toolbar */
+  min-height: 100dvh;
 }
 
-/* Force correct fixed positioning on iOS Safari.
-   translateZ(0) promotes elements to their own GPU layer WITHOUT
-   breaking position:fixed like transform-gpu / will-change:transform does. */
-@supports (-webkit-touch-callout: none) {
-  header.fixed,
-  nav.fixed {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
+/* Fix 3: Remove tap highlight flash on iOS for all interactive elements */
+* {
+  -webkit-tap-highlight-color: transparent;
 }
+
+/* Fix 3: will-change on fixed nav elements to reduce flicker on iOS */
+header,
+nav {
+  will-change: transform;
+}
+
+/* Fix 5: ensure all links and buttons show pointer cursor */
+a,
+button {
+  cursor: pointer;
+}
+
 /* ─────────────────────────────────────────────────────────────────────────── */
 
 /* Prevents the fixed Navbar from covering section titles */

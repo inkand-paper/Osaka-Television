@@ -10,12 +10,11 @@ export default function Navbar() {
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null)
 
   const scrollToProducts = () => {
-    let savedCategory = 'Television'
-    try {
-      savedCategory = localStorage.getItem('mainCategory') || 'Television'
-    } catch {
-      // Ignore storage errors.
-    }
+    // Fix 6: safer localStorage access
+    const savedCategory =
+      typeof window !== 'undefined' && localStorage.getItem('mainCategory')
+        ? localStorage.getItem('mainCategory')
+        : 'Television'
 
     const targetId =
       savedCategory === 'Television'
@@ -29,7 +28,10 @@ export default function Navbar() {
     const el = document.getElementById(targetId)
     if (el) {
       isAutomaticScroll.current = true
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+
+      // Fix 1: replace scrollIntoView with window.scrollTo for iOS reliability
+      const y = el.getBoundingClientRect().top + window.pageYOffset - 80
+      window.scrollTo({ top: y, behavior: 'smooth' })
 
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current)
       scrollTimeout.current = setTimeout(() => {
@@ -55,15 +57,17 @@ export default function Navbar() {
       const sections = ['home', 'about', 'category', 'gallery', 'contact']
       let currentIdx = 0
 
+      // Fix 4: use scrollY + offsetTop instead of getBoundingClientRect
+      // avoids iOS innerHeight fluctuation when address bar hides/shows
+      const scrollPosition = window.scrollY + window.innerHeight / 2
+
       for (let i = 0; i < sections.length; i++) {
         const element = document.getElementById(sections[i])
-        if (element) {
-          const rect = element.getBoundingClientRect()
-          if (rect.top <= window.innerHeight / 3) {
-            currentIdx = i
-          }
+        if (element && element.offsetTop <= scrollPosition) {
+          currentIdx = i
         }
       }
+
       setActiveSection(sections[currentIdx])
     }
 
@@ -115,7 +119,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Brand / Desktop nav bar */}
+        {/* Brand / Desktop nav bar — backdrop-blur removed, causes iOS glitches */}
         <nav className="bg-black/95 transition-all duration-500">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-14 sm:h-16 md:h-20">
@@ -142,7 +146,7 @@ export default function Navbar() {
                         scrollToProducts()
                       }
                     }}
-                    className={`relative py-2 text-sm font-bold uppercase tracking-widest transition-all duration-300 ${
+                    className={`relative py-2 text-sm font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer ${
                       activeSection === item.id
                         ? 'text-red-500'
                         : 'text-gray-300 hover:text-white'
@@ -194,19 +198,18 @@ export default function Navbar() {
                     scrollToProducts()
                   }
                 }}
-                className={`relative flex flex-col flex-1 min-w-0 items-center p-1.5 sm:p-2 rounded-xl transition-all touch-manipulation ${
+                className={`relative flex flex-col flex-1 min-w-0 items-center p-1.5 sm:p-2 rounded-xl transition-all duration-200 touch-manipulation cursor-pointer ${
                   isActive
                     ? 'text-red-600'
-                    : 'text-gray-400 hover:text-red-600 active:bg-red-50'
+                    : 'text-gray-400 active:bg-red-50'
                 }`}
               >
-                {isActive && (
-                  <motion.div
-                    layoutId="mobileNavBg"
-                    className="absolute inset-0 bg-red-50 rounded-xl"
-                    transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                  />
-                )}
+                {/* Plain div replaces motion.div — iOS flickers with Framer Motion on fixed elements */}
+                <div
+                  className={`absolute inset-0 rounded-xl transition-opacity duration-200 bg-red-50 ${
+                    isActive ? 'opacity-100' : 'opacity-0'
+                  }`}
+                />
                 <div className="relative z-10 flex flex-col items-center gap-0.5">
                   <item.Icon
                     size={20}
