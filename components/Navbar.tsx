@@ -139,7 +139,7 @@ export default function Navbar() {
           <div className="flex justify-between items-center h-14 sm:h-16 md:h-20">
             <div className="flex-shrink-0">
               <a href="#home" className="group flex items-center gap-2">
-                <span className="text-lg sm:text-xl md:text-2xl font-black tracking-tighter text-white group-hover:text-red-500 transition-all duration-300 group-hover:scale-105 inline-block">
+                <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black tracking-tighter text-white group-hover:text-red-500 transition-all duration-300 group-hover:scale-105 inline-block">
                   OSAKA <span className="text-red-600">GROUP</span>
                 </span>
               </a>
