@@ -34,7 +34,14 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  console.log(`[Middleware] Path: ${request.nextUrl.pathname} | User: ${user?.email || 'None'}`)
+  const userRole = user?.user_metadata?.role
+  const userEmail = user?.email
+  
+  // Check if email is in the admin whitelist from env
+  const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim())
+  const isAdmin = userRole === 'admin' || (userEmail && adminEmails.includes(userEmail))
+
+  console.log(`[Middleware] Path: ${request.nextUrl.pathname} | User: ${userEmail || 'None'} | Admin: ${isAdmin}`)
 
   // Protect admin routes
   if (request.nextUrl.pathname.startsWith('/admin') || request.nextUrl.pathname.startsWith('/osaka-ops')) {
@@ -45,9 +52,9 @@ export async function middleware(request: NextRequest) {
       return supabaseResponse
     }
 
-    if (!user) {
+    // Redirect if not logged in or not an admin
+    if (!user || !isAdmin) {
       console.log(`[Middleware] Unauthorized access attempt to ${request.nextUrl.pathname}, redirecting to /osaka-ops`)
-      // Redirect to new obfuscated login path if not authenticated
       const url = request.nextUrl.clone()
       url.pathname = '/osaka-ops'
       return NextResponse.redirect(url)
