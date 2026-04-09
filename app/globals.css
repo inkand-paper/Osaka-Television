@@ -22,6 +22,11 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
+
+    /* ── iOS Visual Viewport Vars (set by Navbar JS) ─────────────────────── */
+    --vv-top: 0px;
+    --vv-height: 100vh;
+    --header-h: 80px; /* fallback; Navbar updates dynamically */
   }
 
   .dark {
@@ -47,47 +52,41 @@
   }
 }
 
-/* ─── iOS Safari Core Fixes ───────────────────────────────────────────────── */
+/* ──────────────────────────────────────────────────────────────────────────
+   iOS Safari + Layout stability
+   - Avoid global will-change on every nav/header (can worsen compositing)
+   - Use dvh where possible
+   - Keep horizontal overflow hidden
+   ────────────────────────────────────────────────────────────────────────── */
 
-/* Fix 2: Use dynamic viewport height so iOS Safari address bar
-   doesn't cause layout shifts or bottom nav overlap */
 html {
   height: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
-  /* Fallback for older iOS that doesn't support dvh */
   -webkit-text-size-adjust: 100%;
 }
 
 body {
   height: 100%;
   overflow-x: hidden;
-  /* Fix 2: 100dvh = dynamic viewport height, accounts for iOS toolbar */
   min-height: 100dvh;
 }
 
-/* Fix 3: Remove tap highlight flash on iOS for all interactive elements */
+/* Remove tap highlight flash on iOS for all interactive elements */
 * {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Fix 3: will-change on fixed nav elements to reduce flicker on iOS */
-header,
-nav {
-  will-change: transform;
-}
-
-/* Fix 5: ensure all links and buttons show pointer cursor */
+/* Ensure all links and buttons show pointer cursor */
 a,
 button {
   cursor: pointer;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────── */
-
-/* Prevents the fixed Navbar from covering section titles */
+/* Prevent fixed Navbar from covering section titles.
+   Uses the real measured header height via CSS var. */
 section[id] {
-  scroll-margin-top: 70px;
+  scroll-margin-top: var(--header-h, 70px);
 }
 
 /* Utilities for hiding scrollbars but allowing touch swipe */

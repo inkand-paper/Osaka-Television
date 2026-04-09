@@ -70,12 +70,19 @@ export default function Home() {
   const [lightboxIndex, setLightboxIndex] = useState(0)
 
   const scrollToId = (id: string) => {
-    // Wait for React to render conditional sections before scrolling.
-    window.setTimeout(() => {
-      const el = document.getElementById(id)
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, 120)
-  }
+  window.setTimeout(() => {
+    const el = document.getElementById(id)
+    if (!el) return
+
+    const headerH =
+      Number.parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue('--header-h')
+      ) || 80
+
+    const y = el.getBoundingClientRect().top + window.pageYOffset - headerH
+    window.scrollTo({ top: y, behavior: 'smooth' })
+  }, 120)
+}
 
   const scrollToProductsForCategory = (category: string) => {
     const targetId =
