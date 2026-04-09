@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { Eye, EyeOff } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { isUserAdmin } from './signup-internal/actions'
 import { Button } from '@/components/ui/button'
@@ -13,6 +14,7 @@ import { Card } from '@/components/ui/card'
 export default function AdminLogin() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [sessionUser, setSessionUser] = useState<any>(null)
@@ -110,7 +112,24 @@ export default function AdminLogin() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="password" className="text-gray-700 font-black text-xs uppercase tracking-widest">Secret Key</Label>
-                  <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="h-14 text-base border-2 border-gray-100 focus:border-red-600 transition-all rounded-xl" required />
+                  <div className="relative group">
+                    <Input 
+                      id="password" 
+                      type={showPassword ? "text" : "password"} 
+                      value={password} 
+                      onChange={(e) => setPassword(e.target.value)} 
+                      placeholder="••••••••" 
+                      className="h-14 text-base border-2 border-gray-100 focus:border-red-600 transition-all rounded-xl pr-12" 
+                      required 
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-600 transition-colors focus:outline-none"
+                    >
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
                 </div>
                 {error && (
                   <div className="bg-red-50 border-l-4 border-red-600 p-4 rounded-xl">

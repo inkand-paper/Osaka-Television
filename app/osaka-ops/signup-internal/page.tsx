@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { validateRegistrationKey } from './actions'
+import { Eye, EyeOff } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -13,6 +14,8 @@ export default function SignupInternal() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [regKey, setRegKey] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showRegKey, setShowRegKey] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
@@ -82,15 +85,24 @@ export default function SignupInternal() {
 
           <div className="space-y-2">
             <Label htmlFor="password" className="font-bold text-gray-700 text-xs uppercase tracking-widest">Strong Password</Label>
-            <Input 
-              id="password" 
-              type="password" 
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="h-12 border-2 border-gray-100 focus:border-red-600 transition-all rounded-xl"
-              required
-            />
+            <div className="relative">
+              <Input 
+                id="password" 
+                type={showPassword ? "text" : "password"} 
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="h-12 border-2 border-gray-100 focus:border-red-600 transition-all rounded-xl pr-12"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-600 transition-colors focus:outline-none"
+              >
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
 
           <div className="space-y-2">
@@ -98,15 +110,24 @@ export default function SignupInternal() {
               <span>Registration Key</span>
               <span className="text-[10px] bg-red-100 px-2 py-0.5 rounded-full">REQUIRED</span>
             </Label>
-            <Input 
-              id="regKey" 
-              type="password" 
-              placeholder="Security Key"
-              value={regKey}
-              onChange={(e) => setRegKey(e.target.value)}
-              className="h-12 border-2 border-red-50 focus:border-red-600 transition-all rounded-xl"
-              required
-            />
+            <div className="relative">
+              <Input 
+                id="regKey" 
+                type={showRegKey ? "text" : "password"} 
+                placeholder="Security Key"
+                value={regKey}
+                onChange={(e) => setRegKey(e.target.value)}
+                className="h-12 border-2 border-red-50 focus:border-red-600 transition-all rounded-xl pr-12"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowRegKey(!showRegKey)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-700 transition-colors focus:outline-none"
+              >
+                {showRegKey ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
 
           {error && (
