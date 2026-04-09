@@ -46,25 +46,44 @@
     --ring: 212.7 26.8% 83.9%;
   }
 }
-/* Enable smooth scrolling for the whole page */
+
+/* ─── iOS Safari Fix ──────────────────────────────────────────────────────── */
+/* Fix viewport height — iOS Safari's dynamic toolbar shrinks 100vh incorrectly */
 html {
+  height: -webkit-fill-available;
   scroll-behavior: smooth;
 }
 
-/* Prevents the fixed Navbar from covering section titles.
-   We apply it to all sections with an ID.
-*/
+body {
+  min-height: 100vh;
+  /* Fallback for iOS Safari so body fills the real visible height */
+  min-height: -webkit-fill-available;
+}
+
+/* Force correct fixed positioning on iOS Safari.
+   translateZ(0) promotes elements to their own GPU layer WITHOUT
+   breaking position:fixed like transform-gpu / will-change:transform does. */
+@supports (-webkit-touch-callout: none) {
+  header.fixed,
+  nav.fixed {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+/* Prevents the fixed Navbar from covering section titles */
 section[id] {
   scroll-margin-top: 70px;
 }
 
 /* Utilities for hiding scrollbars but allowing touch swipe */
 .hide-scroll-bar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .hide-scroll-bar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
+  display: none;
 }
 
 /* Safe Area Utilities for Mobile */
@@ -79,4 +98,4 @@ section[id] {
 }
 .mb-safe {
   margin-bottom: env(safe-area-inset-bottom, 0px);
-}
+}

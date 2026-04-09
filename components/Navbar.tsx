@@ -85,13 +85,16 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ─── Fixed Top Header ─────────────────────────────────────────── */}
+      {/* Fixed Top Header */}
       <header
-        className="fixed top-0 left-0 w-full z-[100] flex flex-col shadow-lg border-b border-white/5 transform-gpu will-change-transform"
-        /* Push content below the notch on iPhones */
-        style={{ paddingTop: 'env(safe-area-inset-top)' }}
+        className="fixed top-0 left-0 w-full z-[100] flex flex-col shadow-lg border-b border-white/5"
+        style={{
+          paddingTop: 'env(safe-area-inset-top)',
+          WebkitBackfaceVisibility: 'hidden',
+          backfaceVisibility: 'hidden',
+        }}
       >
-        {/* ── Marquee bar ── */}
+        {/* Marquee bar */}
         <div className="bg-red-600 overflow-hidden">
           <div className="h-8 sm:h-9 md:h-10 flex items-center">
             <motion.div
@@ -112,8 +115,8 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* ── Brand / Desktop nav bar ── */}
-        <nav className="bg-black/90 backdrop-blur-2xl transition-all duration-500">
+        {/* Brand / Desktop nav bar */}
+        <nav className="bg-black/95 transition-all duration-500">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-14 sm:h-16 md:h-20">
 
@@ -164,19 +167,17 @@ export default function Navbar() {
         </nav>
       </header>
 
-      {/* ─── Mobile Bottom Navigation ─────────────────────────────────── */}
-      {/*
-        pb-safe  →  respects iPhone home-indicator via env(safe-area-inset-bottom).
-        Make sure your global CSS / tailwind.config includes:
-          theme.extend.padding = { safe: 'env(safe-area-inset-bottom)' }
-        OR replace `pb-safe` with an inline style shown below.
-      */}
+      {/* Mobile Bottom Navigation */}
       <nav
-        className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 z-50 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] transform-gpu will-change-transform"
+        className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 z-50 shadow-[0_-10px_40px_rgba(0,0,0,0.08)]"
         style={{
-          paddingBottom: 'env(safe-area-inset-bottom)',
+          paddingBottom: 'max(env(safe-area-inset-bottom), 8px)',
           paddingLeft: 'env(safe-area-inset-left)',
           paddingRight: 'env(safe-area-inset-right)',
+          WebkitBackfaceVisibility: 'hidden',
+          backfaceVisibility: 'hidden',
+          WebkitTransform: 'translateZ(0)',
+          transform: 'translateZ(0)',
         }}
       >
         <div className="flex justify-between items-center px-1 xs:px-2 sm:px-4 py-1.5 sm:py-2">
@@ -193,7 +194,6 @@ export default function Navbar() {
                     scrollToProducts()
                   }
                 }}
-                /* min-w-0 + flex-1 keeps all 5 items evenly distributed on tiny screens */
                 className={`relative flex flex-col flex-1 min-w-0 items-center p-1.5 sm:p-2 rounded-xl transition-all touch-manipulation ${
                   isActive
                     ? 'text-red-600'
@@ -208,7 +208,6 @@ export default function Navbar() {
                   />
                 )}
                 <div className="relative z-10 flex flex-col items-center gap-0.5">
-                  {/* Slightly smaller icon on very small screens */}
                   <item.Icon
                     size={20}
                     className="sm:w-[22px] sm:h-[22px]"
