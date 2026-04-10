@@ -149,7 +149,7 @@ export default function ProductsPage() {
   const validateForm = () => {
     if (!formData.category) { toast.error("Please select a size category"); return false; }
     if (!formData.selectedModel) { toast.error("Please select a model name"); return false; }
-    if (hasTypes(formData.category) && !formData.selectedType) { toast.error("Please select a type"); return false; }
+    if (hasTypes(formData.category) && !formData.selectedType && productTypes.length > 0) { toast.error("Please select a type"); return false; }
     if (formData.price <= 0) { toast.error("Price must be greater than 0"); return false; }
     return true;
   }
@@ -258,7 +258,7 @@ export default function ProductsPage() {
       toast.success(`${formData.name} added to catalog`)
       setAddDialog(false)
       fetchProducts()
-    } else toast.error("Failed to add product")
+    } else toast.error(`Failed to add product: ${error.message || "Unknown error"}`)
   }
 
   const handleEdit = async () => {
@@ -281,7 +281,7 @@ export default function ProductsPage() {
       toast.success("Changes saved successfully")
       setEditDialog(false)
       fetchProducts()
-    } else toast.error("Failed to update product")
+    } else toast.error(`Failed to update product: ${error.message || "Unknown error"}`)
   }
 
   const handleDelete = async () => {
@@ -589,7 +589,7 @@ export default function ProductsPage() {
             <SelectTrigger className="h-12 bg-white border-2 border-gray-100 focus:border-red-500">
               <SelectValue placeholder="Pick size" />
             </SelectTrigger>
-            <SelectContent className="bg-white opacity-100 shadow-xl border border-gray-200 z-[150]">
+            <SelectContent className="bg-white opacity-100 shadow-xl border border-gray-200 z-[300]">
               {Object.keys(PRODUCT_MAPPING).map((cat) => (
                 <SelectItem key={cat} value={cat} className="focus:bg-red-50">
                   {PRODUCT_MAPPING[cat as CategoryKey].label}
@@ -606,7 +606,7 @@ export default function ProductsPage() {
             <SelectTrigger className="h-12 bg-white border-2 border-gray-100">
               <SelectValue placeholder="Pick model" />
             </SelectTrigger>
-            <SelectContent className="bg-white opacity-100 shadow-xl border border-gray-200 z-[150]">
+            <SelectContent className="bg-white opacity-100 shadow-xl border border-gray-200 z-[300]">
               {formData.category && PRODUCT_MAPPING[formData.category as CategoryKey].models.map((model) => (
                 <SelectItem key={model} value={model} className="focus:bg-red-50">{model}</SelectItem>
               ))}
@@ -622,7 +622,7 @@ export default function ProductsPage() {
               <SelectTrigger className="h-12 bg-white border-2 border-gray-100">
                 <SelectValue placeholder="Pick type" />
               </SelectTrigger>
-              <SelectContent className="bg-white opacity-100 shadow-xl border border-gray-200 z-[150]">
+              <SelectContent className="bg-white opacity-100 shadow-xl border border-gray-200 z-[300]">
                 {productTypes.map((type) => (
                   <SelectItem key={type.id} value={type.name} className="focus:bg-red-50">{type.name}</SelectItem>
                 ))}
