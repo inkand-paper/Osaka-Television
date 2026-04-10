@@ -587,7 +587,7 @@ export default function Home() {
                         <div className="text-center py-14 sm:py-20 bg-white rounded-2xl border border-gray-100 shadow-sm w-full">
                           <ChefHat className="w-16 h-16 mx-auto text-gray-200 mb-6" strokeWidth={1} />
                           <h3 className="text-2xl font-bold text-gray-800 mb-2">No Cookers Found</h3>
-                          <p className="text-gray-500">We couldn&apos;t find any active rice cookers in our current inventory.</p>
+                          <p className="text-gray-500">We couldn&apos;t find any active cookers in our current inventory.</p>
                         </div>
                       )}
                     </div>
