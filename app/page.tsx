@@ -240,17 +240,18 @@ export default function Home() {
               <div>
                 <h3 className="text-3xl font-bold mb-6">Our Story</h3>
                 <p className="text-gray-700 text-lg mb-4">
-                  OSAKA GROUP has been at the forefront of bringing premium
-                  solutions to homes and businesses across Bangladesh.
+                  Since 1994, Osaka Group has been a leader in high-end manufacturing, blending innovation with elite reliability.
+                  A Proven Legacy: Over 2 million televisions sold.
+                  Trusted Quality: 32 years of customer satisfaction.
+                  Diverse Engineering: We manufacture a premium range of essential home appliances.
                 </p>
                 <p className="text-gray-700 text-lg">
-                  Our commitment to quality and innovation has made us a trusted name.
-                  We offer a comprehensive range from 24 inch to 65 inch.
+                  Osaka Group | Three Decades of Innovation | Two Million Stories of Trust.
                 </p>
               </div>
               <div className="bg-gray-200 h-96 rounded-lg flex items-center justify-center overflow-hidden shadow-xl">
                 <img
-                  src="/assets/images/about/about-osaka.jpeg"
+                  src="/assets/images/about/imageAbout.PNG"
                   alt="About Osaka"
                   className="w-full h-full object-cover rounded-lg"
                 />
@@ -750,7 +751,7 @@ export default function Home() {
         <DialogContent className="max-w-[95vw] sm:max-w-[90vw] md:max-w-[75vw] lg:max-w-[70vw] w-full p-0 overflow-hidden border-none bg-white rounded-2xl md:rounded-3xl shadow-2xl">
           <DialogTitle className="sr-only">Product Details</DialogTitle>
           {selectedProduct && (
-            <div className="flex flex-col xl:flex-row max-h-[92vh] xl:min-h-[60vh] overflow-y-auto pb-20 sm:pb-24 xl:pb-0">
+            <div className="flex flex-col xl:flex-row max-h-[92vh] xl:min-h-[60vh] overflow-y-auto pb-20 sm:pb-24 xl:pb-12">
               
               {/* Left Side: Large Product Display */}
               <div className="w-full xl:w-1/2 bg-[#fdfdfd] flex items-center justify-center p-4 md:p-12 relative border-b xl:border-b-0 xl:border-r border-gray-100 min-h-[250px] sm:min-h-[300px] xl:min-h-0">
@@ -872,24 +873,28 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Action Footer */}
-                <div className="mt-8 md:mt-12">
-                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 md:gap-5 w-full">
-                    <a 
-                      href={`https://wa.me/8801886469096?text=${encodeURIComponent(`Hello OSAKA GROUP!\nI would like to order:\n*${selectedProduct.name}*\n\nPrice: MRP  ${(selectedProduct.original_price || selectedProduct.price).toLocaleString()}  ৳\nSize: ${selectedProduct.size || 'N/A'}`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-[#25D366] hover:bg-[#128C7E] text-white font-black py-4 sm:py-5 md:py-6 rounded-xl md:rounded-2xl shadow-xl shadow-green-100 transition-all active:scale-95 flex items-center justify-center gap-2 sm:gap-3 uppercase tracking-widest text-[10px] sm:text-xs md:text-sm lg:text-base cursor-pointer text-center leading-tight"
-                    >
-                      Order via WhatsApp
-                    </a>
-                    <a 
-                      href="tel:+8801886469096"
-                      className="bg-black hover:bg-gray-800 text-white font-black py-4 sm:py-5 md:py-6 rounded-xl md:rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-2 sm:gap-3 uppercase tracking-widest text-[10px] sm:text-xs md:text-sm lg:text-base cursor-pointer text-center leading-tight"
-                    >
-                      Call Expert
-                    </a>
+                {/* Action Footer Container */}
+                <div>
+                  <div className="mt-8 md:mt-12 mb-8 md:mb-12">
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 md:gap-5 w-full">
+                      <a 
+                        href={`https://wa.me/8801886469096?text=${encodeURIComponent(`Hello OSAKA GROUP!\nI would like to order:\n*${selectedProduct.name}*\n\nPrice: MRP  ${(selectedProduct.original_price || selectedProduct.price).toLocaleString()}  ৳\nSize: ${selectedProduct.size || 'N/A'}`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[#25D366] hover:bg-[#128C7E] text-white font-black py-4 sm:py-5 md:py-6 rounded-xl md:rounded-2xl shadow-xl shadow-green-100 transition-all active:scale-95 flex items-center justify-center gap-2 sm:gap-3 uppercase tracking-widest text-[10px] sm:text-xs md:text-sm lg:text-base cursor-pointer text-center leading-tight"
+                      >
+                        Order via WhatsApp
+                      </a>
+                      <a 
+                        href="tel:+8801886469096"
+                        className="bg-black hover:bg-gray-800 text-white font-black py-4 sm:py-5 md:py-6 rounded-xl md:rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-2 sm:gap-3 uppercase tracking-widest text-[10px] sm:text-xs md:text-sm lg:text-base cursor-pointer text-center leading-tight"
+                      >
+                        Call Expert
+                      </a>
+                    </div>
                   </div>
+                  {/* Safe bottom margin block for when scrolling inside modal */}
+                  <div className="h-8 md:h-12 w-full shrink-0"></div>
                 </div>
               </div>
             </div>
