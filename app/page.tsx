@@ -43,7 +43,7 @@ const MAIN_CATEGORIES = ['Television', 'Fan', 'Cooker', 'More'];
 
 const TV_SIZES = ['24 inch', '32 inch', '43 inch', '50 inch', '65 inch'];
 const TV_MODELS: Record<string, string[]> = {
-  "24 inch": ["Basic Frameless", "Basic Double Glass", "Smart Frameless", "Smart Double Glass"],
+  "24 inch": ["Basic Frameless", "Basic Double Glass", "Smart Frameless", "Smart Double Glass", "Regular Series", "Gold Series", "Google TV"],
   "32 inch": ["Regular Series", "Gold Series", "Google TV"],
   "43 inch": ["Regular Series", "Gold Series", "Google TV"],
   "50 inch": ["Regular Series", "Gold Series", "Google TV"],
@@ -252,13 +252,10 @@ export default function Home() {
               <div>
                 <h3 className="text-3xl font-bold mb-6">Our Story</h3>
                 <p className="text-gray-700 text-lg mb-4">
-                  Since 1994, Osaka Group has been a leader in high-end manufacturing, blending innovation with elite reliability.
-                  A Proven Legacy: Over 2 million televisions sold.
-                  Trusted Quality: 32 years of customer satisfaction.
-                  Diverse Engineering: We manufacture a premium range of essential home appliances.
+                  Since 1994, Osaka Group has been a leader in high-end manufacturing, with a proven legacy of producing countless home appliances and selling over 2 million televisions.
                 </p>
                 <p className="text-gray-700 text-lg">
-                  Osaka Group | Three Decades of Innovation | Two Million Stories of Trust.
+                  Osaka Group | 32 years of Innovation | Two Million Stories of Trust.
                 </p>
               </div>
               <div className="bg-gray-200 h-96 rounded-lg flex items-center justify-center overflow-hidden shadow-xl">

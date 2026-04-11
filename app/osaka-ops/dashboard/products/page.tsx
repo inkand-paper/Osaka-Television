@@ -21,7 +21,7 @@ import {
 import { Edit2, Trash2, Package, ShieldCheck, ShieldAlert, Plus, Upload, X, Loader2, ImageIcon, Settings2 } from 'lucide-react'
 
 const PRODUCT_MAPPING = {
-  "24 inch": { label: "24 inch (TV)", size: "24\"", models: ["Basic Frameless", "Basic Double Glass", "Smart Frameless", "Smart Double Glass"], hasTypes: true },
+  "24 inch": { label: "24 inch (TV)", size: "24\"", models: ["Basic Frameless", "Basic Double Glass", "Smart Frameless", "Smart Double Glass", "Regular Series", "Gold Series", "Google TV"], hasTypes: true },
   "32 inch": { label: "32 inch (TV)", size: "32\"", models: ["Regular Series", "Gold Series", "Google TV"], hasTypes: true },
   "43 inch": { label: "43 inch (TV)", size: "43\"", models: ["Regular Series", "Gold Series", "Google TV"], hasTypes: true },
   "50 inch": { label: "50 inch (TV)", size: "50\"", models: ["Regular Series", "Gold Series", "Google TV"], hasTypes: true },
