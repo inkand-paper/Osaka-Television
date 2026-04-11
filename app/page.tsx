@@ -219,7 +219,19 @@ export default function Home() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          <HeroCarousel />
+          <HeroCarousel onShopNow={(slideTitle) => {
+            const titleLower = slideTitle.toLowerCase()
+            const matchedProduct = products.find(p => {
+              const nameLower = p.name.toLowerCase()
+              return titleLower.includes(nameLower) || nameLower.includes(titleLower)
+            })
+            
+            if (matchedProduct) {
+              setSelectedProduct(matchedProduct);
+            } else {
+              scrollToId('category');
+            }
+          }} />
         </motion.section>
 
         {/* ABOUT SECTION */}

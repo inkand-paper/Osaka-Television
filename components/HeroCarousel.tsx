@@ -10,7 +10,11 @@ interface Slide {
   image_url: string;
 }
 
-export default function HeroCarousel() {
+interface HeroCarouselProps {
+  onShopNow?: (slideTitle: string) => void;
+}
+
+export default function HeroCarousel({ onShopNow }: HeroCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [slides, setSlides] = useState<Slide[]>([])
   const [loading, setLoading] = useState(true)
@@ -136,12 +140,21 @@ export default function HeroCarousel() {
                     transition={{ duration: 0.8, delay: 0.6 }}
                     className="flex flex-col sm:flex-row gap-3 sm:gap-4 pointer-events-auto"
                   >
-                    <a 
-                      href="#category" 
-                      className="inline-block bg-red-600 hover:bg-red-700 text-white px-8 py-3.5 sm:py-4 rounded-full font-black uppercase tracking-widest text-xs sm:text-sm transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-red-900/20 text-center"
-                    >
-                      Shop Now
-                    </a>
+                    {onShopNow ? (
+                      <button 
+                        onClick={() => onShopNow(slide.title)}
+                        className="inline-block bg-red-600 hover:bg-red-700 text-white px-8 py-3.5 sm:py-4 rounded-full font-black uppercase tracking-widest text-xs sm:text-sm transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-red-900/20 text-center"
+                      >
+                        Shop Now
+                      </button>
+                    ) : (
+                      <a 
+                        href="#category" 
+                        className="inline-block bg-red-600 hover:bg-red-700 text-white px-8 py-3.5 sm:py-4 rounded-full font-black uppercase tracking-widest text-xs sm:text-sm transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-red-900/20 text-center"
+                      >
+                        Shop Now
+                      </a>
+                    )}
                   </motion.div>
                 </div>
               </div>

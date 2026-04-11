@@ -21,7 +21,7 @@ import {
 import { Edit2, Trash2, Package, ShieldCheck, ShieldAlert, Plus, Upload, X, Loader2, ImageIcon, Settings2 } from 'lucide-react'
 
 const PRODUCT_MAPPING = {
-  "24 inch": { label: "24 inch (TV)", size: "24\"", models: ["Basic Frameless", "Basic Double Glass", "Smart Frameless", "Smart Double Glass"], hasTypes: false },
+  "24 inch": { label: "24 inch (TV)", size: "24\"", models: ["Basic Frameless", "Basic Double Glass", "Smart Frameless", "Smart Double Glass"], hasTypes: true },
   "32 inch": { label: "32 inch (TV)", size: "32\"", models: ["Regular Series", "Gold Series", "Google TV"], hasTypes: true },
   "43 inch": { label: "43 inch (TV)", size: "43\"", models: ["Regular Series", "Gold Series", "Google TV"], hasTypes: true },
   "50 inch": { label: "50 inch (TV)", size: "50\"", models: ["Regular Series", "Gold Series", "Google TV"], hasTypes: true },
@@ -472,7 +472,7 @@ export default function ProductsPage() {
           <div className="bg-gradient-to-r from-black to-red-900 p-6 rounded-t-lg -mx-6 -mt-6 mb-6">
             <DialogTitle className="text-2xl font-black text-white">Manage Product Types</DialogTitle>
             <DialogDescription className="text-red-200 mt-1">
-              Types are shared across 32&quot;, 43&quot;, 50&quot; and 65&quot; products
+              Types are shared across 24&quot;, 32&quot;, 43&quot;, 50&quot; and 65&quot; products
             </DialogDescription>
           </div>
 
