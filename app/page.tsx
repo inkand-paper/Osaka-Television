@@ -255,7 +255,7 @@ export default function Home() {
                   Since 1994, Osaka Group has been a leader in high-end manufacturing, with a proven legacy of producing countless home appliances and selling over 2 million televisions.
                 </p>
                 <p className="text-gray-700 text-lg">
-                  Osaka Group | 32 years of Innovation | Two Million Stories of Trust.
+                  Osaka Group | 32 Years of Innovation | Two Million Stories of Trust.
                 </p>
               </div>
               <div className="bg-gray-200 h-96 rounded-lg flex items-center justify-center overflow-hidden shadow-xl">
