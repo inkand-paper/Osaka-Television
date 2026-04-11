@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
-import { Card } from '@/components/ui/card'
 import Link from 'next/link'
+import { LayoutDashboard, Package, ImageIcon, Monitor, ArrowRight, CheckCircle, AlertCircle, Clock } from 'lucide-react'
 
 export default function DashboardPage() {
   const [stats, setStats] = useState({
@@ -25,97 +25,82 @@ export default function DashboardPage() {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchStats()
   }, [])
 
   return (
-    <div>
+    <div className="space-y-12">
       {/* Welcome Header */}
-      <div className="bg-gradient-to-r from-black to-red-900 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-12 mb-8 rounded-lg">
-        <h1 className="text-5xl font-bold text-white mb-3">
-          Welcome Back! 👋
-        </h1>
-        <p className="text-xl text-gray-300">
-          Manage your OSAKA GROUP products and content
-        </p>
+      <div className="bg-gradient-to-br from-black via-[#111] to-red-950 p-12 rounded-[2.5rem] border border-white/5 shadow-2xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/10 blur-[120px] rounded-full -mr-20 -mt-20" />
+        <div className="relative z-10">
+          <h1 className="text-6xl font-black text-white mb-4 tracking-tighter">
+            System <span className="text-red-500">Command</span>
+          </h1>
+          <p className="text-xl text-white/40 max-w-lg font-medium">
+            Operational dashboard for OSAKA GROUP. Monitor inventory levels and brand presence in real-time.
+          </p>
+        </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <Card className="p-8 border-l-4 border-red-600 bg-white shadow-lg hover:shadow-xl transition">
-          <div className="flex items-center justify-between">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {[
+          { label: 'Inventory Units', value: stats.totalProducts, detail: 'Total catalog count', icon: Package, color: 'text-white' },
+          { label: 'Live Broadcast', value: stats.activeProducts, detail: 'Currently public', icon: CheckCircle, color: 'text-green-500' },
+          { label: 'In Maintenance', value: stats.inactiveProducts, detail: 'Hidden from site', icon: AlertCircle, color: 'text-red-500' },
+        ].map((stat, i) => (
+          <div key={i} className="bg-white p-10 rounded-[2rem] shadow-sm border border-gray-100 flex items-center justify-between group hover:shadow-xl transition-all duration-500">
             <div>
-              <p className="text-sm text-gray-600 mb-2 uppercase tracking-wide">Total Products</p>
-              <p className="text-5xl font-bold text-red-600">{stats.totalProducts}</p>
-              <p className="text-xs text-gray-500 mt-2">All product models</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-2">{stat.label}</p>
+              <p className={`text-6xl font-black tracking-tighter ${stat.color}`}>{stat.value}</p>
+              <p className="text-xs font-bold text-gray-400 mt-2">{stat.detail}</p>
             </div>
-            <div className="bg-red-100 p-6 rounded-full">
-              <span className="text-5xl">📺</span>
+            <div className="bg-gray-50 p-6 rounded-2xl group-hover:bg-red-50 transition-colors">
+              <stat.icon className={`w-10 h-10 ${stat.color.includes('white') ? 'text-gray-900' : stat.color}`} />
             </div>
           </div>
-        </Card>
+        ))}
+      </div>
 
-        <Card className="p-8 border-l-4 border-green-600 bg-white shadow-lg hover:shadow-xl transition">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600 mb-2 uppercase tracking-wide">Active Products</p>
-              <p className="text-5xl font-bold text-green-600">{stats.activeProducts}</p>
-              <p className="text-xs text-gray-500 mt-2">Currently visible</p>
-            </div>
-            <div className="bg-green-100 p-6 rounded-full">
-              <span className="text-5xl">✅</span>
-            </div>
+      {/* Command Center (Quick Actions) */}
+      <div className="space-y-8">
+        <h2 className="text-3xl font-black text-gray-900 tracking-tight">Command Center</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            { title: 'Products', desc: 'Manage TV, Fan, and Cooker inventory.', link: '/osaka-ops/dashboard/products', icon: Monitor, gradient: 'from-orange-50 to-red-50' },
+            { title: 'Imagery', desc: 'Sync high-res photography to the gallery.', link: '/osaka-ops/dashboard/gallery', icon: ImageIcon, gradient: 'from-blue-50 to-indigo-50' },
+            { title: 'Hero Engine', desc: 'Control cinematic homepage banners.', link: '/osaka-ops/dashboard/hero', icon: LayoutDashboard, gradient: 'from-purple-50 to-pink-50' },
+          ].map((action, i) => (
+            <Link href={action.link} key={i}>
+              <div className={`p-10 rounded-[2.5rem] bg-gradient-to-br ${action.gradient} border-2 border-transparent hover:border-red-600/20 hover:shadow-2xl transition-all duration-500 cursor-pointer group h-full flex flex-col`}>
+                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg mb-8 group-hover:scale-110 transition-transform duration-500">
+                  <action.icon className="w-8 h-8 text-red-600" />
+                </div>
+                <h3 className="text-2xl font-black text-gray-900 mb-3 tracking-tight group-hover:text-red-600 transition-colors">{action.title}</h3>
+                <p className="text-gray-500 font-medium leading-relaxed">{action.desc}</p>
+                <div className="mt-auto pt-8 flex items-center gap-2 text-red-600 font-black text-xs uppercase tracking-widest">
+                  ACCESS MODULE <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Logs Section */}
+      <div className="bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-sm">
+        <div className="px-10 py-8 border-b border-gray-100 flex items-center justify-between">
+          <h2 className="text-2xl font-black text-gray-900 tracking-tight">System Logs</h2>
+          <span className="text-[10px] font-black text-white bg-red-600 px-4 py-1 rounded-full uppercase tracking-widest">Live Monitor</span>
+        </div>
+        <div className="p-20 flex flex-col items-center justify-center text-center space-y-4">
+          <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center animate-pulse">
+            <Clock className="w-8 h-8 text-gray-200" />
           </div>
-        </Card>
-
-
-      </div>
-
-      {/* Quick Actions */}
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Link href="/osaka-ops/dashboard/products">
-            <Card className="p-8 hover:shadow-2xl transition-all cursor-pointer border-2 border-transparent hover:border-red-600 bg-gradient-to-br from-white to-red-50 group">
-              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">🏷️</div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-800 group-hover:text-red-600 transition">
-                Manage Products
-              </h3>
-              <p className="text-gray-600">Add, edit, or remove products from your inventory</p>
-              <div className="mt-4 text-red-600 font-semibold group-hover:underline">
-                Go to Products →
-              </div>
-            </Card>
-          </Link>
-
-          <Link href="/osaka-ops/dashboard/gallery">
-            <Card className="p-8 hover:shadow-2xl transition-all cursor-pointer border-2 border-transparent hover:border-red-600 bg-gradient-to-br from-white to-blue-50 group">
-              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">🖼️</div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-800 group-hover:text-red-600 transition">
-                Manage Gallery
-              </h3>
-              <p className="text-gray-600">Upload and organize your company photos</p>
-              <div className="mt-4 text-red-600 font-semibold group-hover:underline">
-                Go to Gallery →
-              </div>
-            </Card>
-          </Link>
-
-
+          <p className="text-gray-400 font-bold uppercase text-[10px] tracking-[0.2em]">Activity tracking initialization...</p>
         </div>
       </div>
-
-      {/* Recent Activity */}
-      <Card className="shadow-lg">
-        <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b">
-          <h2 className="text-2xl font-bold text-gray-800">Recent Activity</h2>
-        </div>
-        <div className="p-8 text-center text-gray-500">
-          <span className="text-4xl mb-4 block">📊</span>
-          <p>Activity tracking coming soon...</p>
-        </div>
-      </Card>
     </div>
   )
-}
+}

@@ -1,127 +1,97 @@
-// components/BottomNav.tsx
 'use client'
 
-import { Home, Info, LayoutGrid, Image as ImageIcon, PhoneCall } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Home, Info, LayoutGrid, Image as ImageIcon, PhoneCall } from 'lucide-react'
+
+const navItems = [
+  { id: 'home', icon: Home, label: 'HOME' },
+  { id: 'about', icon: Info, label: 'ABOUT' },
+  { id: 'category', icon: LayoutGrid, label: 'PRODUCTS' },
+  { id: 'gallery', icon: ImageIcon, label: 'GALLERY' },
+  { id: 'contact', icon: PhoneCall, label: 'CONTACT' },
+]
 
 export default function BottomNav() {
   const [activeSection, setActiveSection] = useState('home')
   const isAutomaticScroll = useRef(false)
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null)
 
-  const getHeaderOffset = () => {
-    const headerH = Number.parseFloat(
-      getComputedStyle(document.documentElement).getPropertyValue('--header-h')
-    ) || 80
-    return headerH
-  }
-
-  const scrollToProducts = () => {
-    const savedCategory =
-      typeof window !== 'undefined' && localStorage.getItem('mainCategory')
-        ? localStorage.getItem('mainCategory')
-        : 'Television'
-
-    const targetId =
-      savedCategory === 'Television'
-        ? 'tv-products'
-        : savedCategory === 'Fan'
-          ? 'fan-products'
-          : savedCategory === 'Cooker'
-            ? 'cooker-products'
-            : 'tv-products'
-
-    const el = document.getElementById(targetId)
-    if (el) {
-      const offset = getHeaderOffset()
-      const y = el.getBoundingClientRect().top + window.pageYOffset - offset
-      window.scrollTo({ top: y, behavior: 'smooth' })
-    }
-  }
-
-  const handleNavClick = (id: string, e: React.MouseEvent<HTMLAnchorElement>) => {
-    setActiveSection(id)
-    
-    if (id === 'category') {
-      e.preventDefault()
-      scrollToProducts()
-      return
-    }
-
-    const el = document.getElementById(id)
-    if (el) {
-      e.preventDefault()
-      const offset = getHeaderOffset()
-      const y = el.getBoundingClientRect().top + window.pageYOffset - offset
-      window.scrollTo({ top: y, behavior: 'smooth' })
-    }
-  }
-
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'category', 'gallery', 'contact']
-      let currentIdx = 0
+      if (isAutomaticScroll.current) return
+
       const scrollPosition = window.scrollY + window.innerHeight / 2
-
-      for (let i = 0; i < sections.length; i++) {
-        const element = document.getElementById(sections[i])
-        if (element && element.offsetTop <= scrollPosition) {
-          currentIdx = i
+      const sections = navItems.map(item => document.getElementById(item.id))
+      
+      let currentSection = 'home'
+      sections.forEach((section, index) => {
+        if (section && scrollPosition >= section.offsetTop) {
+          currentSection = navItems[index].id
         }
-      }
-
-      setActiveSection(sections[currentIdx])
+      })
+      setActiveSection(currentSection)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navItems = [
-    { id: 'home', label: 'Home', Icon: Home },
-    { id: 'about', label: 'About', Icon: Info },
-    { id: 'category', label: 'Products', Icon: LayoutGrid },
-    { id: 'gallery', label: 'Gallery', Icon: ImageIcon },
-    { id: 'contact', label: 'Contact', Icon: PhoneCall },
-  ]
+  const getHeaderOffset = () => {
+    const root = document.documentElement
+    return Number.parseFloat(getComputedStyle(root).getPropertyValue('--header-h')) || 80
+  }
+
+  const scrollToId = (id: string) => {
+    const el = document.getElementById(id)
+    if (el) {
+      isAutomaticScroll.current = true
+      setActiveSection(id)
+      
+      const offset = getHeaderOffset()
+      const y = el.getBoundingClientRect().top + window.pageYOffset - offset
+      window.scrollTo({ top: y, behavior: 'smooth' })
+
+      if (scrollTimeout.current) clearTimeout(scrollTimeout.current)
+      scrollTimeout.current = setTimeout(() => {
+        isAutomaticScroll.current = false
+      }, 1000)
+    }
+  }
 
   return (
-    <nav 
-      className="fixed bottom-0 left-0 right-0 md:hidden bg-white border-t border-gray-100 z-50 shadow-[0_-10px_40px_rgba(0,0,0,0.08)]"
-      style={{
-        paddingBottom: 'max(env(safe-area-inset-bottom), 8px)',
-        paddingLeft: 'env(safe-area-inset-left)',
-        paddingRight: 'env(safe-area-inset-right)',
-      }}
-    >
-      <div className="flex justify-between items-center px-1 xs:px-2 sm:px-4 py-1.5 sm:py-2">
+    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] md:hidden w-[90%] max-w-[400px]">
+      <nav className="glass rounded-[2rem] px-4 py-3 shadow-2xl flex items-center justify-between border border-black/[0.05]">
         {navItems.map((item) => {
           const isActive = activeSection === item.id
           return (
-            <a
+            <button
               key={item.id}
-              href={`#${item.id}`}
-              onClick={(e) => handleNavClick(item.id, e)}
-              className={`relative flex flex-col flex-1 min-w-0 items-center p-1.5 sm:p-2 rounded-xl transition-all duration-200 touch-manipulation cursor-pointer ${
-                isActive ? 'text-red-600' : 'text-gray-400 active:bg-red-50'
-              }`}
+              onClick={() => scrollToId(item.id)}
+              className="relative p-3 flex flex-col items-center gap-1 group transition-all"
             >
-              <div
-                className={`absolute inset-0 rounded-xl transition-opacity duration-200 bg-red-50 ${
-                  isActive ? 'opacity-100' : 'opacity-0'
-                }`}
-              />
-              <div className="relative z-10 flex flex-col items-center gap-0.5">
-                <item.Icon size={20} className="sm:w-[22px] sm:h-[22px]" strokeWidth={2.5} />
-                <span className="text-[8px] xs:text-[9px] sm:text-[10px] font-bold uppercase tracking-wider leading-none truncate w-full text-center">
-                  {item.label}
-                </span>
+              <div className={`relative z-10 transition-all duration-300 ${isActive ? 'text-black' : 'text-black/20'}`}>
+                <item.icon size={20} strokeWidth={isActive ? 2.5 : 2} />
               </div>
-            </a>
+
+              {isActive && (
+                <motion.div 
+                  layoutId="bottomNavGlow"
+                  className="absolute inset-0 bg-black/[0.03] rounded-2xl"
+                  transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                />
+              )}
+
+              {isActive && (
+                <motion.div 
+                  layoutId="bottomNavDot"
+                  className="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-black rounded-full"
+                />
+              )}
+            </button>
           )
         })}
-      </div>
-    </nav>
+      </nav>
+    </div>
   )
 }

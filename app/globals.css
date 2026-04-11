@@ -3,62 +3,65 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 0%; /* Technical Black */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 45.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 1.5rem;
 
-    /* Header height - set by Navbar */
+    /* Light Antigravity Tokens */
+    --void-bg: #ffffff;
+    --void-surface: #f9f9fb;
+    --void-accent: #e21d1d; /* Technical Red */
+    --void-border: rgba(0, 0, 0, 0.04);
+    --void-glass: rgba(255, 255, 255, 0.8);
+    
     --header-h: 80px;
   }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
 }
 
-/* Utility classes - place these OUTSIDE @layer base */
-.flex-layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+/* Antigravity Glass System - Refined for Light Mode */
+.glass {
+  background: var(--void-glass);
+  backdrop-filter: blur(25px) saturate(160%);
+  -webkit-backdrop-filter: blur(25px) saturate(160%);
+  border: 1px solid var(--void-border);
 }
 
-.flex-content {
-  flex: 1;
+.premium-shadow {
+  box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.05);
+}
+
+.technical-border {
+  border: 1px solid var(--void-border);
+}
+
+.text-technical {
+  font-family: var(--font-geist-mono);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #888888;
+}
+
+.pulse-red {
+  background: var(--void-accent);
+  box-shadow: 0 0 10px rgba(226, 29, 29, 0.4);
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -66,36 +69,23 @@
    ────────────────────────────────────────────────────────────────────────── */
 
 html {
-  height: 100%;
-  overflow-x: hidden;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  background: var(--void-bg);
 }
 
 body {
-  height: 100%;
   overflow-x: hidden;
   min-height: 100dvh;
+  background: var(--void-bg);
+  color: #111;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Remove tap highlight flash on iOS for all interactive elements */
-* {
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Ensure all links and buttons show pointer cursor */
-a,
-button {
-  cursor: pointer;
-}
-
-/* Prevent fixed Navbar from covering section titles.
-   Uses the real measured header height via CSS var. */
 section[id] {
-  scroll-margin-top: var(--header-h, 70px);
+  scroll-margin-top: calc(var(--header-h, 70px) + 20px);
 }
 
-/* Utilities for hiding scrollbars but allowing touch swipe */
 .hide-scroll-bar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -104,16 +94,14 @@ section[id] {
   display: none;
 }
 
-/* Safe Area Utilities for Mobile */
-.pt-safe {
-  padding-top: env(safe-area-inset-top, 0px);
+/* Fluid Entrance */
+.reveal-content {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
 }
-.pb-safe {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-.mt-safe {
-  margin-top: env(safe-area-inset-top, 0px);
-}
-.mb-safe {
-  margin-bottom: env(safe-area-inset-bottom, 0px);
+
+.reveal-content.active {
+  opacity: 1;
+  transform: translateY(0);
 }

@@ -1,88 +1,110 @@
-import { Facebook, MessageCircle, Phone, Mail, MapPin, ShieldCheck, Truck, RefreshCw } from 'lucide-react'
+'use client'
+
 import { motion } from 'framer-motion'
+import { ArrowRight, Mail, Phone, MapPin, Shield, Zap, Globe } from 'lucide-react'
+
+const footerLinks = [
+  {
+    title: 'Selection',
+    links: [
+      { name: 'Hardware Stack', href: '#category' },
+      { name: 'Display Intelligence', href: '#home' },
+      { name: 'Technical Spec', href: '#gallery' },
+      { name: 'Core Systems', href: '#about' }
+    ]
+  },
+  {
+    title: 'Company',
+    links: [
+      { name: 'Corporate Info', href: '#about' },
+      { name: 'Global Presence', href: '#contact' },
+      { name: 'Safety Protocols', href: '#' },
+      { name: 'Support Node', href: '#contact' }
+    ]
+  }
+]
 
 export default function Footer() {
   return (
-    <footer className="relative bg-[#050505] text-white pt-20 pb-10 overflow-hidden">
-      {/* Decorative Gradient Background */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
-      
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-          
-          {/* Brand Corner */}
-          <div className="space-y-6">
-            <h3 className="text-2xl font-black tracking-tighter text-white">
-              OSAKA <span className="text-red-600">GROUP</span>
-            </h3>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
-              Redefining the standards of home electronics in Bangladesh. We bring you premium technology designed for durability, efficiency, and the ultimate user experience.
-            </p>
-            <div className="flex gap-4 mt-6">
-              <a href="https://facebook.com/oscarintosaka/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border-2 border-transparent bg-blue-600 flex items-center justify-center hover:scale-110 hover:border-white transition-all duration-300 shadow-lg shadow-blue-600/30">
-                <Facebook size={24} className="text-white fill-current" />
+    <footer className="bg-[#f9f9fb] pt-32 pb-16 border-t border-black/[0.03] relative overflow-hidden">
+      {/* Structural Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:40px_40px]" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+        <div className="grid lg:grid-cols-4 gap-20 mb-32">
+          {/* Brand Identity */}
+          <div className="lg:col-span-2 space-y-12">
+            <div>
+               <a href="#home" className="group flex items-center gap-4 mb-8">
+                <div className="w-10 h-10 flex items-center justify-center bg-black rounded-xl">
+                  <div className="w-4 h-4 bg-white rounded-sm" />
+                </div>
+                <span className="text-2xl font-black tracking-[-0.05em] text-black">
+                  OSAKA <span className="font-light text-black/20 italic tracking-normal">Group</span>
+                </span>
               </a>
-              <a href="https://wa.me/8801886469096" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border-2 border-transparent bg-green-500 flex items-center justify-center hover:scale-110 hover:border-white transition-all duration-300 shadow-lg shadow-green-500/30">
-                <MessageCircle size={24} className="text-white fill-current" />
-              </a>
+              <p className="text-black/40 text-lg leading-relaxed max-w-sm font-medium">
+                Pioneering the next generation of visual hardware and sensory display systems. Engineered for global excellence.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-8">
+              {[
+                { icon: Shield, label: 'Certified' },
+                { icon: Zap, label: 'High-Spec' },
+                { icon: Globe, label: 'Global' }
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <item.icon size={16} className="text-black/20" />
+                  <span className="text-[10px] font-black text-black/30 uppercase tracking-[0.2em]">{item.label}</span>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Navigation */}
-          <div>
-            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-red-600 mb-8">Navigation</h4>
-            <ul className="space-y-4 text-gray-400 font-bold text-sm">
-              <li><a href="#home" className="hover:text-white transition-colors">Digital Showroom</a></li>
-              <li><a href="#about" className="hover:text-white transition-colors">Our Legacy</a></li>
-              <li><a href="#category" className="hover:text-white transition-colors">All Products</a></li>
-              <li><a href="#gallery" className="hover:text-white transition-colors">Visual Gallery</a></li>
-              <li><a href="#contact" className="hover:text-white transition-colors">Get in Touch</a></li>
-            </ul>
-          </div>
-
-
-          {/* Contact Details */}
-          <div className="space-y-6">
-            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-red-600 mb-8">Showrooms</h4>
-            <div className="space-y-6">
-              <div className="flex items-start gap-3 group">
-                <MapPin size={18} className="text-red-600 mt-1 shrink-0" />
-                <div className="text-gray-400 text-sm leading-relaxed group-hover:text-white transition-colors">
-                  <strong className="text-white block mb-1">Corporate Office:</strong>
-                  মোহাম্মদপুর, কাদেরাবাদ হাউসিং, রোড ৫, ব্লক বি, বাসা ৪, গ্রাউন্ড ফ্লোর । 
-                  <a href="tel:01886469096" className="block mt-1 font-bold text-red-500 hover:text-white">📲 01886469096</a>
-                </div>
-              </div>
-              <div className="flex items-start gap-3 group">
-                <MapPin size={18} className="text-red-600 mt-1 shrink-0" />
-                <div className="text-gray-400 text-sm leading-relaxed group-hover:text-white transition-colors">
-                  <strong className="text-white block mb-1">Wholesale Center:</strong>
-                  গুলিস্তান, কাপ্তান বাজার কম্পলেক্স -ভবন ২, ২য় তলা, দোকান নং- ১০৫ (105) & ১০৬ (106), নওবাবপুর রোড, ঢাকা।
-                  <a href="tel:01934009834" className="block mt-1 font-bold text-red-500 hover:text-white">📲 01934009834</a>
-                </div>
-              </div>
-              <div className="flex items-start gap-3 group">
-                <MapPin size={18} className="text-red-600 mt-1 shrink-0" />
-                <div className="text-gray-400 text-sm leading-relaxed group-hover:text-white transition-colors">
-                  <strong className="text-white block mb-1">Sales Center:</strong>
-                  এলিফ্যান্ট রোড, আইসিটি ভবন (সুভাসতু আর্কেড), লেভেল ৩, দোকান নং: ৩০৮ (308)।
-                  <a href="tel:01401111245" className="block mt-1 font-bold text-red-500 hover:text-white">📲 01401111245</a>
-                </div>
-              </div>
+          {/* Navigation Links */}
+          {footerLinks.map((column, i) => (
+            <div key={i} className="space-y-10">
+              <h4 className="text-[10px] font-black text-black/20 uppercase tracking-[0.4em]">{column.title}</h4>
+              <ul className="space-y-6">
+                {column.links.map((link, j) => (
+                  <li key={j}>
+                    <a 
+                      href={link.href} 
+                      className="text-black/40 hover:text-black transition-colors text-sm font-bold tracking-tight inline-flex items-center gap-2 group"
+                    >
+                      {link.name}
+                      <ArrowRight size={12} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-
+          ))}
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 text-xs font-black uppercase tracking-widest">
-            &copy; OSAKA GROUP. AUTHORIZED GLOBAL STORE.
-          </p>
-          <div className="flex gap-6 text-[10px] font-black uppercase tracking-widest text-gray-500">
-            <a href="#" className="hover:text-red-600">Privacy Policy</a>
-            <a href="#" className="hover:text-red-600">Terms of Service</a>
+        {/* Closing Layer */}
+        <div className="pt-16 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-12">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12">
+            {[
+              { icon: Phone, label: '01886-469096' },
+              { icon: Mail, label: 'INFO@OSAKAGROUP.COM' },
+              { icon: MapPin, label: 'DHAKA, BANGLADESH' }
+            ].map((item, i) => (
+              <div key={i} className="space-y-2">
+                <span className="text-[8px] font-black text-black/20 uppercase tracking-[0.3em] flex items-center gap-2">
+                  <item.icon size={10} />
+                </span>
+                <p className="text-[10px] font-bold text-black/60 tracking-widest">{item.label}</p>
+              </div>
+            ))}
           </div>
+
+          <p className="text-[10px] font-black text-black/20 uppercase tracking-[0.3em]">
+            © 2024 OSAKA GROUP <span className="mx-4 text-black/5">|</span> PRECISION HARDWARE
+          </p>
         </div>
       </div>
     </footer>

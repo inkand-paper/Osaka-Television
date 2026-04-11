@@ -19,6 +19,7 @@ interface Slide {
   image_url: string;
   display_order: number;
   is_active: boolean;
+  show_3d_highlight: boolean;
 }
 
 export default function HeroManagement() {
@@ -34,7 +35,8 @@ export default function HeroManagement() {
     title: '',
     description: '',
     image_url: '',
-    display_order: 0
+    display_order: 0,
+    show_3d_highlight: false
   })
 
   useEffect(() => {
@@ -64,12 +66,12 @@ export default function HeroManagement() {
         title: slide.title,
         description: slide.description || '',
         image_url: slide.image_url,
-        display_order: slide.display_order
+        display_order: slide.display_order,
+        show_3d_highlight: slide.show_3d_highlight || false
       })
       setImagePreview(slide.image_url)
     } else {
-      setSelectedSlide(null)
-      setFormData({ title: '', description: '', image_url: '', display_order: 0 })
+      setFormData({ title: '', description: '', image_url: '', display_order: 0, show_3d_highlight: false })
       setImagePreview('')
     }
     setDialogOpen(true)
@@ -143,7 +145,8 @@ export default function HeroManagement() {
         description: xss(formData.description),
         image_url: xss(formData.image_url),
         display_order: Number(formData.display_order),
-        is_active: true
+        is_active: true,
+        show_3d_highlight: formData.show_3d_highlight
       }
 
       let error;
@@ -271,6 +274,19 @@ export default function HeroManagement() {
                 placeholder="Describe the promotion or product..."
                 className="border-2 focus:ring-red-500"
               />
+            </div>
+
+            <div className="flex items-center gap-2 bg-red-50 p-4 rounded-xl border border-red-100">
+              <input
+                type="checkbox"
+                id="show_3d_highlight"
+                checked={formData.show_3d_highlight}
+                onChange={e => setFormData({...formData, show_3d_highlight: e.target.checked})}
+                className="w-5 h-5 accent-red-600 cursor-pointer"
+              />
+              <Label htmlFor="show_3d_highlight" className="font-bold cursor-pointer">
+                Enable Premium 3D Highlight for this slide
+              </Label>
             </div>
 
             {/* Image Upload Section */}

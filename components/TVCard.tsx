@@ -1,93 +1,84 @@
-import { Package } from 'lucide-react'
+'use client'
+
 import { motion } from 'framer-motion'
+import { ArrowUpRight } from 'lucide-react'
 
 interface TVCardProps {
-  name: string
-  price: string
-  image: string
-  originalPrice?: string | null
-  discountTag?: string | null
-  onClick?: () => void
+  name: string;
+  price: string;
+  originalPrice?: string | null;
+  image: string;
+  discountTag?: string | null;
+  onClick: () => void;
 }
 
-export default function TVCard({ name, price, originalPrice, discountTag, image, onClick }: TVCardProps) {
+export default function TVCard({ name, price, originalPrice, image, discountTag, onClick }: TVCardProps) {
   return (
-    <motion.div 
-      layout
-      whileHover={{ y: -8, transition: { duration: 0.3, ease: "easeOut" } }}
-      whileTap={{ scale: 0.98 }}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+    <motion.div
       onClick={onClick}
-      className="border border-gray-100 rounded-3xl overflow-hidden hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] hover:border-red-200 transition-all duration-500 bg-white cursor-pointer group relative flex flex-col h-full"
+      whileHover={{ y: -8 }}
+      className="group relative bg-[#f9f9fb] rounded-[2rem] p-6 cursor-pointer border border-black/[0.03] transition-all hover:shadow-2xl hover:shadow-black/5 hover:bg-white"
     >
-      {/* Discount Badge */}
-      {discountTag && (
-        <div className="absolute top-4 left-4 bg-red-600 text-white text-[10px] md:text-xs font-black px-4 py-2 rounded-full z-10 shadow-2xl tracking-wider uppercase">
-          {discountTag}
+      {/* Hardware Designation Header */}
+      <div className="flex justify-between items-start mb-10">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <div className="w-1 h-1 rounded-full pulse-red" />
+            <span className="text-[10px] font-bold text-black uppercase tracking-[0.3em]">Hardware</span>
+          </div>
+          <p className="text-[9px] font-bold text-black/30 uppercase tracking-[0.2em]">CERTIFIED_SERIES</p>
         </div>
-      )}
-
-      {/* TV Image */}
-      <div className="bg-[#fcfcfc] aspect-video flex items-center justify-center p-6 sm:p-8 overflow-hidden relative group-hover:bg-red-50/30 transition-colors duration-500">
-        {image ? (
-          <motion.img 
-            src={image} 
-            alt={name}
-            className="w-full h-full object-contain drop-shadow-2xl"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }} // smooth easeOut
-          />
-        ) : (
-          <div className="w-full h-full rounded flex items-center justify-center text-gray-200">
-            <Package className="w-16 h-16 sm:w-20 sm:h-20" strokeWidth={1} />
+        {discountTag && (
+          <div className="px-3 py-1 bg-black text-white text-[9px] font-black uppercase tracking-widest rounded-lg">
+            {discountTag}
           </div>
         )}
       </div>
-      
-      {/* Details */}
-      <div className="p-5 sm:p-8 text-center flex flex-col flex-1 justify-between gap-4">
-        <div className="flex-1 flex flex-col justify-between">
-          <div className="h-[3.5rem] md:h-[4rem] flex items-center justify-center">
-            <h4 className="font-bold text-base sm:text-lg md:text-xl text-gray-900 line-clamp-2 leading-snug tracking-tight group-hover:text-red-600 transition-colors px-1 sm:px-2">
-              {name}
-            </h4>
-          </div>
-          
-          <div className="min-h-[50px] sm:min-h-[60px] md:min-h-[70px] flex flex-col items-center justify-center mt-1 sm:mt-2 mb-2 sm:mb-4">
-            <div className="h-5 flex items-center justify-center">
-              {originalPrice ? (
-                <span className="text-[10px] sm:text-xs md:text-sm text-gray-400 font-bold line-through decoration-gray-300">
-                  {originalPrice}
-                </span>
-              ) : (
-                <div className="h-5" /> // Spacer for consistency
-              )}
-            </div>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-red-600 font-bold tracking-tight leading-none flex items-baseline gap-1 mt-0.5 sm:mt-1">
-              {price.toString().startsWith('MRP') ? (
-                <>
-                  <span className="text-[8px] sm:text-[10px] md:text-xs font-bold text-red-600 uppercase">MRP</span>
-                  <span>{price.toString().replace('MRP', '').trim()}</span>
-                </>
-              ) : price}
-            </p>
-          </div>
+
+      {/* Product Image Stage */}
+      <div className="relative h-56 sm:h-64 mb-10 flex items-center justify-center">
+        <div className="absolute inset-0 bg-radial-gradient from-black/[0.02] to-transparent opacity-50" />
+        <motion.img
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          src={image}
+          alt={name}
+          className="w-full h-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.1)] z-10 group-hover:scale-105 transition-transform duration-700"
+        />
+      </div>
+
+      {/* Information Layer */}
+      <div className="space-y-6">
+        <div className="space-y-2">
+          <h3 className="text-xl font-black text-black leading-tight tracking-tight group-hover:text-red-600 transition-colors">
+            {name}
+          </h3>
+          <div className="w-6 h-[1.5px] bg-black/10 transition-all group-hover:w-12 group-hover:bg-red-600" />
         </div>
 
-        <motion.button 
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={(e) => {
-            e.stopPropagation();
-            onClick?.();
-          }}
-          className="w-full h-auto flex-shrink-0 bg-black hover:bg-gray-900 text-white px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-5 rounded-xl sm:rounded-2xl font-black transition-all uppercase tracking-[0.1em] text-[10px] sm:text-xs md:text-sm shadow-lg shadow-black/10 group-hover:shadow-black/20"
-        >
-          Explore Now
-        </motion.button>
+        <div className="flex items-end justify-between">
+          <div className="space-y-1">
+            {originalPrice && (
+              <p className="text-[10px] font-bold text-black/20 line-through tracking-wider">
+                {originalPrice}
+              </p>
+            )}
+            <p className="text-xl font-black text-black tracking-tight">{price}</p>
+          </div>
+          
+          <div className="w-10 h-10 rounded-full border border-black/5 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all">
+            <ArrowUpRight size={18} />
+          </div>
+        </div>
+      </div>
+
+      {/* Technical Sidebar Detail */}
+      <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-1 items-center opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="w-px h-8 bg-black/5" />
+        <span className="text-[8px] font-bold text-black/20 vertical-text uppercase tracking-widest">Specifications</span>
+        <div className="w-px h-8 bg-black/5" />
       </div>
     </motion.div>
   )
-}
+}

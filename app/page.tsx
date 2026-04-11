@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { motion, AnimatePresence } from 'framer-motion'
-import { CheckCircle2, Package, Tv, Wind, ChefHat, Sparkles, Mail, Phone, ImageIcon, Clock, Calendar, ArrowRight, X, ChevronDown, Shield, Zap, Maximize } from "lucide-react"
+import { CheckCircle2, Package, Tv, Wind, ChefHat, Sparkles, Mail, Phone, ImageIcon, Clock, Calendar, ArrowRight, X, ChevronDown, Shield, Zap, Maximize, MessageSquare } from "lucide-react"
 import GalleryLightbox from '@/components/GalleryLightbox'
 
 interface Product {
@@ -211,14 +211,7 @@ export default function Home() {
       <Navbar />
 
       
-        <main>
-        <motion.section 
-          id="home" 
-          className="pt-28 md:pt-36"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
+        <main className="bg-white">
           <HeroCarousel onShopNow={(slideTitle) => {
             const titleLower = slideTitle.toLowerCase()
             const matchedProduct = products.find(p => {
@@ -232,39 +225,65 @@ export default function Home() {
               scrollToId('category');
             }
           }} />
-        </motion.section>
 
         {/* ABOUT SECTION */}
         <motion.section 
           id="about" 
-          className="py-14 sm:py-20 bg-white border-b"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="py-32 sm:py-48 bg-white relative overflow-hidden"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5 }}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
-              About <span className="text-red-600">OSAKA GROUP</span>
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <h3 className="text-3xl font-bold mb-6">Our Story</h3>
-                <p className="text-gray-700 text-lg mb-4">
-                  Since 1994, Osaka Group has been a leader in high-end manufacturing, with a proven legacy of producing countless home appliances and selling over 2 million televisions.
-                </p>
-                <p className="text-gray-700 text-lg">
-                  Osaka Group | 32 years of Innovation | Two Million Stories of Trust.
-                </p>
-              </div>
-              <div className="bg-gray-200 h-96 rounded-lg flex items-center justify-center overflow-hidden shadow-xl">
-                <img
-                  src="/assets/images/about/imageAbout.PNG"
-                  alt="About Osaka"
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              </div>
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-black/[0.01] blur-[150px] rounded-full -translate-y-1/2 translate-x-1/2" />
+          
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-20 md:gap-32 items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
+              >
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-[1px] bg-black/10" />
+                  <span className="text-[10px] font-bold text-black/40 uppercase tracking-[0.4em]">Corporate Excellence</span>
+                </div>
+                
+                <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-black mb-12 leading-[0.9] tracking-tighter">
+                  INTELLIGENT <br />
+                  <span className="text-black/10 italic">ENGINEERING</span>
+                </h2>
+                
+                <div className="space-y-10 text-black/50 text-base md:text-lg leading-relaxed font-medium">
+                  <p className="max-w-xl">
+                    Forging the future of visual intelligence since 1994. Osaka Group stands at the intersection of monolithic design and pure performance, delivering over 2 million display solutions to a global audience.
+                  </p>
+                  <div className="flex flex-col gap-4 pt-4 border-l border-black/5 pl-8">
+                    <span className="text-[10px] font-bold text-black/20 uppercase tracking-[0.3em]">Operational Milestone</span>
+                    <p className="text-black font-bold text-2xl tracking-tight">
+                      "32 Years of Precision Innovation."
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+              
+              <motion.div 
+                className="relative"
+                initial={{ opacity: 0, scale: 0.98 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
+              >
+                <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-black/5 border border-black/5 group aspect-square lg:aspect-[4/5] xl:aspect-[3/4]">
+                  <img
+                    src="/assets/images/about/imageAbout.PNG"
+                    alt="Engineering"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-all duration-[2000ms] ease-[0.23,1,0.32,1] object-center"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+                </div>
+              </motion.div>
             </div>
           </div>
         </motion.section>
@@ -273,26 +292,42 @@ export default function Home() {
         {!loading && products.length > 0 && (
         <motion.section 
           id="newly-arrived" 
-          className="py-14 sm:py-20 bg-gradient-to-br from-red-50 to-white"
-          initial={{ opacity: 0, y: 40 }}
+          className="py-32 sm:py-48 bg-[#f9f9fb] border-y border-black/[0.03]"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
         >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-16">
-                <span className="bg-red-100 text-red-700 font-bold px-4 py-2 rounded-full uppercase tracking-widest text-sm mb-4 inline-block">Flash Release</span>
-                <h2 className="text-3xl md:text-5xl font-bold">
-                  Newly <span className="text-red-600">Arrived</span>
-                </h2>
-                <p className="text-gray-600 mt-4 text-lg">Check out our latest products just added to the store!</p>
+            <div className="max-w-7xl mx-auto px-6 lg:px-12">
+              <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-12">
+                <div>
+                   <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="flex items-center gap-4 mb-6"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full pulse-red" />
+                    <span className="text-[10px] font-bold text-black/40 uppercase tracking-[0.4em]">Latest Catalog</span>
+                  </motion.div>
+                  <h2 className="text-4xl md:text-7xl font-black text-black uppercase tracking-tighter leading-none">
+                    NEW <span className="text-black/10 italic">RELEASES</span>
+                  </h2>
+                </div>
+                <p className="text-black/30 max-w-sm text-sm font-medium leading-relaxed">
+                  Precision-manufactured units incorporating our newest sensory and visual hardware.
+                </p>
               </div>
 
-              <div className="flex overflow-x-auto pb-8 snap-x snap-mandatory hide-scroll-bar gap-5 px-4 md:px-0 md:flex-wrap md:justify-center">
-                {getLatestProducts().map((product) => (
-                  <div 
+              <div className="flex overflow-x-auto pb-12 snap-x snap-mandatory hide-scroll-bar gap-6 md:gap-8 px-4 -mx-4 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 md:mx-0 md:px-0">
+                {getLatestProducts().map((product, idx) => (
+                  <motion.div 
                     key={`new-${product.id}`} 
-                    className="snap-center w-[260px] md:w-[280px] shrink-0 h-full py-2"
+                    className="snap-center w-[280px] md:w-auto shrink-0"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
                   >
                     <TVCard
                       name={product.name}
@@ -302,7 +337,7 @@ export default function Home() {
                       image={product.image_url || ''}
                       onClick={() => setSelectedProduct(product)}
                     />
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -312,37 +347,53 @@ export default function Home() {
         {/* CATEGORY SECTION */}
         <motion.section 
           id="category" 
-          className="py-14 sm:py-20 bg-gray-50"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="py-32 sm:py-48 bg-white border-t border-black/[0.03]"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5 }}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
-              Our <span className="text-red-600">Categories</span>
-            </h2>
+          <div className="max-w-7xl mx-auto px-6 lg:px-12">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-12">
+              <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  className="flex items-center gap-4 mb-6"
+                >
+                  <div className="w-1.5 h-1.5 rounded-full pulse-red" />
+                  <span className="text-[10px] font-bold text-black/40 uppercase tracking-[0.4em]">Integrated Solutions</span>
+                </motion.div>
+                <h2 className="text-4xl md:text-7xl font-black text-black uppercase tracking-tighter leading-none">
+                  THE <span className="text-black/10 italic">COLLECTION</span>
+                </h2>
+              </div>
+              <p className="text-black/30 max-w-sm text-sm font-medium leading-relaxed">
+                Discover the technical specifications and unparalleled performance of our certified hardware series.
+              </p>
+            </div>
 
             {loading ? (
-              <div className="text-center py-14 sm:py-20">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
-                <p className="text-xl text-gray-600">Loading products...</p>
+              <div className="text-center py-32 flex flex-col items-center">
+                <div className="w-8 h-[1px] bg-white/20 animate-pulse mb-8" />
+                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/20">Querying Database...</p>
               </div>
             ) : (
             <div className="flex flex-col items-center w-full">
                 {/* Main Category Selection Tabs - Modern Horizontal Scroll on Mobile */}
-                <div className="w-full overflow-x-auto pb-4 hide-scroll-bar">
-                  <div className="flex justify-start sm:justify-center gap-3 sm:gap-4 px-4 min-w-max mx-auto">
+                <div className="w-full overflow-x-auto pb-16 hide-scroll-bar">
+                  <div className="flex justify-start md:justify-center gap-4 px-4 min-w-max mx-auto">
                     {MAIN_CATEGORIES.map(category => (
                       <motion.button
                         key={category}
                         layout
-                        whileHover={{ scale: 1.02 }}
+                        whileHover={{ scale: 1.02, y: -2 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => handleMainCategoryClick(category)}
-                        className={`px-4 py-2.5 sm:px-8 sm:py-3 md:px-10 md:py-4 whitespace-nowrap rounded-full font-black text-xs sm:text-base md:text-xl transition-all shadow-sm ${selectedMainCategory === category
-                            ? 'bg-red-600 text-white shadow-xl ring-4 ring-red-100'
-                            : 'bg-white text-gray-800 hover:bg-gray-50 border-2 border-gray-100'
+                        className={`px-10 py-5 rounded-full font-bold text-[10px] uppercase tracking-[0.2em] transition-all duration-500 border ${selectedMainCategory === category
+                            ? 'bg-black text-white border-black shadow-2xl'
+                            : 'bg-black/[0.01] text-black/40 border-black/5 hover:border-black/10 hover:text-black'
                           }`}
                       >
                         {category}
@@ -357,21 +408,22 @@ export default function Home() {
                     {/* TV Size Selection Tabs */}
                     <div
                       id="tv-size-picker"
-                      className="w-full max-w-3xl bg-white border border-gray-100 rounded-2xl shadow-sm p-4 sm:p-5 mb-6 sm:mb-8 scroll-mt-24"
+                      className="w-full max-w-5xl bg-[#f9f9fb] rounded-[2.5rem] p-10 sm:p-14 mb-12 scroll-mt-32 border border-black/5 shadow-inner"
                     >
-                      <div className="mb-4">
-                        <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
-                          Pick TV Size
+                      <div className="mb-10 flex items-center gap-4">
+                        <div className="w-12 h-px bg-black/10" />
+                        <p className="text-[10px] sm:text-xs font-black text-black/40 uppercase tracking-[0.5em]">
+                          Selection Matrix / Size
                         </p>
                       </div>
-                      <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+                      <div className="flex flex-wrap justify-center gap-4 md:gap-6">
                         {TV_SIZES.map(size => (
                           <button
                             key={size}
                             onClick={() => handleSizeClick(size)}
-                            className={`px-3 py-1.5 sm:px-6 sm:py-2.5 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-xs sm:text-sm md:text-lg transition-all shadow-md border-2 ${selectedSize === size
-                                ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
-                                : 'bg-gray-50 text-gray-700 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
+                            className={`px-8 py-4 md:px-12 md:py-6 whitespace-nowrap rounded-2xl font-black text-[10px] sm:text-sm transition-all border ${selectedSize === size
+                                ? 'bg-black text-white border-black shadow-2xl scale-105'
+                                : 'bg-white/50 text-black/30 hover:text-black/60 border-black/5 hover:bg-white'
                               }`}
                           >
                             {size}
@@ -381,56 +433,55 @@ export default function Home() {
                     </div>
 
                     {/* TV Model Selection Tabs */}
-{TV_MODELS[selectedSize] && TV_MODELS[selectedSize].length > 0 && (
-  <div
-    id="tv-series-picker"
-    className="w-full max-w-3xl bg-white border border-gray-100 rounded-2xl shadow-sm p-4 sm:p-5 mb-10 sm:mb-16 scroll-mt-24"
-  >
-    <div className="mb-4">
-      <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
-        Pick TV Series
-      </p>
-    </div>
-    <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
-      {/* "All Models" Button - Content & Logic preserved */}
-      <button
-        onClick={() => {
-          setSelectedModel('All')
-          scrollToProductsForCategory(selectedMainCategory)
-        }}
-        className={`px-3 py-1.5 sm:px-6 sm:py-2.5 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-xs sm:text-sm md:text-lg transition-all shadow-md border-2 ${
-          selectedModel === 'All'
-            ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
-            : 'bg-gray-50 text-gray-700 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
-        }`}
-      >
-        All models
-      </button>
+                    {TV_MODELS[selectedSize] && TV_MODELS[selectedSize].length > 0 && (
+                      <div
+                        id="tv-series-picker"
+                        className="w-full max-w-5xl bg-[#f9f9fb] rounded-[2.5rem] p-10 sm:p-14 mb-14 sm:mb-24 scroll-mt-32 border border-black/5 shadow-inner"
+                      >
+                        <div className="mb-10 flex items-center gap-4">
+                          <div className="w-12 h-px bg-black/10" />
+                          <p className="text-[10px] sm:text-xs font-black text-black/40 uppercase tracking-[0.5em]">
+                             Premium Series / Model
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+                          <button
+                            onClick={() => {
+                              setSelectedModel('All')
+                              scrollToProductsForCategory(selectedMainCategory)
+                            }}
+                            className={`px-6 py-3 md:px-12 md:py-5 rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] transition-all border ${
+                              selectedModel === 'All'
+                                ? 'bg-black text-white border-black shadow-2xl scale-105'
+                                : 'bg-white/50 text-black/30 hover:text-black/60 border-black/5 hover:bg-white'
+                            }`}
+                          >
+                            All series
+                          </button>
 
-      {/* Map through Models - Content & Logic preserved */}
-      {TV_MODELS[selectedSize].map(model => (
-        <button
-          key={model}
-          onClick={() => {
-            setSelectedModel(model)
-            scrollToProductsForCategory(selectedMainCategory)
-          }}
-          className={`px-3 py-1.5 sm:px-6 sm:py-2.5 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-xs sm:text-sm md:text-lg transition-all shadow-md border-2 ${
-            selectedModel === model
-              ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
-              : 'bg-gray-50 text-gray-700 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
-          }`}
-        >
-          {model}
-        </button>
-      ))}
-    </div>
-  </div>
-)}
+                          {TV_MODELS[selectedSize].map(model => (
+                            <button
+                              key={model}
+                              onClick={() => {
+                                setSelectedModel(model)
+                                scrollToProductsForCategory(selectedMainCategory)
+                              }}
+                              className={`px-6 py-3 md:px-12 md:py-5 rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] transition-all border ${
+                                selectedModel === model
+                                  ? 'bg-black text-white border-black shadow-2xl scale-105'
+                                  : 'bg-white/50 text-black/30 hover:text-black/60 border-black/5 hover:bg-white'
+                              }`}
+                            >
+                              {model}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     {/* TV Product Grid */}
-                    <div id="tv-products" className="w-full scroll-mt-24">
-                      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 sm:gap-8 justify-center">
+                    <div id="tv-products" className="w-full scroll-mt-32">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
                         {products
                           .filter(p => p.category === selectedSize)
                           .filter(p => selectedModel === 'All' || p.name.includes(selectedModel))
@@ -448,15 +499,15 @@ export default function Home() {
                       </div>
 
                       {products.filter(p => p.category === selectedSize && (selectedModel === 'All' || p.name.includes(selectedModel))).length === 0 && (
-                        <div className="text-center py-14 sm:py-20 bg-white rounded-2xl border border-gray-100 shadow-sm w-full">
-                          <Tv className="w-16 h-16 mx-auto text-gray-200 mb-6" strokeWidth={1} />
-                          <h3 className="text-2xl font-bold text-gray-800 mb-2">No TVs Found</h3>
-                          <p className="text-gray-500">We couldn&apos;t find any active TVs in our current inventory matching your selection.</p>
+                        <div className="text-center py-24 sm:py-32 glass rounded-[3rem] border border-white/5 w-full">
+                          <Tv className="w-24 h-24 mx-auto text-white/10 mb-8" strokeWidth={1} />
+                          <h3 className="text-3xl font-black text-white mb-4 uppercase tracking-tighter">Inventory Empty</h3>
+                          <p className="text-gray-500 max-w-sm mx-auto font-medium">We couldn&apos;t find any active units in the current selection.</p>
                           <button
                             onClick={() => handleSizeClick('32 inch')}
-                            className="mt-6 px-6 py-2 bg-gray-100 text-gray-800 font-bold rounded-lg hover:bg-gray-200 transition-colors"
+                            className="mt-10 px-10 py-4 bg-white/5 hover:bg-white/10 text-white font-black uppercase tracking-widest text-xs rounded-full border border-white/10 transition-all"
                           >
-                            Reset Filters
+                            Reset Parameters
                           </button>
                         </div>
                       )}
@@ -470,21 +521,22 @@ export default function Home() {
                     {/* Fan Size Selection Tabs */}
                     <div
                       id="fan-size-picker"
-                      className="w-full max-w-3xl bg-white border border-gray-100 rounded-2xl shadow-sm p-4 sm:p-5 mb-6 sm:mb-8 scroll-mt-24"
+                      className="w-full max-w-5xl bg-[#f9f9fb] rounded-[2.5rem] p-10 sm:p-14 mb-12 scroll-mt-32 border border-black/5 shadow-inner"
                     >
-                      <div className="mb-4">
-                        <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
-                          Pick Fan Size
+                      <div className="mb-10 flex items-center gap-4">
+                        <div className="w-12 h-px bg-black/10" />
+                        <p className="text-[10px] sm:text-xs font-black text-black/40 uppercase tracking-[0.5em]">
+                           Technical Matrix / Scale
                         </p>
                       </div>
-                      <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+                      <div className="flex flex-wrap justify-center gap-4">
                         {FAN_SIZES.map(size => (
                           <button
                             key={size}
                             onClick={() => handleSizeClick(size)}
-                            className={`px-3 py-1.5 sm:px-6 sm:py-2.5 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-xs sm:text-sm md:text-lg transition-all shadow-md border-2 ${selectedSize === size
-                                ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
-                                : 'bg-gray-50 text-gray-700 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
+                            className={`px-10 py-4 md:px-12 md:py-6 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] transition-all border ${selectedSize === size
+                                ? 'bg-black text-white border-black shadow-2xl scale-105'
+                                : 'bg-white/50 text-black/30 hover:text-black/60 border-black/5 hover:bg-white'
                               }`}
                           >
                             {size}
@@ -497,48 +549,52 @@ export default function Home() {
                     {FAN_MODELS[selectedSize] && FAN_MODELS[selectedSize].length > 0 && (
                       <div
                         id="fan-series-picker"
-                        className="w-full max-w-3xl bg-white border border-gray-100 rounded-2xl shadow-sm p-4 sm:p-5 mb-10 sm:mb-16 scroll-mt-24"
+                        className="w-full max-w-5xl bg-[#f9f9fb] rounded-[2.5rem] p-10 sm:p-14 mb-20 scroll-mt-32 border border-black/5 shadow-inner"
                       >
-                        <div className="mb-4">
-                          <p className="text-xs sm:text-sm font-extrabold text-gray-600 uppercase tracking-widest">
-                            Pick Fan Model
+                         <div className="mb-10 flex items-center gap-4">
+                          <div className="w-12 h-px bg-black/10" />
+                          <p className="text-[10px] sm:text-xs font-black text-black/40 uppercase tracking-[0.5em]">
+                             Series Differentiation
                           </p>
                         </div>
-                        <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
-                        <button
-                          onClick={() => {
-                            setSelectedModel('All')
-                            scrollToProductsForCategory(selectedMainCategory)
-                          }}
-                          className={`px-3 py-1.5 sm:px-6 sm:py-2.5 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-xs sm:text-sm md:text-lg transition-all shadow-md border-2 ${selectedModel === 'All'
-                              ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
-                              : 'bg-gray-50 text-gray-600 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
-                            }`}
-                        >
-                          All models
-                        </button>
-                        {FAN_MODELS[selectedSize].map(model => (
+                        <div className="flex flex-wrap justify-center gap-4">
                           <button
-                            key={model}
                             onClick={() => {
-                              setSelectedModel(model)
+                              setSelectedModel('All')
                               scrollToProductsForCategory(selectedMainCategory)
                             }}
-                            className={`px-3 py-1.5 sm:px-6 sm:py-2.5 md:px-8 md:py-3 whitespace-nowrap rounded-full font-bold text-xs sm:text-sm md:text-lg transition-all shadow-md border-2 ${selectedModel === model
-                                ? 'bg-gray-900 text-white border-gray-900 shadow-xl transform scale-105'
-                                : 'bg-gray-50 text-gray-600 hover:bg-white hover:text-red-600 hover:border-red-300 border-gray-200 hover:shadow-lg'
-                              }`}
+                            className={`px-10 py-5 rounded-2xl font-bold text-[9px] uppercase tracking-[0.3em] transition-all border ${
+                              selectedModel === 'All'
+                                ? 'bg-black text-white border-black shadow-2xl scale-105'
+                                : 'bg-white/50 text-black/30 hover:text-black/60 border-black/5 hover:bg-white'
+                            }`}
                           >
-                            {model}
+                            Unified Catalog
                           </button>
-                        ))}
+
+                          {FAN_MODELS[selectedSize].map(model => (
+                            <button
+                              key={model}
+                              onClick={() => {
+                                setSelectedModel(model)
+                                scrollToProductsForCategory(selectedMainCategory)
+                              }}
+                              className={`px-10 py-5 rounded-2xl font-bold text-[9px] uppercase tracking-[0.3em] transition-all border ${
+                                selectedModel === model
+                                  ? 'bg-black text-white border-black shadow-2xl scale-105'
+                                  : 'bg-white/50 text-black/30 hover:text-black/60 border-black/5 hover:bg-white'
+                              }`}
+                            >
+                              {model}
+                            </button>
+                          ))}
                         </div>
                       </div>
                     )}
 
                     {/* Fan Product Grid */}
-                    <div id="fan-products" className="w-full scroll-mt-24">
-                      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 sm:gap-8 justify-center">
+                    <div id="fan-products" className="w-full scroll-mt-32">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
                         {products
                           .filter(p => p.category === selectedSize)
                           .filter(p => selectedModel === 'All' || p.name.includes(selectedModel))
@@ -556,15 +612,15 @@ export default function Home() {
                       </div>
 
                       {products.filter(p => p.category === selectedSize && (selectedModel === 'All' || p.name.includes(selectedModel))).length === 0 && (
-                        <div className="text-center py-14 sm:py-20 bg-white rounded-2xl border border-gray-100 shadow-sm w-full">
-                          <Wind className="w-16 h-16 mx-auto text-gray-200 mb-6" strokeWidth={1} />
-                          <h3 className="text-2xl font-bold text-gray-800 mb-2">No Fans Found</h3>
-                          <p className="text-gray-500">We couldn&apos;t find any active fans in our current inventory matching your selection.</p>
+                        <div className="text-center py-24 sm:py-32 bg-[#f9f9fb] rounded-[3rem] border border-black/5 w-full">
+                          <Wind className="w-24 h-24 mx-auto text-black/5 mb-8" strokeWidth={1} />
+                          <h3 className="text-3xl font-black text-black mb-4 uppercase tracking-tighter">Inventory Empty</h3>
+                          <p className="text-black/30 max-w-sm mx-auto font-medium">We couldn&apos;t find any active units in the current selection.</p>
                           <button
                             onClick={() => handleSizeClick('16 inch')}
-                            className="mt-6 px-6 py-2 bg-gray-100 text-gray-800 font-bold rounded-lg hover:bg-gray-200 transition-colors"
+                            className="mt-10 px-10 py-4 bg-black text-white font-black uppercase tracking-widest text-xs rounded-full border border-black/10 transition-all hover:bg-zinc-800"
                           >
-                            Reset Filters
+                            Reset Parameters
                           </button>
                         </div>
                       )}
@@ -575,8 +631,8 @@ export default function Home() {
                 {/* COOKER SECTION */}
                 {selectedMainCategory === 'Cooker' && (
                   <div className="w-full flex flex-col items-center">
-                    <div id="cooker-products" className="w-full mt-4 scroll-mt-24">
-                      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 sm:gap-8 justify-center">
+                    <div id="cooker-products" className="w-full mt-4 scroll-mt-32">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
                         {products
                           .filter(p => p.category === 'Cooker')
                           .map((product) => (
@@ -593,10 +649,10 @@ export default function Home() {
                       </div>
 
                       {products.filter(p => p.category === 'Cooker').length === 0 && (
-                        <div className="text-center py-14 sm:py-20 bg-white rounded-2xl border border-gray-100 shadow-sm w-full">
-                          <ChefHat className="w-16 h-16 mx-auto text-gray-200 mb-6" strokeWidth={1} />
-                          <h3 className="text-2xl font-bold text-gray-800 mb-2">No Cookers Found</h3>
-                          <p className="text-gray-500">We couldn&apos;t find any active cookers in our current inventory.</p>
+                        <div className="text-center py-24 sm:py-32 bg-[#f9f9fb] rounded-[2.5rem] border border-black/5 w-full shadow-inner">
+                          <ChefHat className="w-16 h-16 mx-auto text-black/10 mb-6" strokeWidth={1} />
+                          <h3 className="text-3xl font-black text-black mb-4 uppercase tracking-tighter">Inventory Empty</h3>
+                          <p className="text-black/30 max-w-sm mx-auto font-medium">We couldn&apos;t find any active culinary units in our current inventory.</p>
                         </div>
                       )}
                     </div>
@@ -605,11 +661,12 @@ export default function Home() {
 
                 {/* MORE SECTION */}
                 {selectedMainCategory === 'More' && (
-                  <div className="text-center py-24 bg-white rounded-3xl border border-gray-100 shadow-sm w-full max-w-4xl mx-auto my-8">
-                    <Sparkles className="w-24 h-24 mx-auto text-gray-200 mb-8 mt-4" strokeWidth={1} />
-                    <h3 className="text-4xl font-bold text-gray-800 mb-4">More Categories</h3>
-                    <p className="text-2xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
-                      We are always expanding. Later we will decide on more exciting products!
+                  <div className="text-center py-48 bg-white rounded-[3rem] border border-black/[0.03] w-full max-w-5xl mx-auto my-12 relative overflow-hidden shadow-2xl shadow-black/5">
+                    <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-black/5 to-transparent" />
+                    <Sparkles className="w-24 h-24 mx-auto text-black/[0.02] mb-12" strokeWidth={0.5} />
+                    <h2 className="text-4xl md:text-6xl font-black text-black mb-8 uppercase tracking-tighter">FUTURE <span className="text-black/10 text-4xl italic">PROTOCOLS</span></h2>
+                    <p className="text-lg text-black/30 max-w-xl mx-auto leading-relaxed font-medium px-8">
+                      Our ecosystem is expanding into next-generation sensory and domestic hardware. Initializing roadmap protocols.
                     </p>
                   </div>
                 )}
@@ -621,44 +678,54 @@ export default function Home() {
         {/* GALLERY SECTION */}
         <motion.section 
           id="gallery" 
-          className="py-14 sm:py-20 bg-white"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="py-32 sm:py-48 bg-white border-t border-black/[0.03]"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5 }}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
-              Our <span className="text-red-600">Gallery</span>
-            </h2>
+          <div className="max-w-7xl mx-auto px-6 lg:px-12">
+            <div className="text-center mb-32">
+              <div className="flex flex-col items-center gap-4 mb-4">
+                <span className="text-[10px] font-bold text-black/20 uppercase tracking-[0.5em]">Visionary Artifacts</span>
+                <div className="w-1.5 h-1.5 rounded-full bg-black/10" />
+              </div>
+              <h2 className="text-5xl md:text-8xl font-black text-black uppercase tracking-tighter">
+                SPEC <span className="text-black/10 italic">SHOWCASE</span>
+              </h2>
+            </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 {galleryItems.length > 0 ? (
                   galleryItems.map((item, idx) => (
                     <motion.div 
                       key={item.id} 
-                      whileHover={{ y: -5 }}
+                      whileHover={{ scale: 1.02, y: -5 }}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, delay: idx * 0.05, ease: [0.23, 1, 0.32, 1] }}
                       onClick={() => {
                         setLightboxIndex(idx)
                         setIsLightboxOpen(true)
                       }}
-                      className="relative group overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 cursor-zoom-in"
+                      className="group relative overflow-hidden rounded-[2rem] aspect-square bg-[#f9f9fb] border border-black/[0.03] cursor-zoom-in"
                     >
                       <img 
                         src={item.image_url} 
                         alt={item.caption || "Gallery"} 
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        className="w-full h-full object-cover opacity-90 group-hover:scale-110 group-hover:opacity-100 transition-all duration-1000 ease-[0.23,1,0.32,1]"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                        <p className="text-white font-bold text-xs line-clamp-1">{item.caption}</p>
+                      <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
+                        <div>
+                          <p className="text-black font-bold text-[10px] tracking-[0.2em] uppercase">{item.caption}</p>
+                        </div>
                       </div>
                     </motion.div>
                   ))
                 ) : (
                   [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-                    <div key={item} className="bg-gray-50 h-48 md:h-64 rounded-2xl flex items-center justify-center border border-gray-100 border-dashed">
-                      <ImageIcon className="w-10 h-10 text-gray-200" />
-                    </div>
+                    <div key={item} className="bg-[#f9f9fb] h-64 md:h-80 rounded-[2rem] border border-black/[0.03] border-dashed animate-pulse" />
                   ))
                 )}
             </div>
@@ -668,176 +735,185 @@ export default function Home() {
         {/* CONTACT SECTION */}
         <motion.section 
           id="contact" 
-          className="py-14 sm:py-20 bg-gray-100"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="py-32 sm:py-48 bg-white relative border-t border-black/[0.03]"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5 }}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
-              Contact <span className="text-red-600">Us</span>
-            </h2>
-            <div className="grid md:grid-cols-2 gap-12">
-              <div>
-                <h3 className="text-2xl font-bold mb-6 text-gray-800">Get In Touch</h3>
-                <div className="space-y-6">
-                  <div className="flex items-start">
-                    <div className="bg-red-50 p-4 rounded-2xl mr-6 group-hover:bg-red-100 transition-colors">
-                      <Phone className="w-6 h-6 text-red-600" />
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-20 md:gap-32 items-start">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
+              >
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-[1px] bg-black/10" />
+                  <span className="text-[10px] font-bold text-black/40 uppercase tracking-[0.4em]">Establish Communication</span>
+                </div>
+                <h2 className="text-5xl md:text-9xl font-black text-black mb-16 leading-[0.85] tracking-tighter">
+                  CONNECT <br />
+                  <span className="text-black/10">CENTER</span>
+                </h2>
+                
+                <div className="space-y-16">
+                  <div className="flex items-center gap-10">
+                    <div className="flex-shrink-0 w-16 h-16 rounded-full bg-black/[0.02] border border-black/5 flex items-center justify-center">
+                      <Phone className="w-5 h-5 text-black/40" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-gray-900">Phone</h4>
-                      <p className="text-gray-600">01886-469096</p>
+                      <h4 className="text-[9px] font-black text-black/20 uppercase tracking-[0.4em] mb-2">Technical Direct</h4>
+                      <p className="text-3xl font-black text-black tracking-[0.1em] leading-none font-mono">01886-469096</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-10">
+                    <div className="flex-shrink-0 w-16 h-16 rounded-full bg-black/[0.02] border border-black/5 flex items-center justify-center">
+                      <Mail className="w-5 h-5 text-black/40" />
+                    </div>
+                    <div>
+                      <h4 className="text-[9px] font-bold text-black/20 uppercase tracking-[0.4em] mb-2">General Inquiry</h4>
+                      <p className="text-xl font-bold text-black tracking-[0.1em] leading-none uppercase">info@osakagroup.com</p>
                     </div>
                   </div>
                 </div>
-                
+              </motion.div>
               
-              </div>
-              <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 flex flex-col justify-center">
-                <div className="mb-8">
-                  <h3 className="text-3xl font-black text-gray-900 mb-2">Visit Our Showroom</h3>
-                  <p className="text-gray-500 font-medium font-mono text-sm uppercase tracking-widest">Official OSAKA Point</p>
-                </div>
-                
-                <div className="space-y-8">
-                  <div className="flex items-start">
-                    <div className="bg-red-50 p-4 rounded-2xl mr-6">
-                      <Package className="w-6 h-6 text-red-600" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 text-lg">Corporate Office</h4>
-                      <p className="text-gray-600 leading-relaxed mt-1 text-sm">
-                        মোহাম্মদপুর, কাদেরাবাদ হাউজিং, রোড ৫, ব্লক বি, বাসা ৪, গ্রাউন্ড ফ্লোর । 
-                        <a href="tel:01886469096" className="text-red-600 font-bold hover:underline block mt-1">📲 01886469096</a>
+              <motion.div 
+                className="bg-[#f9f9fb] p-10 md:p-20 rounded-[3rem] border border-black/[0.03] relative overflow-hidden shadow-2xl shadow-black/5"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
+              >
+                <div className="flex flex-col gap-12">
+                  <div className="flex items-center gap-8">
+                    <div className="w-1.5 h-1.5 rounded-full pulse-red" />
+                    <h3 className="text-2xl font-black text-black uppercase tracking-tighter">Presence</h3>
+                  </div>
+                  
+                  <div className="space-y-12">
+                    <div className="flex flex-col gap-4">
+                      <h4 className="text-[10px] font-bold text-black/40 uppercase tracking-[0.3em]">Core Operations</h4>
+                      <p className="text-black/60 text-base leading-relaxed font-medium">
+                        Mohammadpur, Kaderabad Housing, Road 5, Block B, House 4, Ground Floor.
                       </p>
                     </div>
-                  </div>
-
-                  <div className="flex items-start">
-                    <div className="bg-red-50 p-4 rounded-2xl mr-6">
-                      <Package className="w-6 h-6 text-red-600" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 text-lg">Wholesale Center</h4>
-                      <p className="text-gray-600 leading-relaxed mt-1 text-sm">
-                        গুলিস্তান, কাপ্তান বাজার কম্পলেক্স -ভবন ২, ২য় তলা,<br />দোকান নং- ১০৫ (105) & ১০৬ (106), নবাবপুর রোড, ঢাকা।
-                        <a href="tel:01934009834" className="text-red-600 font-bold hover:underline block mt-1">📲 01934009834</a>
+ 
+                    <div className="flex flex-col gap-4">
+                      <h4 className="text-[10px] font-bold text-black/40 uppercase tracking-[0.3em]">Distribution Node</h4>
+                      <p className="text-black/60 text-base leading-relaxed font-medium">
+                        Gulistan, Kaptan Bazar Complex - Bldg 2, 2nd Floor, Shop 105 & 106, Dhaka.
                       </p>
                     </div>
-                  </div>
-
-                  <div className="flex items-start">
-                    <div className="bg-red-50 p-4 rounded-2xl mr-6">
-                      <Package className="w-6 h-6 text-red-600" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 text-lg">Sales Center</h4>
-                      <p className="text-gray-600 leading-relaxed mt-1 text-sm">
-                        এলিফ্যান্ট রোড, আইসিটি ভবন (সুভাসতু আর্কেড),<br />লেভেল ৩, দোকান নং: ৩০৮ (308)।
-                        <a href="tel:01401111245" className="text-red-600 font-bold hover:underline block mt-1">📲 01401111245</a>
+ 
+                    <div className="flex flex-col gap-4">
+                      <h4 className="text-[10px] font-bold text-black/40 uppercase tracking-[0.3em]">Flagship Outlet</h4>
+                      <p className="text-black/60 text-base leading-relaxed font-medium">
+                        Elephant Road, Subastu Arcade, Level 3, Shop 308.
                       </p>
                     </div>
                   </div>
                 </div>
-
-                <div className="mt-10 pt-8 border-t border-gray-100">
-                   <p className="text-xs text-gray-400 font-bold uppercase tracking-[0.3em] text-center">
-                     Reliable • Genuine • Verified
-                   </p>
-                </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </motion.section>
       </main>
+
       
       
 
       {/* PRODUCT DETAILS MODAL */}
       <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
-        <DialogContent className="max-w-[95vw] sm:max-w-[90vw] md:max-w-[75vw] lg:max-w-[70vw] w-full p-0 overflow-hidden border-none bg-white rounded-2xl md:rounded-3xl shadow-2xl">
-          <DialogTitle className="sr-only">Product Details</DialogTitle>
+        <DialogContent className="max-w-[95vw] sm:max-w-[90vw] md:max-w-[85vw] lg:max-w-[75vw] xl:max-w-[70vw] w-full p-0 overflow-hidden border border-black/[0.05] bg-white rounded-[2rem] shadow-2xl h-[90vh] sm:h-auto sm:max-h-[85vh]">
+          <DialogTitle className="sr-only">Hardware Specification Detail</DialogTitle>
           {selectedProduct && (
-            <div className="flex flex-col xl:flex-row max-h-[92vh] xl:min-h-[60vh] overflow-y-auto pb-20 sm:pb-24 xl:pb-12">
+            <div className="flex flex-col xl:flex-row h-full overflow-hidden">
               
-              {/* Left Side: Large Product Display */}
-              <div className="w-full xl:w-1/2 bg-[#fdfdfd] flex items-center justify-center p-4 md:p-12 relative border-b xl:border-b-0 xl:border-r border-gray-100 min-h-[250px] sm:min-h-[300px] xl:min-h-0">
-                <div className="absolute top-4 left-4 md:top-10 md:left-10 z-10 flex flex-col gap-1.5 md:gap-2 items-start text-left">
-                  <Badge className="bg-red-600 text-white border-0 px-3 md:px-6 py-1 md:py-2 text-[9px] md:text-xs font-black uppercase tracking-widest shadow-lg">
-                    OSAKA AUTHENTIC
-                  </Badge>
+              {/* Left Side: Specialized Display Stage */}
+              <div className="w-full xl:w-[45%] bg-[#f9f9fb] flex items-center justify-center p-8 md:p-12 relative border-b xl:border-b-0 xl:border-r border-black/[0.03] min-h-[250px] sm:min-h-[350px] xl:h-full overflow-hidden">
+                <div className="absolute top-6 left-6 z-10 flex flex-col gap-3 items-start text-left">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1 h-1 rounded-full pulse-red" />
+                    <span className="text-[9px] font-black text-black uppercase tracking-[0.4em]">Operational_Stage</span>
+                  </div>
                   {selectedProduct.discount_percentage && (
-                    <Badge className="bg-black text-white border-0 px-3 md:px-6 py-1 md:py-2 text-[9px] md:text-xs font-black uppercase tracking-widest shadow-lg">
+                    <div className="px-3 py-1 bg-black text-white text-[8px] font-black uppercase tracking-widest rounded-sm shadow-xl">
                       {selectedProduct.discount_percentage}
-                    </Badge>
+                    </div>
                   )}
                 </div>
 
+                <div className="absolute inset-0 bg-radial-gradient from-black/[0.03] to-transparent opacity-40 pointer-events-none" />
+
                 {selectedProduct.image_url ? (
-                  <img
+                  <motion.img
+                    initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                    animate={{ scale: 1, opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
                     src={selectedProduct.image_url}
                     alt={selectedProduct.name}
-                    className="w-full max-h-[180px] sm:max-h-[220px] md:max-h-[350px] object-contain drop-shadow-xl p-4"
+                    className="w-full max-h-[200px] sm:max-h-[280px] md:max-h-[400px] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.1)] z-10 hover:scale-[1.03] transition-transform duration-1000"
                   />
                 ) : (
-                  <div className="w-full h-40 sm:h-48 flex items-center justify-center bg-gray-50 rounded-2xl border border-gray-100 mb-4">
-                    <Package className="w-16 h-16 sm:w-24 sm:h-24 text-gray-200" strokeWidth={1} />
+                  <div className="w-full h-48 flex items-center justify-center bg-black/[0.01] rounded-[2rem] border border-black/5">
+                    <Package className="w-12 h-12 text-black/5" strokeWidth={1} />
                   </div>
                 )} 
               </div>
 
-              {/* Right Side: Information */}
-              <div className="w-full xl:w-1/2 p-4 sm:p-6 md:p-14 lg:p-16 flex flex-col justify-between bg-white text-left">
-                <div className="space-y-4 md:space-y-8">
-                  {/* Title & Status */}
+              {/* Right Side: High-Precision Documentation */}
+              <div className="w-full xl:w-[55%] flex flex-col h-full bg-white relative overflow-hidden">
+                <div className="flex-1 overflow-y-auto p-8 sm:p-10 md:p-12 xl:p-16 space-y-12">
+                  {/* Title & Status Block */}
                   <div>
-                    <div className="flex items-center gap-2 text-green-600 font-bold text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] mb-2 md:mb-4">
-                      <CheckCircle2 size={14} strokeWidth={3} className="md:w-[18px] md:h-[18px]" />
-                      Verified Factory Stock
-                    </div>
-                    <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-black text-gray-900 leading-tight md:leading-[1.15] tracking-tight">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-[0.95] tracking-tight mb-4">
                       {selectedProduct.name}
                     </h2>
+                    <div className="flex items-center gap-3">
+                      <div className="w-4 h-[1px] bg-black/20" />
+                      <p className="text-[9px] font-bold text-black/30 uppercase tracking-[0.3em]">Code: {selectedProduct.id.slice(0, 8)}</p>
+                    </div>
                   </div>
 
-                  {/* Price & Info Grid */}
-                    <div className="flex flex-wrap gap-x-12 gap-y-4 md:gap-x-16 border-y border-gray-100 py-4 md:py-8 items-start">
-                    <div>
-                      <p className="text-gray-400 font-bold uppercase text-[8px] md:text-xs tracking-widest mb-1 md:mb-2 whitespace-nowrap">Price</p>
-                      {selectedProduct.original_price && (
-                        <div className="text-[9px] md:text-sm text-gray-400 font-bold line-through mb-0.5 whitespace-nowrap flex items-baseline gap-1">
-                          <span className="text-[8px] md:text-[10px] uppercase text-gray-400">MRP</span>
-                          <span>{selectedProduct.price.toLocaleString()}  ৳</span>
-                        </div>
-                      )}
-                      <div className="text-base sm:text-lg md:text-xl lg:text-2xl font-extrabold text-red-600 tracking-tight whitespace-nowrap flex items-baseline gap-1.5">
-                        <span className="text-[10px] md:text-xs font-bold text-red-600 uppercase tracking-widest leading-none">MRP</span>
-                        <span>{(selectedProduct.original_price || selectedProduct.price).toLocaleString()}  ৳</span>
+                  {/* Commercial Value & Specifications Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 py-10 border-y border-black/[0.03]">
+                    <div className="space-y-3">
+                      <h4 className="text-[9px] font-black text-black/20 uppercase tracking-[0.4em]">Commercial Value</h4>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-3xl sm:text-4xl font-black text-black tracking-tight leading-none">
+                          {(selectedProduct.original_price || selectedProduct.price).toLocaleString()}
+                        </span>
+                        <span className="text-[10px] font-black text-black/30 uppercase tracking-[0.1em]">৳</span>
                       </div>
                     </div>
-                    <div>
-                      <p className="text-gray-400 font-bold uppercase text-[8px] md:text-xs tracking-widest mb-1 md:mb-2 whitespace-nowrap">Model Size</p>
-                      <p className="text-sm sm:text-base md:text-2xl font-black text-gray-800 whitespace-nowrap">{selectedProduct.size || 'N/A'}</p>
+                    <div className="space-y-3">
+                      <h4 className="text-[9px] font-black text-black/20 uppercase tracking-[0.4em]">Dimensions</h4>
+                      <div className="flex items-baseline gap-2">
+                         <p className="text-xl sm:text-2xl font-black text-black tracking-tighter uppercase whitespace-nowrap">{selectedProduct.size || 'Unspecified'}</p>
+                         <span className="text-[10px] font-black text-black/30 uppercase tracking-[0.1em]">Class</span>
+                      </div>
                     </div>
                   </div>
 
                   {/* Specifications Accordion */}
-                  <div className="pt-2 md:pt-4">
+                  <div className="space-y-6">
                     <button 
                       onClick={() => setShowSpecs(!showSpecs)}
-                      className="w-full flex items-center justify-between p-4 md:p-6 bg-gray-50 hover:bg-red-50/50 rounded-xl md:rounded-2xl border border-gray-100 group transition-all"
+                      className="w-full flex items-center justify-between py-6 border-b border-black/[0.03] group transition-all"
                     >
-                      <div className="flex items-center gap-3">
-                        <Sparkles size={18} className="text-red-600" />
-                        <span className="text-xs sm:text-sm md:text-base font-bold text-gray-900">Specifications</span>
+                      <div className="flex items-center gap-4">
+                        <div className="w-2 h-[1px] bg-black/10" />
+                        <span className="text-[10px] font-bold text-black uppercase tracking-[0.3em] group-hover:text-red-600 transition-colors">Technical Parameters</span>
                       </div>
                       <motion.div
                         animate={{ rotate: showSpecs ? 180 : 0 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <ChevronDown size={18} className="text-gray-400 group-hover:text-red-600" />
+                        <ChevronDown size={14} className="text-black/20 group-hover:text-black" />
                       </motion.div>
                     </button>
 
@@ -847,32 +923,31 @@ export default function Home() {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
                           className="overflow-hidden"
                         >
-                          <div className="p-4 md:p-6 bg-white border-x border-b border-gray-50 rounded-b-2xl space-y-3">
+                          <div className="py-6 space-y-6">
                             {selectedProduct.description ? (
                               selectedProduct.description.split('\n').map((line: string, i: number) => {
-                                // Try to extract key-value if present (e.g., "Model: OS-32")
                                 const parts = line.split(':');
                                 if (parts.length >= 2) {
                                   return (
-                                    <div key={i} className="flex justify-between items-center py-2 border-b border-gray-50 last:border-0 hover:bg-gray-50/50 px-2 rounded-lg transition-colors">
-                                      <span className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-wider">{parts[0].trim()}</span>
-                                      <span className="text-xs md:text-sm font-black text-gray-800">{parts.slice(1).join(':').trim()}</span>
+                                    <div key={i} className="flex justify-between items-center group">
+                                      <span className="text-[10px] font-bold text-black/20 uppercase tracking-[0.2em]">{parts[0].trim()}</span>
+                                      <span className="text-xs font-bold text-black tracking-widest">{parts.slice(1).join(':').trim()}</span>
                                     </div>
                                   );
                                 }
                                 return (
-                                  <div key={i} className="flex gap-3 py-2 px-2 hover:bg-gray-50/50 rounded-lg transition-colors">
-                                    <span className="text-red-600 mt-1.5 shrink-0 text-[10px]">•</span>
-                                    <span className="text-xs md:text-sm font-medium text-gray-600 leading-relaxed">{line}</span>
+                                  <div key={i} className="flex gap-4 items-center">
+                                    <div className="w-1 h-1 rounded-full bg-black/10" />
+                                    <span className="text-xs font-medium text-black/40 leading-relaxed uppercase tracking-widest">{line}</span>
                                   </div>
                                 );
                               })
                             ) : (
-                              <div className="text-center py-6 opacity-50 text-sm">
-                                No detailed specifications available.
+                              <div className="text-center py-8 text-[9px] font-bold text-black/10 uppercase tracking-widest italic">
+                                Null Documentation.
                               </div>
                             )}
                           </div>
@@ -880,36 +955,31 @@ export default function Home() {
                       )}
                     </AnimatePresence>
                   </div>
-                </div>
 
-                {/* Action Footer Container */}
-                <div>
-                  <div className="mt-8 md:mt-12 mb-8 md:mb-12">
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 md:gap-5 w-full">
-                      <a 
-                        href={`https://wa.me/8801886469096?text=${encodeURIComponent(`Hello OSAKA GROUP!\nI would like to order:\n*${selectedProduct.name}*\n\nPrice: MRP  ${(selectedProduct.original_price || selectedProduct.price).toLocaleString()}  ৳\nSize: ${selectedProduct.size || 'N/A'}`)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-[#25D366] hover:bg-[#128C7E] text-white font-black py-4 sm:py-5 md:py-6 rounded-xl md:rounded-2xl shadow-xl shadow-green-100 transition-all active:scale-95 flex items-center justify-center gap-2 sm:gap-3 uppercase tracking-widest text-[10px] sm:text-xs md:text-sm lg:text-base cursor-pointer text-center leading-tight"
-                      >
-                        Order via WhatsApp
-                      </a>
-                      <a 
-                        href="tel:+8801886469096"
-                        className="bg-black hover:bg-gray-800 text-white font-black py-4 sm:py-5 md:py-6 rounded-xl md:rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-2 sm:gap-3 uppercase tracking-widest text-[10px] sm:text-xs md:text-sm lg:text-base cursor-pointer text-center leading-tight"
-                      >
-                        Call Expert
-                      </a>
-                    </div>
+                  {/* Action Deployment */}
+                  <div className="flex flex-col gap-4 pt-4 border-t border-black/[0.03] mt-auto">
+                    <a 
+                      href={`https://wa.me/8801886469096?text=${encodeURIComponent(`Hello OSAKA GROUP!\nInquiry regarding:\n*${selectedProduct.name}*\n\nValue: MRP  ${(selectedProduct.original_price || selectedProduct.price).toLocaleString()}  ৳\nClass: ${selectedProduct.size || 'N/A'}`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 bg-black text-white font-black py-5 rounded-xl transition-all hover:bg-zinc-800 hover:shadow-2xl hover:scale-[1.01] active:scale-95 flex items-center justify-center gap-3 uppercase tracking-[0.2em] text-[10px] premium-shadow"
+                    >
+                      <MessageSquare className="w-4 h-4" /> Initialize Order
+                    </a>
+                    <a 
+                      href="tel:+8801886469096"
+                      className="flex-1 bg-black/[0.03] border border-black/10 text-black font-bold py-6 rounded-full transition-all hover:bg-black/[0.06] active:scale-95 flex items-center justify-center gap-3 uppercase tracking-[0.2em] text-[10px]"
+                    >
+                      Voice Verification
+                    </a>
                   </div>
-                  {/* Safe bottom margin block for when scrolling inside modal */}
-                  <div className="h-8 md:h-12 w-full shrink-0"></div>
                 </div>
               </div>
             </div>
           )}
         </DialogContent>
       </Dialog>
+
 
       {/* GALLERY LIGHTBOX */}
       <GalleryLightbox 
@@ -920,21 +990,19 @@ export default function Home() {
         setCurrentIndex={setLightboxIndex}
       />
 
-      {/* BACK TO TOP BUTTON */}
       <motion.button
         initial={{ opacity: 0, scale: 0.5 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: 1.1, backgroundColor: '#000', color: '#fff' }}
         whileTap={{ scale: 0.9 }}
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="fixed bottom-24 right-6 z-[90] bg-white text-gray-900 p-4 rounded-full shadow-2xl border border-gray-100 md:bottom-10 md:right-10 hidden sm:flex items-center justify-center"
+        className="fixed bottom-24 right-8 z-[100] bg-white text-black/40 p-5 rounded-2xl shadow-2xl border border-black/5 md:bottom-10 md:right-32 hidden sm:flex items-center justify-center transition-all duration-300"
       >
         <Package className="w-6 h-6 rotate-180" />
       </motion.button>
 
       <Footer />
       <SocialLinks />
-      
       <BottomNav />
     </div>
   )
