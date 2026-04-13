@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Osaka Group - Official Digital Experience
 
-## Getting Started
+Welcome to the official online platform and e-commerce portal for **Osaka Group**. Built with modern web technologies, this platform serves as the digital front door for Osaka's premium electronics—including Televisions, Fans, and Cookers. It features a highly interactive and responsive UI, real-time product updates, and an integrated secure administrative dashboard.
 
-First, run the development server:
+## 🌟 Key Features
 
+*   **Interactive Showroom**: Browse products by category (TV, Fan, Cooker) with fluid animations powered by Framer Motion.
+*   **Detailed Product Views**: Instant-load modals with comprehensive specifications, pricing, and 1-click sharing functionality (deep linking included).
+*   **Seamless Conversions**: Direct integration with WhatsApp and Phone endpoints for immediate expert consultation and order placement.
+*   **Real-time Synchronization**: Powered by Supabase, the product listings and gallery updates reflect in real-time across all active clients.
+*   **Integrated Admin Dashboard**: Secure, role-based operations dashboard (`/osaka-ops`) for managing products and gallery assets centrally.
+*   **Fully Responsive**: Meticulously crafted to provide a premium experience whether on mobile, tablet, or desktop.
+
+## 🚀 Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Database / Backend**: [Supabase](https://supabase.com/) (PostgreSQL & Realtime channels)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Components**: UI primitives (Dialogs, Badges, etc.) via shadcn.
+
+## 🛠️ Getting Started
+
+To run this project locally, follow these steps:
+
+### 1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd osakaWebsite
 ```
 
+### 2. Install Dependencies
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3. Environment Setup
+Create a `.env.local` file in the root of the project and add the necessary environment variables required for Supabase and the Admin Dashboard:
+
+```env
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Admin Authentication
+SESSION_SECRET=your_secure_session_secret
+ADMIN_SECRET_KEY=your_secure_admin_key
+```
+
+### 4. Run the Development Server
+```bash
+npm run dev
+```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🏗️ Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/app`: Contains all Next.js App Router pages including the home store interface and the `/osaka-ops` admin dashboard.
+- `/components`: Reusable UI components including the `Navbar`, `Footer`, `HeroCarousel`, and more.
+- `/components/ui`: Core UI components.
+- `/lib`: Shared utilities, including the Supabase client configuration.
+- `/public`: Static assets like images and branding.
 
-## Learn More
+## 🔒 Security & Operations
 
-To learn more about Next.js, take a look at the following resources:
+Access to the `osaka-ops` dashboard is strictly controlled via middleware and server actions using securely hashed cookies and secret tokens established in `.env.local`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Developed for Osaka Group - Reliable • Genuine • Verified*
