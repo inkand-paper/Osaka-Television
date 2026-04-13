@@ -13,8 +13,35 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: "OSAKA GROUP | Premium Electronics & Home Appliances",
   description: "Official OSAKA GROUP website. Explore our premium range of TVs, Fans, and Rice Cookers. Quality appliances designed for modern homes in Bangladesh.",
+  icons: {
+    icon: "/assets/about-osaka.jpeg",
+    shortcut: "/assets/about-osaka.jpeg",
+    apple: "/assets/about-osaka.jpeg",
+  },
+  openGraph: {
+    title: "OSAKA GROUP | Premium Electronics & Home Appliances",
+    description: "Official OSAKA GROUP website. Explore our premium range of TVs, Fans, and Rice Cookers. Quality appliances designed for modern homes in Bangladesh.",
+    siteName: "Osaka Group",
+    images: [
+      {
+        url: "/assets/about-osaka.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "Osaka Group Premium Electronics",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "OSAKA GROUP | Premium Electronics & Home Appliances",
+    description: "Official OSAKA GROUP website.",
+    images: ["/assets/about-osaka.jpeg"],
+  },
 };
 
 export const viewport: Viewport = {
