@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { motion, AnimatePresence } from 'framer-motion'
-import { CheckCircle2, Package, Tv, Wind, ChefHat, Sparkles, Mail, Phone, ImageIcon, Clock, Calendar, ArrowRight, X, ChevronDown, Shield, Zap, Maximize } from "lucide-react"
+import { CheckCircle2, Package, Tv, Wind, ChefHat, Sparkles, Mail, Phone, ImageIcon, Clock, Calendar, ArrowRight, X, ChevronDown, Shield, Zap, Maximize, Share2, Check } from "lucide-react"
 import GalleryLightbox from '@/components/GalleryLightbox'
 
 interface Product {
@@ -67,6 +67,18 @@ export default function Home() {
   const [selectedModel, setSelectedModel] = useState<string>('All')
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [showSpecs, setShowSpecs] = useState(false)
+  const [copiedLink, setCopiedLink] = useState(false)
+
+  const handleShare = async (productId: string) => {
+    const url = `${window.location.origin}/?product=${productId}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy link', err);
+    }
+  }
   
   // Lightbox state
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
@@ -145,7 +157,19 @@ const scrollToId = useCallback((id: string) => {
     if (error) {
       console.error('Error fetching products:', error)
     } else {
-      setProducts(data || [])
+      const fetchedProducts = data || []
+      setProducts(fetchedProducts)
+
+      if (typeof window !== 'undefined') {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('product');
+        if (productId) {
+          const productToSelect = fetchedProducts.find(p => p.id === productId);
+          if (productToSelect) {
+            setSelectedProduct(productToSelect);
+          }
+        }
+      }
     }
     setLoading(false)
   }
@@ -777,7 +801,7 @@ const scrollToId = useCallback((id: string) => {
       
 
       {/* PRODUCT DETAILS MODAL */}
-      <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
+      <Dialog open={!!selectedProduct} onOpenChange={() => { setSelectedProduct(null); setCopiedLink(false); }}>
         <DialogContent className="max-w-[95vw] sm:max-w-[90vw] md:max-w-[75vw] lg:max-w-[70vw] w-full p-0 overflow-hidden border-none bg-white rounded-2xl md:rounded-3xl shadow-2xl">
           <DialogTitle className="sr-only">Product Details</DialogTitle>
           {selectedProduct && (
@@ -813,14 +837,23 @@ const scrollToId = useCallback((id: string) => {
               <div className="w-full xl:w-1/2 p-4 sm:p-6 md:p-14 lg:p-16 flex flex-col justify-between bg-white text-left">
                 <div className="space-y-4 md:space-y-8">
                   {/* Title & Status */}
-                  <div>
-                    <div className="flex items-center gap-2 text-green-600 font-bold text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] mb-2 md:mb-4">
-                      <CheckCircle2 size={14} strokeWidth={3} className="md:w-[18px] md:h-[18px]" />
-                      Verified Factory Stock
+                  <div className="flex justify-between items-start gap-4">
+                    <div>
+                      <div className="flex items-center gap-2 text-green-600 font-bold text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] mb-2 md:mb-4">
+                        <CheckCircle2 size={14} strokeWidth={3} className="md:w-[18px] md:h-[18px]" />
+                        Verified Factory Stock
+                      </div>
+                      <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-black text-gray-900 leading-tight md:leading-[1.15] tracking-tight">
+                        {selectedProduct.name}
+                      </h2>
                     </div>
-                    <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-black text-gray-900 leading-tight md:leading-[1.15] tracking-tight">
-                      {selectedProduct.name}
-                    </h2>
+                    <button
+                      onClick={() => handleShare(selectedProduct.id)}
+                      className="shrink-0 p-3 bg-gray-50 hover:bg-red-50 text-gray-600 hover:text-red-600 rounded-full transition-all flex items-center justify-center border border-gray-100 hover:border-red-200"
+                      title="Share Product"
+                    >
+                      {copiedLink ? <Check size={20} className="text-green-600" /> : <Share2 size={20} />}
+                    </button>
                   </div>
 
                   {/* Price & Info Grid */}
