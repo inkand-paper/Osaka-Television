@@ -37,9 +37,6 @@ export default function SignupInternal() {
       email,
       password,
       options: {
-          data: {
-            role: 'admin'
-          },
           emailRedirectTo: `${window.location.origin}/osaka-ops`
       }
     })

@@ -1,5 +1,6 @@
 import { Package } from 'lucide-react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 interface TVCardProps {
   name: string
@@ -32,13 +33,16 @@ export default function TVCard({ name, price, originalPrice, discountTag, image,
       {/* TV Image */}
       <div className="bg-[#fcfcfc] aspect-video flex items-center justify-center p-6 sm:p-8 overflow-hidden relative group-hover:bg-red-50/30 transition-colors duration-500">
         {image ? (
-          <motion.img 
-            src={image} 
-            alt={name}
-            className="w-full h-full object-contain drop-shadow-2xl"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }} // smooth easeOut
-          />
+          <div className="relative w-full h-full">
+            <Image 
+              src={image} 
+              alt={name}
+              fill
+              className="object-contain drop-shadow-2xl"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority={false}
+            />
+          </div>
         ) : (
           <div className="w-full h-full rounded flex items-center justify-center text-gray-200">
             <Package className="w-16 h-16 sm:w-20 sm:h-20" strokeWidth={1} />
@@ -90,4 +94,4 @@ export default function TVCard({ name, price, originalPrice, discountTag, image,
       </div>
     </motion.div>
   )
-}
+}

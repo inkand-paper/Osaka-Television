@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { Menu, X, Home, Image as ImageIcon, Package, Sparkles, LogOut, ExternalLink, ChevronRight } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 
+
 export default function DashboardLayout({
   children,
 }: {

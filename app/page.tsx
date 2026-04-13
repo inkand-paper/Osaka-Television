@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState,useCallback } from 'react'
 import Navbar from '@/components/Navbar'
 import BottomNav from '@/components/BottomNav'
 import HeroCarousel from '@/components/HeroCarousel'
@@ -8,6 +8,8 @@ import Footer from '@/components/Footer'
 import TVCard from '@/components/TVCard'
 import SocialLinks from '@/components/SocialLinks'
 import { supabase } from '@/lib/supabase'
+import Image from 'next/image'
+import imageAbout from '@/public/assets/imageAbout.png'
 import {
   Dialog,
   DialogContent,
@@ -63,27 +65,29 @@ export default function Home() {
   const [selectedMainCategory, setSelectedMainCategory] = useState<string>('Television')
   const [selectedSize, setSelectedSize] = useState<string>('32 inch')
   const [selectedModel, setSelectedModel] = useState<string>('All')
-  const [selectedProduct, setSelectedProduct] = useState<any>(null)
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [showSpecs, setShowSpecs] = useState(false)
   
   // Lightbox state
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
 
-  const scrollToId = (id: string) => {
-  window.setTimeout(() => {
-    const el = document.getElementById(id)
-    if (!el) return
 
-    const headerH =
-      Number.parseFloat(
+const scrollToId = useCallback((id: string) => {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const el = document.getElementById(id)
+      if (!el) return
+
+      const headerH = Number.parseFloat(
         getComputedStyle(document.documentElement).getPropertyValue('--header-h')
       ) || 80
 
-    const y = el.getBoundingClientRect().top + window.pageYOffset - headerH
-    window.scrollTo({ top: y, behavior: 'smooth' })
-  }, 120)
-}
+      const y = el.getBoundingClientRect().top + window.pageYOffset - headerH
+      window.scrollTo({ top: y, behavior: 'smooth' })
+    })
+  })
+}, [])
 
   const scrollToProductsForCategory = (category: string) => {
     const targetId =
@@ -160,9 +164,23 @@ export default function Home() {
     }
   }
 
+  // app/page.tsx - Add to existing useEffect
   useEffect(() => {
     fetchProducts()
     fetchGallery()
+
+    // Real-time subscription
+    const channel = supabase
+      .channel('public:products')
+      .on('postgres_changes', 
+        { event: '*', schema: 'public', table: 'products' }, 
+        () => fetchProducts()
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
   }, [])
 
   useEffect(() => {
@@ -258,11 +276,14 @@ export default function Home() {
                   Osaka Group | 32 Years of Innovation | Two Million Stories of Trust.
                 </p>
               </div>
-              <div className="bg-gray-200 h-96 rounded-lg flex items-center justify-center overflow-hidden shadow-xl">
-                <img
-                  src="/assets/images/about/imageAbout.PNG"
+              <div className="bg-white h-96 rounded-lg flex items-center justify-center overflow-hidden shadow-xl border border-gray-100 relative">
+                <Image
+                  src="/assets/imageAbout.png"
                   alt="About Osaka"
-                  className="w-full h-full object-cover rounded-lg"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
                 />
               </div>
             </div>

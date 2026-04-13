@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useEffect, useCallback } from 'react'
+import Image from 'next/image'
 
 interface GalleryLightboxProps {
   isOpen: boolean
@@ -96,12 +97,16 @@ export default function GalleryLightbox({
             className="relative max-w-5xl w-full h-full flex items-center justify-center select-none"
             onClick={(e) => e.stopPropagation()}
           >
-            <img 
-              src={images[currentIndex]} 
-              alt="Gallery Preview" 
-              className="max-w-full max-h-full object-contain shadow-2xl rounded-sm"
-              draggable={false}
-            />
+            <div className="relative w-full h-full">
+              <Image 
+                src={images[currentIndex]} 
+                alt="Gallery Preview"
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, 80vw"
+                priority
+              />
+            </div>
             
             {/* Mobile Swipe Simulation Info (Optional) */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/40 text-xs font-bold uppercase tracking-widest md:hidden">

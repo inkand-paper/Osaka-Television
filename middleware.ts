@@ -34,14 +34,16 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  const userRole = user?.user_metadata?.role
   const userEmail = user?.email
   
   // Check if email is in the admin whitelist from env
-  const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim())
-  const isAdmin = userRole === 'admin' || (userEmail && adminEmails.includes(userEmail))
+  const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase())
+  const isAdmin = userEmail ? adminEmails.includes(userEmail.toLowerCase()) : false
 
-  console.log(`[Middleware] Path: ${request.nextUrl.pathname} | User: ${userEmail || 'None'} | Admin: ${isAdmin}`)
+  // Only log in development
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`[Middleware] Path: ${request.nextUrl.pathname} | User: ${userEmail || 'None'} | Admin: ${isAdmin}`)
+  }
 
   // Protect admin routes
   if (request.nextUrl.pathname.startsWith('/admin') || request.nextUrl.pathname.startsWith('/osaka-ops')) {
@@ -54,7 +56,9 @@ export async function middleware(request: NextRequest) {
 
     // Redirect if not logged in or not an admin
     if (!user || !isAdmin) {
-      console.log(`[Middleware] Unauthorized access attempt to ${request.nextUrl.pathname}, redirecting to /osaka-ops`)
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`[Middleware] Unauthorized access attempt to ${request.nextUrl.pathname}, redirecting to /osaka-ops`)
+      }
       const url = request.nextUrl.clone()
       url.pathname = '/osaka-ops'
       return NextResponse.redirect(url)
@@ -71,7 +75,7 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
+     * - Public assets (images, svg, etc.)
      */
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],

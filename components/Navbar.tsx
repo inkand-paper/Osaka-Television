@@ -30,11 +30,14 @@ export default function Navbar() {
     return h
   }
 
+  const savedCategoryRef = useRef<string | null>(null)
+
+  useEffect(() => {
+    savedCategoryRef.current = localStorage.getItem('mainCategory')
+  }, [])
+
   const scrollToProducts = () => {
-    const savedCategory =
-      typeof window !== 'undefined' && localStorage.getItem('mainCategory')
-        ? localStorage.getItem('mainCategory')
-        : 'Television'
+    const savedCategory = savedCategoryRef.current || 'Television'
 
     const targetId =
       savedCategory === 'Television'

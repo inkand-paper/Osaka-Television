@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { supabase } from '@/lib/supabase'
+import Image from 'next/image'
 
 interface Slide {
   title: string;
@@ -106,15 +107,16 @@ export default function HeroCarousel({ onShopNow }: HeroCarouselProps) {
             >
               <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent z-10" />
-                <motion.img 
-                  initial={{ scale: 1.1 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 10 }}
-                  src={slide.image_url} 
-                  alt="" 
-                  className="w-full h-full object-cover" 
-                  draggable={false} 
-                />
+                <div className="relative w-full h-full">
+                  <Image 
+                    src={slide.image_url} 
+                    alt={slide.title}
+                    fill
+                    className="object-cover"
+                    priority={index === 0}
+                    sizes="100vw"
+                  />
+                </div>
               </div>
               <div className="relative z-20 flex items-center h-full px-8 md:px-16 lg:px-24 pointer-events-none">
                 <div className="max-w-2xl text-white">

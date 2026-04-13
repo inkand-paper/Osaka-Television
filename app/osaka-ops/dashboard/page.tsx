@@ -1,6 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+
+
+import { useEffect, useState} from 'react'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { Package, Image as ImageIcon, Sparkles, TrendingUp, Eye, EyeOff, ArrowRight } from 'lucide-react'
