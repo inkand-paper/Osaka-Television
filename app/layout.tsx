@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: "OSAKA GROUP | Premium Electronics & Home Appliances",
-  description: "Official OSAKA GROUP website. Explore our premium range of TVs, Fans, and Rice Cookers. Quality appliances designed for modern homes in Bangladesh.",
+  description: "Official OSAKA GROUP website. Explore our premium range of TVs, Fans, and Cookers. Quality appliances designed for modern homes in Bangladesh.",
   icons: {
     icon: "/assets/about-osaka.jpeg",
     shortcut: "/assets/about-osaka.jpeg",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "OSAKA GROUP | Premium Electronics & Home Appliances",
-    description: "Official OSAKA GROUP website. Explore our premium range of TVs, Fans, and Rice Cookers. Quality appliances designed for modern homes in Bangladesh.",
+    description: "Official OSAKA GROUP website. Explore our premium range of TVs, Fans, and Cookers. Quality appliances designed for modern homes in Bangladesh.",
     siteName: "Osaka Group",
     images: [
       {

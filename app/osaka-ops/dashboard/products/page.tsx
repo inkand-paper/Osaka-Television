@@ -33,7 +33,7 @@ const PRODUCT_MAPPING = {
   "12 inch": { label: "12 inch (Fan)", size: "12\"", models: ["Table Fan - Rechargeable"], hasTypes: false },
   "16 inch": { label: "16 inch (Fan)", size: "16\"", models: ["Table Fan - Rechargeable", "Stand Fan - Rechargeable"], hasTypes: false },
   "18 inch": { label: "18 inch (Fan)", size: "18\"", models: ["Stand Fan - Rechargeable"], hasTypes: false },
-  "Cooker": { label: "Rice Cooker", size: "Cooker", models: ["Rice Cooker"], hasTypes: false },
+  "Cooker": { label: "Cooker", size: "Cooker", models: ["Cooker"], hasTypes: false },
 }
 
 type CategoryKey = keyof typeof PRODUCT_MAPPING;
