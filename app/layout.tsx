@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.osakagroupbd.com'),
   title: "OSAKA GROUP | Premium Electronics & Home Appliances",
   description: "Official OSAKA GROUP website. Explore our premium range of TVs, Fans, and Cookers. Quality appliances designed for modern homes in Bangladesh.",
   icons: {
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "OSAKA GROUP | Premium Electronics & Home Appliances",
-    description: "Official OSAKA GROUP website.",
+    description: "Official OSAKA GROUP website. Explore our premium range of TVs, <Fan></Fan>s, and Cookers. Quality appliances designed for modern homes in Bangladesh.",
     images: ["/assets/about-osaka.jpeg"],
   },
 };
